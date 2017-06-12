@@ -6,12 +6,14 @@
     <trackDomain>https://q3.webtrekk.net</trackDomain>
     
     <!--customers trackid-->
-    <trackId>123451234512345 ,  123451234512346</trackId>
+    <trackId>123456789012341,123456789012342,  123456789012343   ,   123456789012344</trackId>
     
     <!-- measure only a subset of the users -->
     <sampling>0</sampling>
     <!-- interval between the requests are send in seconds -->
     <sendDelay>5</sendDelay>
+    <!--maximum amoount of requests to store when the user is offline -->
+    <maxRequests>5000</maxRequests>
     
     <!--optional settings -->
     <!--automaticly track activities onStart method -->
@@ -21,13 +23,13 @@
     <!--track if there was an application update -->
     <autoTrackAppUpdate>true</autoTrackAppUpdate>
     <!--track the advertiser id -->
-    <autoTrackAdvertiserId>true</autoTrackAdvertiserId>
+    <autoTrackAdvertiserId>false</autoTrackAdvertiserId>
     <!--track the app versions name -->
     <autoTrackAppVersionName>true</autoTrackAppVersionName>
     <!--track the app versions code -->
     <autoTrackAppVersionCode>true</autoTrackAppVersionCode>
-    <!-- track adClear ID -->
-    <autoTrackAdClearId>true</autoTrackAdClearId>
+    <!-- track AdClearId -->
+    <autoTrackAdClearId>false</autoTrackAdClearId>
     <!--track the devices screen orientation -->
     <autoTrackScreenOrientation>true</autoTrackScreenOrientation>
     <!--track the current connection type -->
@@ -47,13 +49,13 @@
     <errorLogEnable>true</errorLogEnable>
     <!--set log level to do loging 1- only fatals 2 - fatal and catched, 3- all logs. By default = 3 -->
     <errorLogLevel>3</errorLogLevel>
-
+    
     <recommendations>
         <recommendation name="complexReco">https://reco.webtrekk.com/dmp/recos/v1/?accountId=238713152098253&amp;placementId=39876</recommendation>
         <recommendation name="simpleReco">https://reco.webtrekk.com/dmp/recos/v1/?accountId=238713152098253&amp;placementId=39879</recommendation>
         <recommendation name="emptyTest">https://reco.webtrekk.com/dmp/recos/v1/?accountId=238713152098253&amp;placementId=40056</recommendation>
     </recommendations>
-
+    
     <!--global tracking parameter -->
     <globalTrackingParameter>
         <!--define global tracking parameter which are send with every request, the key has to match a valid parameter name!
@@ -78,8 +80,8 @@
         <parameter id="STREET" key="STREET"></parameter>
         <parameter id="STREETNUMBER" key="STREETNUMBER"></parameter>
         <parameter id="ZIP" key="ZIP"></parameter>
-
-
+        
+        
         <!--define the global page parameter, the key is the index,  -->
         <pageParameter>
             <parameter id="1" key="Key1"></parameter>
@@ -189,15 +191,15 @@
         <mappingname>autoPageName</mappingname>
         <autoTracked>true</autoTracked>
         <screenTrackingParameter>
-                <parameter id="CURRENCY" key="CURRENCYOver"></parameter>
-                <parameter id="PRODUCT" key="PRODUCT"></parameter>
-                <parameter id="PRODUCT_COST" key="PRODUCT_COST"></parameter>
-                <parameter id="PRODUCT_COUNT" key="PRODUCT_COUNT"></parameter>
-                <parameter id="PRODUCT_STATUS" key="PRODUCT_STATUS"></parameter>
-                <parameter id="ORDER_NUMBER" key="ORDER_NUMBER"></parameter>
-                <parameter id="ORDER_TOTAL" key="ORDER_TOTAL"></parameter>
-                <parameter id="VOUCHER_VALUE" key="VOUCHER_VALUE"></parameter>
-                <parameter id="INTERN_SEARCH" key="INTERN_SEARCHOver"></parameter>
+            <parameter id="CURRENCY" key="CURRENCYOver"></parameter>
+            <parameter id="PRODUCT" key="PRODUCT"></parameter>
+            <parameter id="PRODUCT_COST" key="PRODUCT_COST"></parameter>
+            <parameter id="PRODUCT_COUNT" key="PRODUCT_COUNT"></parameter>
+            <parameter id="PRODUCT_STATUS" key="PRODUCT_STATUS"></parameter>
+            <parameter id="ORDER_NUMBER" key="ORDER_NUMBER"></parameter>
+            <parameter id="ORDER_TOTAL" key="ORDER_TOTAL"></parameter>
+            <parameter id="VOUCHER_VALUE" key="VOUCHER_VALUE"></parameter>
+            <parameter id="INTERN_SEARCH" key="INTERN_SEARCHOver"></parameter>
             <pageParameter>
                 <parameter id="1">test_pageparam2Override</parameter>
                 <parameter id="2" key="KeyOver1"></parameter>
@@ -241,5 +243,5 @@
     <screen>
         <classname>NextScreenController</classname>
         <mappingname>autoPNNextScreen</mappingname>
-     </screen>
+    </screen>
 </webtrekkConfiguration>

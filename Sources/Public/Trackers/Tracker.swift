@@ -29,6 +29,7 @@ public protocol Tracker: class {
 
 	/** get and set everID. If you set Ever ID it started to use new value for all requests*/
     var everId: String { get set }
+    var trackIds: [String] { get }
 	var global: GlobalProperties { get set }
 
     /**Functions sends all request from cache to server. Function can be used only for manual send mode, when <sendDelay>0</sendDelay>

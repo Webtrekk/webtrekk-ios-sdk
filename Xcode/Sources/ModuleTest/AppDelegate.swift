@@ -75,21 +75,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
             let queryItems = components.queryItems{
             
+            var everID: String? = nil
+            var mediaCode: String? = nil
+            let everIDName = "wt_everID", mediaCodeName = "wt_mediaCode"
             //loop for all parameters
             for queryItem in queryItems {
-                //if parameter is everID set it
-                if queryItem.name == "downloadTest" {
-                    
-                    if let value = queryItem.value, value == "true"  {
-                            WebtrekkTracking.defaultLogger.logDebug("download test command is received")
-                            DownloadManager.shared.start()
-                    }
-                } else if let value = queryItem.value, queryItem.name == "checkSession" {
+                let item = (queryItem.name, queryItem.value)
+                switch item {
+                case ("downloadTest", let value) where value == "true":
+                    WebtrekkTracking.defaultLogger.logDebug("download test command is received")
+                    DownloadManager.shared.start()
+                case ("checkSession", let value) where value != nil:
                     WebtrekkTracking.defaultLogger.logDebug("started in checkSessionMode")
                     //setup session paramter to be checked by external script
                     WebtrekkTracking.instance()["sessionCheck"]=value
+                case (everIDName, let value):
+                    everID = value
+                case (mediaCodeName, let value):
+                    mediaCode = value
+                default:
+                    break;
+                    
                 }
              }
+            
+            if let id = everID, let code = mediaCode {
+                WebtrekkTracking.defaultLogger.logDebug("\(everIDName)=\(id), \(mediaCodeName)=\(code)")
+            } else {
+                WebtrekkTracking.defaultLogger.logDebug("no deep link info")
+            }
         }
         return true
     }
