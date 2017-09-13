@@ -46,7 +46,6 @@
 		0F2D22011EDEA1C500D09ADF /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D21AE1EDEA1C500D09ADF /* String.swift */; };
 		0F2D22021EDEA1C500D09ADF /* StrongReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D21AF1EDEA1C500D09ADF /* StrongReference.swift */; };
 		0F2D22031EDEA1C500D09ADF /* ThreadSynchronization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D21B01EDEA1C500D09ADF /* ThreadSynchronization.swift */; };
-		0F2D22041EDEA1C500D09ADF /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D21B11EDEA1C500D09ADF /* UIDevice.swift */; };
 		0F2D22051EDEA1C500D09ADF /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D21B21EDEA1C500D09ADF /* UIViewController.swift */; };
 		0F2D22061EDEA1C500D09ADF /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D21B31EDEA1C500D09ADF /* UserDefaults.swift */; };
 		0F2D22071EDEA1C500D09ADF /* WeakReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D21B41EDEA1C500D09ADF /* WeakReference.swift */; };
@@ -139,7 +138,6 @@
 		0F2D21AE1EDEA1C500D09ADF /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		0F2D21AF1EDEA1C500D09ADF /* StrongReference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrongReference.swift; sourceTree = "<group>"; };
 		0F2D21B01EDEA1C500D09ADF /* ThreadSynchronization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadSynchronization.swift; sourceTree = "<group>"; };
-		0F2D21B11EDEA1C500D09ADF /* UIDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
 		0F2D21B21EDEA1C500D09ADF /* UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		0F2D21B31EDEA1C500D09ADF /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		0F2D21B41EDEA1C500D09ADF /* WeakReference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeakReference.swift; sourceTree = "<group>"; };
@@ -347,7 +345,6 @@
 				0F2D21AE1EDEA1C500D09ADF /* String.swift */,
 				0F2D21AF1EDEA1C500D09ADF /* StrongReference.swift */,
 				0F2D21B01EDEA1C500D09ADF /* ThreadSynchronization.swift */,
-				0F2D21B11EDEA1C500D09ADF /* UIDevice.swift */,
 				0F2D21B21EDEA1C500D09ADF /* UIViewController.swift */,
 				0F2D21B31EDEA1C500D09ADF /* UserDefaults.swift */,
 				0F2D21B41EDEA1C500D09ADF /* WeakReference.swift */,
@@ -683,7 +680,6 @@
 				0F2D22011EDEA1C500D09ADF /* String.swift in Sources */,
 				0F2D21E11EDEA1C500D09ADF /* DeepLink.swift in Sources */,
 				0F2D21DF1EDEA1C500D09ADF /* PageViewEventHandler.swift in Sources */,
-				0F2D22041EDEA1C500D09ADF /* UIDevice.swift in Sources */,
 				0F2D22121EDEA1C500D09ADF /* TrackingEventWithPageProperties.swift in Sources */,
 				0F2D221B1EDEA1C500D09ADF /* MediaProperties.swift in Sources */,
 				0F2D22291EDEA1C500D09ADF /* WebtrekkTracking.swift in Sources */,
