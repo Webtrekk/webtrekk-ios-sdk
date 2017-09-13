@@ -75,14 +75,6 @@ internal extension String {
         
         return true
     }
-    
-    internal func sha256() -> String{
-        return self.utf8.lazy.map({ $0 as UInt8 }).sha256().toHexString()
-    }
-    
-    internal func md5() -> String{
-        return self.utf8.lazy.map({ $0 as UInt8 }).md5().toHexString()
-    }
 }
 
 
