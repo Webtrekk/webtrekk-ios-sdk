@@ -1,5 +1,5 @@
 # CryptoSwift is a growing collection of standard and secure cryptographic algorithms implemented in Swift
-github "krzyzanowskim/CryptoSwift" == 0.6.7
+github "krzyzanowskim/CryptoSwift" ~> 0.7
 
 # Replacement for Apple's Reachability re-written in Swift with closures
 github "ashleymills/Reachability.swift" ~> 3.0
