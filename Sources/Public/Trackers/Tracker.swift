@@ -1,29 +1,8 @@
-//The MIT License (MIT)
-//
-//Copyright (c) 2016 Webtrekk GmbH
-//
-//Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the
-//"Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish,
-//distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject
-//to the following conditions:
-//
-//The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-//
-//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-//MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-//CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-//SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
-//  Created by Widgetlabs
-//
-
-
 import UIKit
 
 #if !os(watchOS)
 	import AVFoundation
 #endif
-
 
 public protocol Tracker: class {
 
@@ -41,14 +20,12 @@ public protocol Tracker: class {
 	func trackMediaAction(_ event: MediaEvent)
 
 	func trackPageView(_ event: PageViewEvent)
-
 	
 	func trackerForMedia(_ mediaName: String, pageName: String, mediaProperties : MediaProperties?, variables : [String : String]?) -> MediaTracker
 
 	#if !os(watchOS)
 	func trackerForMedia(_ mediaName: String, pageName: String, automaticallyTrackingPlayer player: AVPlayer, mediaProperties : MediaProperties?, variables : [String : String]?)-> MediaTracker
 	#endif
-
 	
 	func trackerForPage(_ pageName: String) -> PageTracker
     
@@ -69,7 +46,6 @@ public protocol Tracker: class {
     /** return product list tracker instace for product list tracking */
     var productListTracker: ProductListTracker { get }
 }
-
 
 public extension Tracker {
 
@@ -93,7 +69,6 @@ public extension Tracker {
 		)
 	}
 
-
 	public func trackAction(
 		_ actionName: String,
 		viewControllerType: AnyObject.Type,
@@ -113,7 +88,6 @@ public extension Tracker {
 			variables:               variables
 		)
 	}
-
 
 	public func trackAction(
 		_ actionProperties: ActionProperties,
@@ -135,7 +109,6 @@ public extension Tracker {
 		))
 	}
 
-
 	public func trackMediaAction(
 		_ action: MediaEvent.Action,
 		mediaProperties: MediaProperties,
@@ -149,7 +122,6 @@ public extension Tracker {
 			variables: variables
 		))
 	}
-
 
 	public func trackPageView(
 		_ pageName: String,
@@ -168,7 +140,6 @@ public extension Tracker {
 			variables:               variables
 		)
 	}
-
 
 	public func trackPageView(
 		_ pageProperties: PageProperties,
@@ -203,14 +174,20 @@ public extension Tracker {
         }
     }
     
-    func trackerForMedia(_ mediaName: String, pageName: String, mediaProperties : MediaProperties? = nil, variables : [String : String]? = nil) -> MediaTracker {
+    func trackerForMedia(_ mediaName: String,
+                         pageName: String,
+                         mediaProperties : MediaProperties? = nil,
+                         variables : [String : String]? = nil) -> MediaTracker {
         
         return trackerForMedia(mediaName, pageName: pageName, mediaProperties: mediaProperties, variables: variables)
-        
     }
     
     #if !os(watchOS)
-    func trackerForMedia(_ mediaName: String, pageName: String, automaticallyTrackingPlayer player: AVPlayer, mediaProperties : MediaProperties? = nil, variables : [String : String]? = nil) -> MediaTracker {
+    func trackerForMedia(_ mediaName: String,
+                         pageName: String,
+                         automaticallyTrackingPlayer player: AVPlayer,
+                         mediaProperties : MediaProperties? = nil,
+                         variables : [String : String]? = nil) -> MediaTracker {
         
         return trackerForMedia(mediaName, pageName: pageName, automaticallyTrackingPlayer: player, mediaProperties: mediaProperties, variables: variables)
     }

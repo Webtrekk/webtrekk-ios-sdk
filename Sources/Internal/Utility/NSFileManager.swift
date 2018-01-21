@@ -1,6 +1,5 @@
 import Foundation
 
-
 internal extension FileManager {
 
 	@nonobjc

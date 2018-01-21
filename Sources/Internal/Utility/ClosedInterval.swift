@@ -12,7 +12,6 @@ internal extension ClosedRange {
 	}
 }
 
-
 internal extension ClosedRange where Bound: MinimumMaximumAware {
 
 	internal var conditionText: String {
@@ -30,14 +29,11 @@ internal extension ClosedRange where Bound: MinimumMaximumAware {
 	}
 }
 
-
-
 internal protocol MinimumMaximumAware {
 
 	var isMaximum: Bool { get }
 	var isMinimum: Bool { get }
 }
-
 
 extension Float: MinimumMaximumAware {
 
@@ -51,7 +47,6 @@ extension Float: MinimumMaximumAware {
 	}
 }
 
-
 extension Double: MinimumMaximumAware {
 
 	internal var isMaximum: Bool {
@@ -63,7 +58,6 @@ extension Double: MinimumMaximumAware {
 		return sign == .minus && isInfinite
 	}
 }
-
 
 extension Int: MinimumMaximumAware {
 

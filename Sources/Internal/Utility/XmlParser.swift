@@ -1,6 +1,5 @@
 import Foundation
 
-
 internal struct XmlElement {
 
 	internal var attributes: [String : String]
@@ -8,11 +7,9 @@ internal struct XmlElement {
 	internal var path: [String]
 	internal var text: String
 
-
 	internal var name: String {
 		return path.last ?? ""
 	}
-
 
 	internal init(attributes: [String : String], children: [XmlElement], path: [String], text: String) {
 		self.attributes = attributes
@@ -21,7 +18,6 @@ internal struct XmlElement {
 		self.text = text
 	}
 }
-
 
 internal final class XmlParser {
 
@@ -33,7 +29,6 @@ internal final class XmlParser {
 	}
 }
 
-
 private final class ActualParser: NSObject {
 
 	fileprivate var currentText = ""
@@ -43,7 +38,6 @@ private final class ActualParser: NSObject {
 	fileprivate var error: Error?
 	fileprivate let parser: XMLParser
 	fileprivate var rootElement: XmlElement!
-
 
 	fileprivate init(xml data: Data) throws {
 		self.parser = XMLParser(data: data)
@@ -63,8 +57,6 @@ private final class ActualParser: NSObject {
         }
 	}
 
-
-
 	fileprivate final class ElementBuilder {
 
 		fileprivate let attributes: [String : String]
@@ -72,19 +64,16 @@ private final class ActualParser: NSObject {
 		fileprivate let path: [String]
 		fileprivate var text = ""
 
-
 		fileprivate init(attributes: [String : String], path: [String]) {
 			self.attributes = attributes
 			self.path = path
 		}
-
 
 		fileprivate func build() -> XmlElement {
 			return XmlElement(attributes: attributes, children: children, path: path, text: text)
 		}
 	}
 }
-
 
 extension ActualParser: XMLParserDelegate {
 
@@ -104,8 +93,7 @@ extension ActualParser: XMLParserDelegate {
 			parentElementBuilder.children.append(element)
 
 			self.elementBuilder = parentElementBuilder
-		}
-		else {
+		} else {
 			rootElement = element
 
 			self.elementBuilder = nil
@@ -114,7 +102,6 @@ extension ActualParser: XMLParserDelegate {
 		currentText = ""
 		elementPath.removeLast()
 	}
-
 
 	@objc
 	fileprivate func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName: String?, attributes: [String : String]) {
@@ -128,12 +115,10 @@ extension ActualParser: XMLParserDelegate {
 		elementBuilder = ElementBuilder(attributes: attributes, path: elementPath)
 	}
 
-
 	@objc
 	fileprivate func parser(_ parser: XMLParser, foundCharacters string: String) {
 		currentText += string
 	}
-
 
 	@objc
 	fileprivate func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {

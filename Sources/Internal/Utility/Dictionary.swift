@@ -1,6 +1,5 @@
 internal extension Dictionary {
 
-	
 	internal func merged(over other: [Key: Value]) -> [Key: Value] {
 		var merged = other
 		for (key, value) in self {
@@ -9,8 +8,6 @@ internal extension Dictionary {
 		return merged
 	}
 
-
-	
 	internal func merged(over other: [Key: Value]?) -> [Key: Value] {
 		guard let other = other else {
 			return self
@@ -20,10 +17,8 @@ internal extension Dictionary {
 	}
 }
 
-
 internal extension _Optional where Wrapped == Dictionary<Int, TrackingValue> {
 
-	
 	internal func merged(over other: Wrapped?) -> Wrapped? {
 		guard let value = value else {
 			return other
@@ -32,7 +27,6 @@ internal extension _Optional where Wrapped == Dictionary<Int, TrackingValue> {
 		return value.merged(over: other)
 	}
 }
-
 
 internal extension _Optional where Wrapped == Dictionary<Int, String> {
     

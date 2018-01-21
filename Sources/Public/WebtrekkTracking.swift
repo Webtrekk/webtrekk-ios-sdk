@@ -1,22 +1,3 @@
-//The MIT License (MIT)
-//
-//Copyright (c) 2016 Webtrekk GmbH
-//
-//Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the
-//"Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish,
-//distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject
-//to the following conditions:
-//
-//The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-//
-//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-//MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-//CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-//SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
-//  Created by Widgetlabs
-//
-
 import Foundation
 import UIKit
 
@@ -32,7 +13,6 @@ public class WebtrekkTracking {
 
 	/** Current version of the sdk */
     public static let version : String = Bundle.init(for: WebtrekkTracking.self).object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String? ?? "9.9.9"
-	
 
 	/** the default implementation of `TrackingLogger` used for the sdk */
 	public static let defaultLogger = DefaultTrackingLogger()
@@ -47,8 +27,7 @@ public class WebtrekkTracking {
     internal static var tracker: Tracker? = nil
     
      /** Get main shared Webtrekk instance. */
-    public static func instance() -> Tracker
-    {
+    public static func instance() -> Tracker {
         if tracker == nil {
             tracker = DefaultTracker()
         }
@@ -57,13 +36,14 @@ public class WebtrekkTracking {
     }
     
     /** return true if Webtrekk is already initialized. */
-    public static func isInitialized()->Bool{
+    public static func isInitialized() -> Bool {
         
         guard self.tracker != nil else {
             return false
         }
         
         let tracker = self.tracker as! DefaultTracker
+        
         return tracker.isInitialited
     }
 
@@ -71,8 +51,7 @@ public class WebtrekkTracking {
      Optional parameter "configurationFile" is used to define location of webtrekk configuration file.
      In case this parameter is nil the default location is in main bundle with name webtrekk_config 
      and xml extension*/
-    public static func initTrack(_ configurationFile: URL? = nil) throws
-    {
+    public static func initTrack(_ configurationFile: URL? = nil) throws {
         guard let confFile = configurationFile ?? Bundle.main.url(forResource: "webtrekk_config", withExtension: "xml") else {
             throw TrackerError(message: "Cannot locate webtrekk_config.xml in '\(Bundle.main.bundlePath)'. Either place the file there or use WebtrekkTracking.createTracker(configurationFile:) to specify the file's location.")
         }
@@ -104,8 +83,7 @@ public class WebtrekkTracking {
             tracker.initTimers()
             
             return tracker
-		}
-		catch let error {
+		} catch let error {
 			throw TrackerError(message: "Cannot load Webtrekk configuration file '\(configurationFile)': \(error)")
 		}
 	}
@@ -115,7 +93,6 @@ public class WebtrekkTracking {
 		get { return DefaultTracker.isOptedOut }
 		set { DefaultTracker.isOptedOut = newValue }
 	}
-
 
 	/** Returns a `PageTracker` for a corresponding `UIViewController` or WKInterfaceController for watchOS which were configured by the xml. */
     #if !os(watchOS)
@@ -132,7 +109,6 @@ public class WebtrekkTracking {
         
         return viewController.automaticTracker
     }
-    
     #endif
     
     #if os(iOS)
@@ -164,7 +140,5 @@ public class WebtrekkTracking {
         
         return configurationLocal
     }
-
     #endif
-
 }

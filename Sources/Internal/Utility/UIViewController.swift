@@ -2,7 +2,6 @@ import UIKit
 
 private var hookIntoLifecycleToken = Int()
 
-
 internal extension UIViewController {
 
 	private struct AssociatedKeys {
@@ -11,10 +10,8 @@ internal extension UIViewController {
 		fileprivate static var automaticTracker = UInt8()
 	}
 
-
 	@nonobjc
 	private static var swizzled = false
-
 
 	@nonobjc
 	internal var applicationDidBecomeActiveObserver: NSObjectProtocol? {
@@ -22,12 +19,10 @@ internal extension UIViewController {
 		set { objc_setAssociatedObject(self, &AssociatedKeys.applicationDidBecomeActiveObserver, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
 	}
 
-
 	@nonobjc
 	private func applicationDidBecomeActiveWhileAppeared() {
 		automaticTracker.trackPageView()
 	}
-
 
 	@nonobjc
 	internal var automaticTracker: PageTracker {
@@ -37,7 +32,6 @@ internal extension UIViewController {
 			return tracker
 		}()
 	}
-
 
 	@nonobjc
 	internal static func setUpAutomaticTracking() {
@@ -51,7 +45,6 @@ internal extension UIViewController {
 		let _ = swizzleMethod(ofType: UIViewController.self, fromSelector: #selector(viewWillDisappear(_:)), toSelector: #selector(swizzled_viewWillDisappear(_:)))
 	}
 
-
 	@objc(Webtrekk_viewDidAppear:)
 	private dynamic func swizzled_viewDidAppear(_ animated: Bool) {
 		self.swizzled_viewDidAppear(animated)
@@ -64,7 +57,6 @@ internal extension UIViewController {
 			}
 		}
 	}
-
 
 	@objc(Webtrekk_viewWillDisappear:)
 	private dynamic func swizzled_viewWillDisappear(_ animated: Bool) {

@@ -6,7 +6,6 @@ internal struct Environment {
 	internal static var advertisingIdentifierManager: ASIdentifierManager? = {
 		let selector = #selector(ASIdentifierManager.sharedManager)
 
-        
         guard let klass = NSClassFromString("ASIdentifierManager"),
               let identifierManagerClassType = klass as AnyObject as? NSObjectProtocol else {
             return nil
@@ -17,14 +16,13 @@ internal struct Environment {
 		}
 
 		let sharedManager = identifierManagerClassType.perform(selector).takeUnretainedValue()
+        
 		return unsafeBitCast(sharedManager, to: ASIdentifierManager.self)
 	}()
-
 
 	internal static let appVersion: String? = {
 		return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
 	}()
-
 
 	internal static let deviceModelString: String = {
         
@@ -40,7 +38,10 @@ internal struct Environment {
         
         let machineMirror = Mirror(reflecting: systemInfo.machine)
         let identifier = machineMirror.children.reduce("") { identifier, element in
-            guard let value = element.value as? Int8 , value != 0 else { return identifier }
+            guard let value = element.value as? Int8 , value != 0 else {
+                return identifier
+            }
+            
             return identifier + String(UnicodeScalar(UInt8(value)))
         }
         
@@ -48,7 +49,6 @@ internal struct Environment {
         
         #endif
 	}()
-
 
 	internal static let operatingSystemName: String = {
 		#if os(iOS)
@@ -62,13 +62,12 @@ internal struct Environment {
 		#endif
 	}()
 
-
 	internal static let operatingSystemVersionString: String = {
 		let version = ProcessInfo().operatingSystemVersion
+        
 		if version.patchVersion == 0 {
 			return "\(version.majorVersion).\(version.minorVersion)"
-		}
-		else {
+		} else {
 			return "\(version.majorVersion).\(version.minorVersion).\(version.patchVersion)"
 		}
 	}()

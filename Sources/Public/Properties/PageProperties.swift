@@ -1,25 +1,4 @@
-//The MIT License (MIT)
-//
-//Copyright (c) 2016 Webtrekk GmbH
-//
-//Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the
-//"Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish,
-//distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject
-//to the following conditions:
-//
-//The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-//
-//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-//MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-//CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-//SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
-//  Created by Widgetlabs
-//
-
-
 import UIKit
-
 
 public struct PageProperties {
 
@@ -50,7 +29,6 @@ public struct PageProperties {
         setUpURL(url: url)
 	}
 
-
 	public init(
 		viewControllerType: AnyObject.Type?,
 		details: [Int: TrackingValue]? = nil,
@@ -64,8 +42,7 @@ public struct PageProperties {
 		setUpURL(url: url)
 		self.viewControllerType = viewControllerType
 	}
-    
-    
+
     internal func merged(over other: PageProperties) -> PageProperties {
 		var new = self
 		new.details = details.merged(over: other.details)
@@ -78,12 +55,11 @@ public struct PageProperties {
 	}
     
     mutating private func setUpURL(url: String?){
-    
-    if isURLCanBeSet(url) {
-        self.url = url
-    } else {
-        printInvalidURL(url!)
-    }
+        if isURLCanBeSet(url) {
+            self.url = url
+        } else {
+            printInvalidURL(url!)
+        }
     }
     
     fileprivate func isURLCanBeSet(_ url: String?) -> Bool {

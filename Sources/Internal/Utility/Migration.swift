@@ -1,6 +1,5 @@
 import Foundation
 
-
 internal struct Migration {
 
 	internal let appVersion: String?
@@ -9,7 +8,6 @@ internal struct Migration {
 	internal let isSampling: Bool?
 	internal let requestQueue: [URL]?
 	internal let samplingRate: Int?
-
 
 	internal static func migrateFromLibraryV3(webtrekkId: String) -> Migration? {
 		#if os(iOS)
@@ -32,7 +30,6 @@ internal struct Migration {
 			let appVersionFileV2 = documentDirectory?.appendingPathComponent("webtrekk-app-version")
 			let appVersionFileV3 = libraryDirectory?.appendingPathComponent("webtrekk-app-version")
 
-
 			defer {
 				let files = [everIdFileV2, everIdFileV3, requestQueueFileV2, requestQueueFileV3, samplingFileV2, samplingFileV3, appVersionFileV2, appVersionFileV3].filterNonNil()
 				for file in files where fileManager.itemExistsAtURL(file) {
@@ -47,54 +44,51 @@ internal struct Migration {
 				userDefaults.removeObject(forKey: "Webtrekk.optedOut")
 			}
 
-
 			let everId: String
             var encoding = String.Encoding.utf8
+            
 			if let file = everIdFileV3, let _everId = (try? String(contentsOf: file, usedEncoding: &encoding))?.nonEmpty {
 				everId = _everId
-			}
-			else if let file = everIdFileV2, let _everId = (try? String(contentsOf: file, usedEncoding: &encoding))?.nonEmpty {
+			} else if let file = everIdFileV2, let _everId = (try? String(contentsOf: file, usedEncoding: &encoding))?.nonEmpty {
 				everId = _everId
-			}
-			else {
+			} else {
 				return nil
 			}
-
 
 			let requestQueue: [URL]?
 			if let file = requestQueueFileV3, let _requestQueue = NSKeyedUnarchiver.unarchive(file: file) as? [String] {
 				requestQueue = _requestQueue.map({ URL(string: $0) }).filterNonNil()
-			}
-			else if let file = requestQueueFileV2, let _requestQueue = NSKeyedUnarchiver.unarchive(file: file) as? [String] {
+			} else if let file = requestQueueFileV2, let _requestQueue = NSKeyedUnarchiver.unarchive(file: file) as? [String] {
 				requestQueue = _requestQueue.map({ URL(string: $0) }).filterNonNil()
-			}
-			else {
+			} else {
 				requestQueue = nil
 			}
 
 			let isSampling: Bool?
 			let samplingRate: Int?
-			if let file = samplingFileV3, let string = try? String(contentsOf: file, usedEncoding: &encoding), let (_isSampling, _samplingRate) = parseSampling(string) {
+			if let file = samplingFileV3,
+               let string = try? String(contentsOf: file, usedEncoding: &encoding),
+               let (_isSampling, _samplingRate) = parseSampling(string) {
 				isSampling = _isSampling
 				samplingRate = _samplingRate
-			}
-			else if let file = samplingFileV2, let string = try? String(contentsOf: file, usedEncoding: &encoding), let (_isSampling, _samplingRate) = parseSampling(string) {
-				isSampling = _isSampling
-				samplingRate = _samplingRate
-			}
-			else {
+			} else if let file = samplingFileV2,
+                let string = try? String(contentsOf: file, usedEncoding: &encoding),
+                let (_isSampling, _samplingRate) = parseSampling(string) {
+                    isSampling = _isSampling
+                    samplingRate = _samplingRate
+			} else {
 				isSampling = nil
 				samplingRate = nil
 			}
 
 			let appVersion: String?
-			if let file = appVersionFileV3, let _appVersion = (try? String(contentsOf: file, usedEncoding:  &encoding))?.nonEmpty {
+			if let file = appVersionFileV3,
+               let _appVersion = (try? String(contentsOf: file, usedEncoding:  &encoding))?.nonEmpty {
 				appVersion = _appVersion
-			}
-			else if let file = appVersionFileV2, let _appVersion = (try? String(contentsOf: file, usedEncoding: &encoding))?.nonEmpty {
-				appVersion = _appVersion
-			}
-			else {
+			} else if let file = appVersionFileV2,
+                let _appVersion = (try? String(contentsOf: file, usedEncoding: &encoding))?.nonEmpty {
+                    appVersion = _appVersion
+			} else {
 				appVersion = nil
 			}
 
@@ -113,20 +107,21 @@ internal struct Migration {
 		#endif
 	}
 
-
 	fileprivate static func parseSampling(_ string: String) -> (isSampling: Bool, samplingRate: Int)? {
 		let components = string.components(separatedBy: "|")
+        
 		guard components.count == 2 else {
 			return nil
 		}
-		guard let isSampling = Int(components[0]), let samplingRate = Int(components[1]) , isSampling == 1 || isSampling == 0 else {
+        
+		guard let isSampling = Int(components[0]),
+              let samplingRate = Int(components[1]) , isSampling == 1 || isSampling == 0 else {
 			return nil
 		}
-
+        
 		return (isSampling: isSampling == 1, samplingRate: samplingRate)
 	}
 }
-
 
 extension Migration: CustomStringConvertible {
 
@@ -141,8 +136,6 @@ extension Migration: CustomStringConvertible {
 			+ ")"
 	}
 }
-
-
 
 extension NSKeyedUnarchiver {
 

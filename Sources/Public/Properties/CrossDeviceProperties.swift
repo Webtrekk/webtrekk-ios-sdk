@@ -1,23 +1,3 @@
-//The MIT License (MIT)
-//
-//Copyright (c) 2016 Webtrekk GmbH
-//
-//Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the
-//"Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish,
-//distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject
-//to the following conditions:
-//
-//The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-//
-//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-//MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-//CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-//SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
-//  Created by Widgetlabs
-//
-
-
 /** Enhance tracking by adding properties to track users across different devices. */
 public struct CrossDeviceProperties {
 
@@ -33,7 +13,6 @@ public struct CrossDeviceProperties {
 	public var windowsId: String?
 	// custom CDB parameters, valid keys are 1 to 29:
     public var custom: [Int: String]?
-
 
 	public init(
 		address: AnonymizableValue<Address>? = nil,
@@ -60,7 +39,6 @@ public struct CrossDeviceProperties {
 		self.windowsId = windowsId
 		self.custom = custom
         }
-
 
     init (_ json: [String: Any?]) {
         self.androidId = json["androidId"] as? String
@@ -106,7 +84,6 @@ public struct CrossDeviceProperties {
             }
         }
     }
-    
 
     func isEmpty() -> Bool {
         return address == nil &&
@@ -151,8 +128,7 @@ public struct CrossDeviceProperties {
             self.streetNumber = json["streetNumber"] as? String
             self.zipCode = json["zipCode"] as? String
         }
-        
-        
+
         func toJSONObj() -> [String: Any?] {
             let jsonObj: [String: Any?] = [
                 "firstName": firstName,
@@ -165,7 +141,6 @@ public struct CrossDeviceProperties {
         }
 	}
 
-	
     // merges other CDB properties into it (the other properties have lower priority during merging)
 	internal func merged(over other: CrossDeviceProperties) -> CrossDeviceProperties {
 		return CrossDeviceProperties(
@@ -183,9 +158,7 @@ public struct CrossDeviceProperties {
 		)
 	}
 
-    
     private func toJSONObj() -> [String: Any?] {
-    
         var jsonObj: [String: Any?] = [
             "address": address?.toJSONObj(),
             "androidId": androidId,
@@ -209,27 +182,21 @@ public struct CrossDeviceProperties {
         }
         return jsonObj
     }
-    
-    
-    
+
     func saveToDevice() {
-        
         let cdbJsonObject = toJSONObj()
-        
         let valid = JSONSerialization.isValidJSONObject(cdbJsonObject)
+        
         if valid {
             if let jsonData = try? JSONSerialization.data(withJSONObject: cdbJsonObject, options: []) {
                 UserDefaults.standardDefaults.child(namespace: "webtrekk").set(key: DefaultsKeys.crossDeviceProperties, to: jsonData)
             } else {
                 logError("Cross device bridge information couldn't be serialized")
             }
-        }
-        else {
+        } else {
             logError("Cross device bridge information wasn't a valid JSON")
         }
     }
-    
-    
 
     static func loadFromDevice() -> CrossDeviceProperties? {
         
@@ -242,5 +209,4 @@ public struct CrossDeviceProperties {
         
         return nil
     }
-    
 }

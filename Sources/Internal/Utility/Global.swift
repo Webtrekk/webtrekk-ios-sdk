@@ -1,8 +1,6 @@
 import Foundation
 
-
 internal typealias Closure = () -> Void
-
 
 internal func checkIsOnMainThread(function: StaticString = #function, file: StaticString = #file, line: UInt = #line) {
 	guard !Thread.isMainThread else {
@@ -17,26 +15,21 @@ internal func checkIsOnMainThread(function: StaticString = #function, file: Stat
 	logError("[\(file):\(line)] \(function) must be called on the main thread!")
 }
 
-
 internal func logDebug(_ message: @autoclosure () -> String) {
 	WebtrekkTracking.logger.logDebug(message)
 }
-
 
 internal func logError(_ message: @autoclosure () -> String) {
 	WebtrekkTracking.logger.logError(message)
 }
 
-
 internal func logInfo(_ message: @autoclosure () -> String) {
 	WebtrekkTracking.logger.logInfo(message)
 }
 
-
 internal func logWarning(_ message: @autoclosure () -> String) {
 	WebtrekkTracking.logger.logWarning(message)
 }
-
 
 internal func onMainQueue(synchronousIfPossible: Bool = false, closure: @escaping Closure) {
 	guard !synchronousIfPossible || !Thread.isMainThread else {

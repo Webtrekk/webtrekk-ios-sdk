@@ -1,16 +1,11 @@
 import Foundation
 
-
 internal protocol Mergeable {
-
-	
 	func merged(over other: Self) -> Self
 }
 
-
 internal extension Mergeable {
 
-	
 	internal func merged(over other: Self?) -> Self {
 		guard let other = other else {
 			return self
@@ -23,7 +18,6 @@ internal extension Mergeable {
 
 internal extension _Optional where Wrapped: Mergeable {
 
-	
 	internal func merged(over other: Wrapped?) -> Wrapped? {
 		guard let value = value else {
 			return other

@@ -1,9 +1,7 @@
 import Foundation
 
-
 internal extension String {
 
-	
 	internal func firstMatchForRegularExpression(_ regularExpression: NSRegularExpression) -> [String]? {
 		guard let match = regularExpression.firstMatch(in: self, options: [], range: NSMakeRange(0, utf16.count)) else {
 			return nil
@@ -11,8 +9,6 @@ internal extension String {
 
         return (0 ..< match.numberOfRanges).map { String(self[match.range(at: $0).rangeInString(self)!]) }
 	}
-
-
 	
 	internal func firstMatchForRegularExpression(_ regularExpressionPattern: String) -> [String]? {
 		do {
@@ -30,12 +26,11 @@ internal extension String {
        do {
             let regularExpression = try NSRegularExpression(pattern: expression, options: [])
             return regularExpression.numberOfMatches(in: self, options: [], range: NSMakeRange(0, utf16.count)) == 1
-       }catch let error {
+       } catch let error {
             WebtrekkTracking.defaultLogger.logError("Error: \(error) for incorrect regular expression: \(expression)")
             return nil
        }
     }
-
 
 	internal var nonEmpty: String? {
 		if isEmpty {
@@ -44,7 +39,6 @@ internal extension String {
 
 		return self
 	}
-
 
 	internal var simpleDescription: String {
 		return "\"\(self)\""
@@ -95,7 +89,6 @@ internal extension String {
         return self.addingPercentEncoding(withAllowedCharacters: csValue)!
     }
 }
-
 
 internal extension _Optional where Wrapped == String {
 

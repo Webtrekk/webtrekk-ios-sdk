@@ -1,6 +1,5 @@
 import Foundation
 
-
 internal extension Timer {
 
 	@nonobjc
@@ -8,8 +7,6 @@ internal extension Timer {
 		return scheduledTimer(timeInterval: timeInterval, target: timerHandler, selector: #selector(TimerHandler.handle(_:)), userInfo: StrongReference(closure), repeats: repeats)
 	}
 }
-
-
 
 private let timerHandler = TimerHandler()
 
