@@ -95,3 +95,9 @@ pod install
 # 'Examples.xcworkspace' is the file you'll use from now on
 open Examples.xcworkspace
 ```
+
+License
+=======
+
+See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).
+
