@@ -1,5 +1,5 @@
 public class GlobalProperties: BaseProperties {
-	
+
 	public var crossDeviceProperties: CrossDeviceProperties
 	public var variables: [String : String]
 
@@ -22,7 +22,7 @@ public class GlobalProperties: BaseProperties {
                    mediaProperties: mediaProperties, pageProperties: pageProperties,
                    sessionDetails: sessionDetails, userProperties: userProperties)
 	}
-	
+
 	internal func merged(over other: GlobalProperties) -> GlobalProperties {
 		let global = GlobalProperties(
 			actionProperties:        actionProperties.merged(over: other.actionProperties),
@@ -36,7 +36,7 @@ public class GlobalProperties: BaseProperties {
 			userProperties:          userProperties.merged(over: other.userProperties),
 			variables:               variables.merged(over: other.variables)
 		)
-        
+
         global.trackingParameters = self.trackingParameters ?? other.trackingParameters
         return global
 	}

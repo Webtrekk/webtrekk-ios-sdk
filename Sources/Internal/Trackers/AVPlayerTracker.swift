@@ -1,7 +1,6 @@
 import AVFoundation
 import ObjectiveC
 
-
 internal final class AVPlayerTracker: NSObject {
 
 	private var itemDidPlayToEndTimeObserver: NSObjectProtocol?
@@ -12,7 +11,6 @@ internal final class AVPlayerTracker: NSObject {
 	private var playerTimeObserver: AnyObject?
 	private var positionTimer: Timer?
 	private var seekCompletionTimer: Timer?
-
 
 	private init(player: AVPlayer, parentTracker: MediaTracker) {
 		checkIsOnMainThread()
@@ -27,7 +25,6 @@ internal final class AVPlayerTracker: NSObject {
 		parent.trackAction(.initialize)
 		updatePlaybackState()
 	}
-
 
 	deinit {
 		if let itemDidPlayToEndTimeObserver = itemDidPlayToEndTimeObserver {
@@ -46,8 +43,7 @@ internal final class AVPlayerTracker: NSObject {
 			case .paused, .pausedOrSeeking, .playing, .seeking:
 				if let time = self.player?.currentTime() {
 					parent.mediaProperties.position = CMTimeGetSeconds(time)
-				}
-				else if let lastKnownPlaybackTime = lastKnownPlaybackTime {
+				} else if let lastKnownPlaybackTime = lastKnownPlaybackTime {
 					parent.mediaProperties.position = lastKnownPlaybackTime
 				}
 
@@ -65,7 +61,6 @@ internal final class AVPlayerTracker: NSObject {
 		}
 	}
 
-
 	private var _lastKnownPlaybackTime: TimeInterval?
 	private var lastKnownPlaybackTime: TimeInterval? {
 		checkIsOnMainThread()
@@ -76,7 +71,6 @@ internal final class AVPlayerTracker: NSObject {
 
 		return _lastKnownPlaybackTime
 	}
-
 
 	fileprivate func onPlayerDeinit() {
 		onMainQueue(synchronousIfPossible: true) {
@@ -89,7 +83,6 @@ internal final class AVPlayerTracker: NSObject {
 			self.updatePlaybackState()
 		}
 	}
-
 
 	private func setUpObservers(player: AVPlayer) {
 		checkIsOnMainThread()
@@ -139,13 +132,11 @@ internal final class AVPlayerTracker: NSObject {
 		} as AnyObject?
 	}
 
-
 	internal static func track(player: AVPlayer, with tracker: MediaTracker) {
 		checkIsOnMainThread()
 
 		player.trackers.add(AVPlayerTracker(player: player, parentTracker: tracker))
 	}
-
 
 	private func updateMediaProperties() {
 		checkIsOnMainThread()
@@ -154,7 +145,7 @@ internal final class AVPlayerTracker: NSObject {
 			return
 		}
 
-		if let bandwidth = item.accessLog()?.events.last?.indicatedBitrate , bandwidth >= 1 {
+		if let bandwidth = item.accessLog()?.events.last?.indicatedBitrate, bandwidth >= 1 {
 			parent.mediaProperties.bandwidth = bandwidth
 		}
 
@@ -170,7 +161,6 @@ internal final class AVPlayerTracker: NSObject {
 		parent.mediaProperties.soundIsMuted = abs(volume) < 0.000001
 		parent.mediaProperties.soundVolume = Double(volume)
 	}
-
 
 	private func updatePlaybackState() {
 		checkIsOnMainThread()
@@ -190,18 +180,17 @@ internal final class AVPlayerTracker: NSObject {
 		}
 	}
 
-
 	private func updatePositionTimer() {
 		checkIsOnMainThread()
 
 		if playbackState == .playing {
 			if positionTimer == nil {
-                if #available(iOS 10.0, *) , #available(tvOS 10.0, *)  {
+                if #available(iOS 10.0, *), #available(tvOS 10.0, *) {
                     positionTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) {_ in
                         guard self.playbackState == .playing else {
                             return
                         }
-                        
+
                         self.updateMediaProperties()
                         self.parent.trackAction(.position)
                     }
@@ -209,15 +198,13 @@ internal final class AVPlayerTracker: NSObject {
                     // Fallback on earlier versions
                 }
 			}
-		}
-		else {
+		} else {
 			if let timer = positionTimer {
 				timer.invalidate()
 				positionTimer = nil
 			}
 		}
 	}
-
 
 	private func updateToPlaybackState(_ playbackState: PlaybackState) {
 		checkIsOnMainThread()
@@ -264,8 +251,6 @@ internal final class AVPlayerTracker: NSObject {
 		updatePositionTimer()
 	}
 
-
-
 	private enum PlaybackState {
 
 		case finished
@@ -277,8 +262,6 @@ internal final class AVPlayerTracker: NSObject {
 	}
 }
 
-
-
 fileprivate extension AVPlayer {
 
 	fileprivate struct AssociatedKeys {
@@ -286,14 +269,11 @@ fileprivate extension AVPlayer {
 		fileprivate static var trackers = UInt8()
 	}
 
-
-
 	fileprivate var isPlaying: Bool {
 		checkIsOnMainThread()
 
 		return abs(rate) >= 0.000001
 	}
-
 
 	fileprivate var trackers: Trackers {
 		checkIsOnMainThread()
@@ -304,8 +284,6 @@ fileprivate extension AVPlayer {
 			return trackers
 		}()
 	}
-
-
 
 	fileprivate final class Trackers {
 

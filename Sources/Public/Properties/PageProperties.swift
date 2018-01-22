@@ -14,7 +14,7 @@ public struct PageProperties {
             }
         }
     }
-	
+
     public init(
 		name: String?,
 		details: [Int: TrackingValue]? = nil,
@@ -53,19 +53,19 @@ public struct PageProperties {
 		new.url = url ?? other.url
 		return new
 	}
-    
-    mutating private func setUpURL(url: String?){
+
+    mutating private func setUpURL(url: String?) {
         if isURLCanBeSet(url) {
             self.url = url
         } else {
             printInvalidURL(url!)
         }
     }
-    
+
     fileprivate func isURLCanBeSet(_ url: String?) -> Bool {
        return url == nil || url!.isValidURL()
     }
-    
+
     fileprivate func printInvalidURL(_ url: String) {
         WebtrekkTracking.defaultLogger.logError("Invalid URL \(url) for pu parameter")
     }

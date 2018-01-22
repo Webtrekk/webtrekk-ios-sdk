@@ -7,9 +7,9 @@ import UIKit
 #endif
 
 class UIFlowObserver: NSObject {
-    
+
     unowned private let tracker: DefaultTracker
-    
+
     #if !os(watchOS)
     fileprivate let application = UIApplication.shared
     fileprivate var applicationDidBecomeActiveObserver: NSObjectProtocol?
@@ -19,12 +19,10 @@ class UIFlowObserver: NSObject {
     private var backgroundTaskIdentifier = UIBackgroundTaskInvalid
     #endif
 
-
-    
     init(tracker: DefaultTracker) {
         self.tracker = tracker
     }
-    
+
     deinit {
         #if !os(watchOS)
             let notificationCenter = NotificationCenter.default
@@ -39,9 +37,9 @@ class UIFlowObserver: NSObject {
             }
         #endif
     }
-    
-    func setup() -> Bool{
-    
+
+    func setup() -> Bool {
+
         #if !os(watchOS)
             let notificationCenter = NotificationCenter.default
             applicationDidBecomeActiveObserver = notificationCenter.addObserver(forName: NSNotification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil) { [weak self] _ in
@@ -60,13 +58,13 @@ class UIFlowObserver: NSObject {
                 logError("Can't find extension delgate.")
                 return false
             }
-            
+
             // add methods to delegateClass
             let replacedMethods = [#selector(WTapplicationWillResignActive), #selector(WTapplicationWillEnterForeground), #selector(WTapplicationDidEnterBackground), #selector(WTapplicationDidBecomeActive)]
             let extentionOriginalMethodNames = ["applicationWillResignActive", "applicationDidBecomeActive", "applicationDidEnterBackground", "applicationDidBecomeActive"]
-            
+
             for i in 0..<replacedMethods.count {
-                
+
                 guard replaceImplementationFromAnotherClass(toClass: delegateClass, methodChanged: Selector(extentionOriginalMethodNames[i]), fromClass: UIFlowObserver.self, methodAdded: replacedMethods[i]) else {
                     logError("Can't initialize WatchApp setup. See log above for details.")
                     return false
@@ -75,19 +73,17 @@ class UIFlowObserver: NSObject {
             return true
         #endif
     }
-    
-    
+
     internal func applicationDidFinishLaunching() {
         checkIsOnMainThread()
-        
-        let _ = Timer.scheduledTimerWithTimeInterval(15) {
+
+        _ = Timer.scheduledTimerWithTimeInterval(15) {
             self.tracker.updateConfiguration()
         }
     }
 
-    
     @objc dynamic func WTapplicationDidBecomeActive() {
-    
+
     #if os(watchOS)
         defer {
             if class_respondsToSelector(object_getClass(self), #selector(WTapplicationDidBecomeActive)) {
@@ -99,26 +95,25 @@ class UIFlowObserver: NSObject {
     #else
         let tracker = self.tracker
     #endif
-    
+
     checkIsOnMainThread()
-    
+
     tracker.startRequestManager()
-    
+
     #if !os(watchOS)
         finishBackroundTask(requestManager: tracker.requestManager)
     #endif
     }
-    
-    
+
     #if !os(watchOS)
-    
-    func finishBackroundTask(requestManager: RequestManager?){
-    
+
+    func finishBackroundTask(requestManager: RequestManager?) {
+
     guard let requestManager = requestManager else {
             WebtrekkTracking.logger.logError("can't finish background task requestManager isn't initialized")
             return
         }
-    
+
         if requestManager.backgroundTaskIdentifier != UIBackgroundTaskInvalid {
             application.endBackgroundTask(requestManager.backgroundTaskIdentifier)
             requestManager.backgroundTaskIdentifier = UIBackgroundTaskInvalid
@@ -134,20 +129,20 @@ class UIFlowObserver: NSObject {
             }
         }
         let tracker = WebtrekkTracking.instance() as! DefaultTracker
-        
+
         if let started = tracker.requestManager?.started, started {
             tracker.stopRequestManager()
         }
-        
+
         tracker.isApplicationActive = false
     }
-    
+
     #endif
-    
+
     @objc dynamic func WTapplicationWillResignActive() {
-        
+
         WebtrekkTracking.defaultLogger.logDebug("applicationWillResignActive is called")
-        
+
         #if os(watchOS)
             defer {
                 if class_respondsToSelector(object_getClass(self), #selector(WTapplicationWillResignActive)) {
@@ -158,15 +153,15 @@ class UIFlowObserver: NSObject {
         #else
         let tracker = self.tracker
         #endif
-       
+
         checkIsOnMainThread()
-        
+
         guard tracker.checkIfInitialized() else {
             return
         }
-        
+
         tracker.initHibertationDate()
-        
+
         #if !os(watchOS)
             if let requestManager = self.tracker.requestManager, requestManager.backgroundTaskIdentifier == UIBackgroundTaskInvalid,
                self.backgroundTaskIdentifier == UIBackgroundTaskInvalid, requestManager.isPending {
@@ -174,7 +169,7 @@ class UIFlowObserver: NSObject {
                     guard let `self` = self else {
                         return
                     }
-                    
+
                     if !requestManager.started || !requestManager.finishing {
                         self.application.endBackgroundTask(self.backgroundTaskIdentifier)
                     }
@@ -182,13 +177,13 @@ class UIFlowObserver: NSObject {
                 }
                 requestManager.backgroundTaskIdentifier = self.backgroundTaskIdentifier
             }
-            
+
             self.tracker.stopRequestManager()
         #endif
     }
-    
+
     @objc dynamic func WTapplicationWillEnterForeground() {
-        
+
         #if os(watchOS)
             defer {
                 if class_respondsToSelector(object_getClass(self), #selector(WTapplicationWillEnterForeground)) {
@@ -199,9 +194,9 @@ class UIFlowObserver: NSObject {
         #else
             let tracker = self.tracker
         #endif
-        
+
         checkIsOnMainThread()
-        
+
         guard tracker.checkIfInitialized() else {
             return
         }

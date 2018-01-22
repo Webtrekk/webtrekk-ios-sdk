@@ -1,7 +1,7 @@
 import Foundation
 
 public protocol Recommendation: class {
-    
+
     /**
      * returns recommendation URL configured for this product. List of recommendations are defined in
      * <recommendations> tag in config XML. Recommendation are returned as URL based on provided key value. If key isn't defined it returns nil*/
@@ -35,7 +35,7 @@ public protocol RecommendationProduct {
     var values: RecommendationValuesMap {get}
 }
 
-public struct RecommendationProductValue{
+public struct RecommendationProductValue {
     public let type: String
     public let value: String
 }

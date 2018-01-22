@@ -22,9 +22,9 @@ internal struct XmlElement {
 internal final class XmlParser {
 
 	internal func parse(xml data: Data) throws -> XmlElement {
-		
+
         let parser = try ActualParser(xml: data)
-        
+
         return parser.rootElement
 	}
 }
@@ -51,7 +51,7 @@ private final class ActualParser: NSObject {
 		if let error = self.error {
 			throw error
 		}
-        
+
         if self.rootElement == nil {
             throw TrackerError(message: "Configuration xml is invalid. Its probably don't have xml content to parce")
         }

@@ -5,12 +5,11 @@ public struct ActionProperties {
 
 	public init(
 		name: String?,
-		details: [Int: TrackingValue]? = nil)
-	{
+		details: [Int: TrackingValue]? = nil) {
 		self.details = details
 		self.name = name
 	}
-	
+
 	internal func merged(over other: ActionProperties) -> ActionProperties {
 		return ActionProperties(
 			name:    name ?? other.name,

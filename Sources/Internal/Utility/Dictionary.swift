@@ -17,7 +17,7 @@ internal extension Dictionary {
 	}
 }
 
-internal extension _Optional where Wrapped == Dictionary<Int, TrackingValue> {
+internal extension _Optional where Wrapped == [Int: TrackingValue] {
 
 	internal func merged(over other: Wrapped?) -> Wrapped? {
 		guard let value = value else {
@@ -28,13 +28,13 @@ internal extension _Optional where Wrapped == Dictionary<Int, TrackingValue> {
 	}
 }
 
-internal extension _Optional where Wrapped == Dictionary<Int, String> {
-    
+internal extension _Optional where Wrapped == [Int: String] {
+
     internal func merged(over other: Wrapped?) -> Wrapped? {
         guard let value = value else {
             return other
         }
-        
+
         return value.merged(over: other)
     }
 }

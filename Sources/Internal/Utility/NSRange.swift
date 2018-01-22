@@ -33,7 +33,7 @@ internal extension NSRange {
         guard let toPosition = index.samePosition(in: string.utf16) else {return -1}
 		return string.utf16.distance(from: string.utf16.startIndex, to: toPosition)
 	}
-	
+
 	internal func rangeInString(_ string: String) -> Range<String.Index>? {
 		if let startIndex = startIndexInString(string),
            let endIndex = endIndexInString(string) {

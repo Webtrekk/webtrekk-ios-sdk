@@ -3,8 +3,7 @@ public class PageViewEvent:
 	TrackingEventWithEcommerceProperties,
 	TrackingEventWithPageProperties,
 	TrackingEventWithSessionDetails,
-	TrackingEventWithUserProperties
-{
+	TrackingEventWithUserProperties {
 
 	public var advertisementProperties: AdvertisementProperties
 	public var ecommerceProperties: EcommerceProperties

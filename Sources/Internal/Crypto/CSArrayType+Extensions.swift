@@ -36,7 +36,7 @@ public extension CSArrayType where Iterator.Element == UInt8 {
             return $0 + s
         }
     }
-    
+
     public func md5() -> [Iterator.Element] {
         return Digest.md5(cs_arrayValue())
     }
