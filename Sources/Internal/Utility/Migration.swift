@@ -35,8 +35,7 @@ internal struct Migration {
 				for file in files where fileManager.itemExistsAtURL(file) {
 					do {
 						try fileManager.removeItem(at: file)
-					}
-					catch let error {
+					} catch let error {
 						logWarning("Cannot remove \(file) of previous Webtrekk Library version: \(error)")
 					}
 				}
@@ -46,7 +45,7 @@ internal struct Migration {
 
 			let everId: String
             var encoding = String.Encoding.utf8
-            
+
 			if let file = everIdFileV3, let _everId = (try? String(contentsOf: file, usedEncoding: &encoding))?.nonEmpty {
 				everId = _everId
 			} else if let file = everIdFileV2, let _everId = (try? String(contentsOf: file, usedEncoding: &encoding))?.nonEmpty {
@@ -109,16 +108,16 @@ internal struct Migration {
 
 	fileprivate static func parseSampling(_ string: String) -> (isSampling: Bool, samplingRate: Int)? {
 		let components = string.components(separatedBy: "|")
-        
+
 		guard components.count == 2 else {
 			return nil
 		}
-        
+
 		guard let isSampling = Int(components[0]),
-              let samplingRate = Int(components[1]) , isSampling == 1 || isSampling == 0 else {
+              let samplingRate = Int(components[1]), isSampling == 1 || isSampling == 0 else {
 			return nil
 		}
-        
+
 		return (isSampling: isSampling == 1, samplingRate: samplingRate)
 	}
 }
@@ -146,7 +145,7 @@ extension NSKeyedUnarchiver {
 
         return unarchive(data: data)
 	}
-    
+
     static func unarchive(data: Data) -> AnyObject? {
             return unarchiveObject(with: data) as AnyObject?
     }

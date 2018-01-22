@@ -4,20 +4,18 @@ import UIKit
 	import AVFoundation
 #endif
 
-
 internal final class DefaultPageTracker: PageTracker {
 
 	internal typealias Handler = ActionEventHandler & MediaEventHandler & PageViewEventHandler
 
 	fileprivate let handler: Handler
-	
+
 	internal var advertisementProperties = AdvertisementProperties(id: nil)
 	internal var ecommerceProperties = EcommerceProperties()
 	internal var pageProperties: PageProperties
 	internal var sessionDetails = [Int: TrackingValue]()
     internal var userProperties = UserProperties(birthday: nil)
 	internal var variables = [String : String]()
-
 
 	internal init(handler: Handler, pageName: String) {
 		checkIsOnMainThread()
@@ -27,7 +25,6 @@ internal final class DefaultPageTracker: PageTracker {
 		self.pageProperties = PageProperties(name: pageName)
 	}
 
-
 	internal init(handler: Handler, viewControllerType: AnyObject.Type) {
 		checkIsOnMainThread()
 
@@ -36,20 +33,17 @@ internal final class DefaultPageTracker: PageTracker {
 		self.pageProperties = PageProperties(viewControllerType: viewControllerType)
 	}
 
-
 	internal func trackAction(_ event: ActionEvent) {
 		checkIsOnMainThread()
 
 		handleEvent(event)
 	}
 
-
 	internal func trackMediaAction(_ event: MediaEvent) {
 		checkIsOnMainThread()
 
 		handleEvent(event)
 	}
-
 
 	internal func trackPageView() {
 		checkIsOnMainThread()
@@ -63,7 +57,6 @@ internal final class DefaultPageTracker: PageTracker {
 			variables:               variables
 		))
 	}
-
 
 	internal func trackPageView(_ pageViewEvent: PageViewEvent) {
 		checkIsOnMainThread()
@@ -79,14 +72,11 @@ internal final class DefaultPageTracker: PageTracker {
 		))
 	}
 
-
-	
 	internal func trackerForMedia(_ mediaName: String) -> MediaTracker {
 		checkIsOnMainThread()
 
 		return DefaultMediaTracker(handler: self, mediaName: mediaName, pageName: nil, mediaProperties: nil, variables: nil)
 	}
-
 
 	#if !os(watchOS)
 	internal func trackerForMedia(_ mediaName: String, automaticallyTrackingPlayer player: AVPlayer) -> MediaTracker {
@@ -99,7 +89,6 @@ internal final class DefaultPageTracker: PageTracker {
 	}
 	#endif
 }
-
 
 extension DefaultPageTracker: ActionEventHandler {
 
@@ -117,7 +106,6 @@ extension DefaultPageTracker: ActionEventHandler {
 		handler.handleEvent(event)
 	}
 }
-
 
 extension DefaultPageTracker: MediaEventHandler {
 

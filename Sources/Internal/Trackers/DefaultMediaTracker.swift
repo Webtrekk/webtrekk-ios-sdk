@@ -1,6 +1,5 @@
 import UIKit
 
-
 internal final class DefaultMediaTracker: MediaTracker {
 
 	private let handler: MediaEventHandler
@@ -10,10 +9,9 @@ internal final class DefaultMediaTracker: MediaTracker {
     internal var variables : [String : String]
 	internal var viewControllerType: AnyObject.Type?
 
-
     internal init(handler: MediaEventHandler, mediaName: String, pageName: String?, mediaProperties: MediaProperties?, variables: [String : String]?) {
         checkIsOnMainThread()
-        
+
         self.handler = handler
         self.mediaProperties = mediaProperties ?? MediaProperties(name: mediaName)
         self.pageName = pageName

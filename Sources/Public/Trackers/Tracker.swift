@@ -20,29 +20,29 @@ public protocol Tracker: class {
 	func trackMediaAction(_ event: MediaEvent)
 
 	func trackPageView(_ event: PageViewEvent)
-	
+
 	func trackerForMedia(_ mediaName: String, pageName: String, mediaProperties : MediaProperties?, variables : [String : String]?) -> MediaTracker
 
 	#if !os(watchOS)
-	func trackerForMedia(_ mediaName: String, pageName: String, automaticallyTrackingPlayer player: AVPlayer, mediaProperties : MediaProperties?, variables : [String : String]?)-> MediaTracker
+	func trackerForMedia(_ mediaName: String, pageName: String, automaticallyTrackingPlayer player: AVPlayer, mediaProperties : MediaProperties?, variables : [String : String]?) -> MediaTracker
 	#endif
-	
+
 	func trackerForPage(_ pageName: String) -> PageTracker
-    
+
     #if !os(watchOS)
     /** set media code. Media code will be sent with next page request only. Only setter is working. Getter always returns ""*/
     var mediaCode: String { get set }
     #endif
-    
+
     /**this value override pu parameter if it is setup from code in any other way or configuraion xml */
     var pageURL: String? { get set }
-    
+
     /** return recommendation class instance for getting recommendations. Each call returns new instance. Returns nil if SDK isn't initialized*/
     func getRecommendations() -> Recommendation?
-    
+
     /** return exceptoin tracking object that can be used for exception and error tracking in application */
     var exceptionTracker: ExceptionTracker { get }
-    
+
     /** return product list tracker instace for product list tracking */
     var productListTracker: ProductListTracker { get }
 }
@@ -158,13 +158,12 @@ public extension Tracker {
 			variables:               variables
 		))
 	}
-    
-    public func trackCDB(_ crossDeviceProperties: CrossDeviceProperties)
-    {
+
+    public func trackCDB(_ crossDeviceProperties: CrossDeviceProperties) {
         global.crossDeviceProperties = crossDeviceProperties
         trackPageView("CDBPage")
     }
-    
+
     public subscript(key: String) -> String? {
         get {
             return global.variables[key]
@@ -173,22 +172,22 @@ public extension Tracker {
             global.variables[key] = newValue
         }
     }
-    
+
     func trackerForMedia(_ mediaName: String,
                          pageName: String,
                          mediaProperties : MediaProperties? = nil,
                          variables : [String : String]? = nil) -> MediaTracker {
-        
+
         return trackerForMedia(mediaName, pageName: pageName, mediaProperties: mediaProperties, variables: variables)
     }
-    
+
     #if !os(watchOS)
     func trackerForMedia(_ mediaName: String,
                          pageName: String,
                          automaticallyTrackingPlayer player: AVPlayer,
                          mediaProperties : MediaProperties? = nil,
                          variables : [String : String]? = nil) -> MediaTracker {
-        
+
         return trackerForMedia(mediaName, pageName: pageName, automaticallyTrackingPlayer: player, mediaProperties: mediaProperties, variables: variables)
     }
     #endif

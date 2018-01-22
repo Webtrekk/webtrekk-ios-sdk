@@ -15,7 +15,6 @@ internal extension Mergeable {
 	}
 }
 
-
 internal extension _Optional where Wrapped: Mergeable {
 
 	internal func merged(over other: Wrapped?) -> Wrapped? {

@@ -51,7 +51,7 @@ public struct UserProperties {
         self.streetNumber = streetNumber
         self.zipCode = zipCode
     }
-    
+
 	internal func merged(over other: UserProperties) -> UserProperties {
 		 return UserProperties(
 			birthday:             birthday ?? other.birthday,
@@ -83,9 +83,8 @@ public struct UserProperties {
 			self.month = month
 			self.year = year
 		}
-        
-        init?(raw: String?)
-        {
+
+        init?(raw: String?) {
             guard let rawValue = raw else {
                 return nil
             }
@@ -93,7 +92,7 @@ public struct UserProperties {
             if rawValue.isBirthday {
                 let yearIndex = rawValue.index(rawValue.startIndex, offsetBy: 4)
                 self.year = Int(rawValue[..<yearIndex])!
-                
+
                 let monthRange = rawValue.index(rawValue.startIndex, offsetBy: 4)..<rawValue.index(rawValue.startIndex, offsetBy: 6)
                 self.month = Int(rawValue[monthRange])!
                 self.day = Int(rawValue[rawValue.index(rawValue.startIndex, offsetBy: 6)...])!
@@ -103,18 +102,18 @@ public struct UserProperties {
             }
         }
 	}
-	
+
     public enum Gender: Int {
         case male = 1
 		case female
         case unknown
-        
-        init?(raw: String?){
-            
+
+        init?(raw: String?) {
+
             guard let rawValue = raw else {
                 return nil
             }
-            
+
             if rawValue.isGender {
                 self = Gender(rawValue: Int(rawValue)!)!
             } else {
@@ -123,21 +122,20 @@ public struct UserProperties {
             }
         }
  	}
-    
-    
+
     func convertNewsLetter(raw: String) -> Bool {
         return raw == "1"
     }
 
 }
 
-private extension String  {
+private extension String {
     var isBirthday : Bool {
         get {
             return self.count == 8 && self.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil
         }
     }
-    
+
     var isGender: Bool {
         get {
             return self.count == 1 && (self == "1" || self == "2" || self == "3")

@@ -41,8 +41,8 @@ internal extension UIViewController {
 
 		swizzled = true
 
-		let _ = swizzleMethod(ofType: UIViewController.self, fromSelector: #selector(viewDidAppear(_:)), toSelector: #selector(swizzled_viewDidAppear(_:)))
-		let _ = swizzleMethod(ofType: UIViewController.self, fromSelector: #selector(viewWillDisappear(_:)), toSelector: #selector(swizzled_viewWillDisappear(_:)))
+		_ = swizzleMethod(ofType: UIViewController.self, fromSelector: #selector(viewDidAppear(_:)), toSelector: #selector(swizzled_viewDidAppear(_:)))
+		_ = swizzleMethod(ofType: UIViewController.self, fromSelector: #selector(viewWillDisappear(_:)), toSelector: #selector(swizzled_viewWillDisappear(_:)))
 	}
 
 	@objc(Webtrekk_viewDidAppear:)

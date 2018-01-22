@@ -11,7 +11,7 @@ public class BaseProperties {
     public var sessionDetails: [Int: TrackingValue]
     public var userProperties: UserProperties
     var trackingParameters: TrackingParameter?
-    
+
     public init(
         actionProperties: ActionProperties = ActionProperties(name: nil),
         advertisementProperties: AdvertisementProperties = AdvertisementProperties(id: nil),

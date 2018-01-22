@@ -1,7 +1,6 @@
 import Foundation
 import UIKit
 
-
 internal struct TrackerConfiguration {
 
 	/** Allowed values for sendDelay */
@@ -30,12 +29,12 @@ internal struct TrackerConfiguration {
 
 	/** If enabled automatically attaches the current request queue size to each request. */
 	internal var automaticallyTracksRequestQueueSize = true
-    
+
     /** If enabled automatically tracks adclear id. */
     internal var automaticallyTracksAdClearId = false
-    
+
 	/** Url of the remote configuration. */
-	internal var configurationUpdateUrl: URL? = nil
+	internal var configurationUpdateUrl: URL?
 
 	/** Timeout between sending message to server. */
 	internal var maximumSendDelay = TimeInterval(5 * 60)
@@ -67,13 +66,12 @@ internal struct TrackerConfiguration {
 	#endif
 
     //list of recommendations
-    internal var recommendations : [String: URL]? = nil
-	
+    internal var recommendations : [String: URL]?
+
     //error tracking
-    internal var errorLogLevel: Int? = nil
-    
+    internal var errorLogLevel: Int?
+
     internal var globalProperties = GlobalProperties()
-    
 
 	/** 
 	Configuration for a Tracker
@@ -88,7 +86,6 @@ internal struct TrackerConfiguration {
 		self.webtrekkId = webtrekkId
 	}
 
-
 	internal func automaticallyTrackedPageForViewControllerType(_ viewControllerType: AnyObject.Type) -> Page? {
 		let typeName = String(reflecting: viewControllerType)
 
@@ -102,7 +99,6 @@ internal struct TrackerConfiguration {
 
 		/** A Regular Expression to determine a view controller for automatic tracking. */
 		internal var viewControllerTypeNamePattern: NSRegularExpression
-
 
 		/**
 		- Parameter viewControllerTypeNamePattern: A Regular Expression to determine a view controller for automatic tracking.
@@ -127,7 +123,6 @@ internal struct TrackerConfiguration {
                        mediaProperties: mediaProperties ?? MediaProperties(name: nil), pageProperties: pageProperties,
                        sessionDetails: sessionDetails ?? [ : ], userProperties: userProperties ?? UserProperties(birthday: nil))
 		}
-
 
 		fileprivate func matches(viewControllerTypeName: String) -> Bool {
 			return viewControllerTypeNamePattern.rangeOfFirstMatch(in: viewControllerTypeName, options: [], range: NSRange(forString: viewControllerTypeName)).location != NSNotFound

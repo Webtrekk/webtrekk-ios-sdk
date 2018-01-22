@@ -48,36 +48,36 @@ public struct CrossDeviceProperties {
         self.linkedInId = json["linkedInId"] as? String
         self.twitterId = json["twitterId"] as? String
         self.windowsId = json["windowsId"] as? String
-        
+
         // setting the address
-        if let jsonAdress = json["address"] as? [String: Any?]{
+        if let jsonAdress = json["address"] as? [String: Any?] {
             if (jsonAdress["md5"] ?? jsonAdress["sha256"]) != nil {
                 self.address = .hashed(md5: json["md5"] as? String, sha256: json["sha256"] as? String)
             } else if let plain = jsonAdress["plain"] as? [String:Any?] {
                 self.address = .plain(Address(plain))
             }
         }
-        
+
         // setting the emailAddress
-        if let jsonEmailAdress = json["emailAddress"] as? [String: String?]{
+        if let jsonEmailAdress = json["emailAddress"] as? [String: String?] {
             if (jsonEmailAdress["md5"] ?? jsonEmailAdress["sha256"]) != nil {
                 self.emailAddress = .hashed(md5: json["md5"] as? String, sha256: json["sha256"] as? String)
             } else if let plain = jsonEmailAdress["plain"] {
                 self.emailAddress = AnonymizableValue<String>.plain(plain!)
             }
         }
-        
+
         // setting the phoneNumber
-        if let jsonPhoneNumber = json["phoneNumber"] as? [String: String?]{
+        if let jsonPhoneNumber = json["phoneNumber"] as? [String: String?] {
             if (jsonPhoneNumber["md5"] ?? jsonPhoneNumber["sha256"]) != nil {
                 self.phoneNumber = .hashed(md5: jsonPhoneNumber["md5"] as? String, sha256: jsonPhoneNumber["sha256"] as? String)
             } else if let plain = jsonPhoneNumber["plain"] {
                 self.phoneNumber = AnonymizableValue<String>.plain(plain!)
             }
         }
-        
+
         // setting the custom CDB parameters
-        if let jsonCustom = json["custom"] as? [String: String?]{
+        if let jsonCustom = json["custom"] as? [String: String?] {
             self.custom = [:]
             for (key, value) in jsonCustom {
                 self.custom?[Int(key)!] = value
@@ -98,7 +98,7 @@ public struct CrossDeviceProperties {
             windowsId == nil &&
             custom == nil
     }
-    
+
 	public struct Address {
 
 		public var firstName: String?
@@ -120,7 +120,7 @@ public struct CrossDeviceProperties {
 			self.streetNumber = streetNumber
 			self.zipCode = zipCode
 		}
-        
+
         init (_ json: [String: Any?]) {
             self.firstName = json["firstName"] as? String
             self.lastName = json["lastName"] as? String
@@ -171,14 +171,14 @@ public struct CrossDeviceProperties {
             "twitterId": twitterId,
             "windowsId": windowsId
         ]
-        
+
         // add the custom cdb variables (they just need to be coverted from [Int:String] to [String:String?])
-        if let c = custom, c.count > 0 {
+        if let c = custom, c.isEmpty {
             var customDict = [String:String?]()
             for (key, value) in c {
                 customDict[String(key)] = value
             }
-            jsonObj["custom"] = customDict;
+            jsonObj["custom"] = customDict
         }
         return jsonObj
     }
@@ -186,7 +186,7 @@ public struct CrossDeviceProperties {
     func saveToDevice() {
         let cdbJsonObject = toJSONObj()
         let valid = JSONSerialization.isValidJSONObject(cdbJsonObject)
-        
+
         if valid {
             if let jsonData = try? JSONSerialization.data(withJSONObject: cdbJsonObject, options: []) {
                 UserDefaults.standardDefaults.child(namespace: "webtrekk").set(key: DefaultsKeys.crossDeviceProperties, to: jsonData)
@@ -199,14 +199,14 @@ public struct CrossDeviceProperties {
     }
 
     static func loadFromDevice() -> CrossDeviceProperties? {
-        
+
        let crossDevicePropertiesObj = UserDefaults.standardDefaults.child(namespace: "webtrekk").dataForKey(DefaultsKeys.crossDeviceProperties)
 
         if let data = crossDevicePropertiesObj,
             let cdbJsonObj = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any?] {
                 return CrossDeviceProperties(cdbJsonObj!)
         }
-        
+
         return nil
     }
 }

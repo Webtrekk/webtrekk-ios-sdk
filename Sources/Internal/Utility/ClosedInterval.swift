@@ -41,7 +41,6 @@ extension Float: MinimumMaximumAware {
 		return sign == .plus && isInfinite
 	}
 
-
 	internal var isMinimum: Bool {
 		return sign == .minus && isInfinite
 	}
@@ -53,7 +52,6 @@ extension Double: MinimumMaximumAware {
 		return sign == .plus && isInfinite
 	}
 
-
 	internal var isMinimum: Bool {
 		return sign == .minus && isInfinite
 	}
@@ -64,7 +62,6 @@ extension Int: MinimumMaximumAware {
 	internal var isMaximum: Bool {
 		return self == .max
 	}
-
 
 	internal var isMinimum: Bool {
 		return self == .min

@@ -28,7 +28,7 @@ internal extension Sequence {
 internal extension Sequence where Iterator.Element: _Optional {
 
 	internal func filterNonNil() -> [Iterator.Element.Wrapped] {
-		var result = Array<Iterator.Element.Wrapped>()
+		var result = [Iterator.Element.Wrapped]()
 		for element in self {
 			guard let element = element.value else {
 				continue

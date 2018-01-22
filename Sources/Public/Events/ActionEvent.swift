@@ -4,8 +4,7 @@ public class ActionEvent:
 	TrackingEventWithEcommerceProperties,
 	TrackingEventWithPageProperties,
 	TrackingEventWithSessionDetails,
-	TrackingEventWithUserProperties
-{
+	TrackingEventWithUserProperties {
 
 	public var actionProperties: ActionProperties
 	public var advertisementProperties: AdvertisementProperties

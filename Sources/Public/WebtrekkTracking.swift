@@ -22,28 +22,28 @@ public class WebtrekkTracking {
 
 	/** Indicates wether the sdk tries to migrated stored data from the previous major version. */
 	public static var migratesFromLibraryV3 = true
-    
+
     /** Main track object */
-    internal static var tracker: Tracker? = nil
-    
+    internal static var tracker: Tracker?
+
      /** Get main shared Webtrekk instance. */
     public static func instance() -> Tracker {
         if tracker == nil {
             tracker = DefaultTracker()
         }
-        
+
         return tracker!
     }
-    
+
     /** return true if Webtrekk is already initialized. */
     public static func isInitialized() -> Bool {
-        
+
         guard self.tracker != nil else {
             return false
         }
-        
+
         let tracker = self.tracker as! DefaultTracker
-        
+
         return tracker.isInitialited
     }
 
@@ -55,10 +55,10 @@ public class WebtrekkTracking {
         guard let confFile = configurationFile ?? Bundle.main.url(forResource: "webtrekk_config", withExtension: "xml") else {
             throw TrackerError(message: "Cannot locate webtrekk_config.xml in '\(Bundle.main.bundlePath)'. Either place the file there or use WebtrekkTracking.createTracker(configurationFile:) to specify the file's location.")
         }
-        
+
         checkIsOnMainThread()
-        
-        let _ = try createTracker(configurationFile: confFile)
+
+        _ = try createTracker(configurationFile: confFile)
     }
 
 	/**
@@ -79,9 +79,9 @@ public class WebtrekkTracking {
             guard tracker.initializeTracking(configuration: try XmlTrackerConfigurationParser().parse(xml: configurationData)) else {
                 throw TrackerError(message: "Cannot initialize Webtrekk tracking see log above for details")
             }
-            
+
             tracker.initTimers()
-            
+
             return tracker
 		} catch let error {
 			throw TrackerError(message: "Cannot load Webtrekk configuration file '\(configurationFile)': \(error)")
@@ -101,18 +101,18 @@ public class WebtrekkTracking {
 
 		return viewController.automaticTracker
 	}
-    
+
     #else
 
     public static func trackerForAutotrackedViewController(_ viewController: WKInterfaceController) -> PageTracker {
         checkIsOnMainThread()
-        
+
         return viewController.automaticTracker
     }
     #endif
-    
+
     #if os(iOS)
-    
+
     /** Update or create instance of WKWebViewConfiguration class that is used for WKWebView.
      After that all pages that opens in WKWebView and have PIXEL (starting with version 4.4.0) integration will do tracking with the same everId (the one that application has).
      if configuration provided in parameter it uses instance and return it back. If parameter is not proveded new instance is created. In any case instance of WKWebViewConfiguration is returned.
@@ -121,23 +121,23 @@ public class WebtrekkTracking {
     */
     @discardableResult
     public static func updateWKWebViewConfiguration(_ configuration: WKWebViewConfiguration? = nil) -> WKWebViewConfiguration? {
-    
+
         guard let tracker = tracker else {
             logger.logError("Error updating WKWebView configuration. Webtrekk isn't initialized.")
             return nil
         }
-    
+
         let everId = tracker.everId
-        
+
         let userScript = WKUserScript(
             source: "var webtrekkApplicationEverId = \"\(everId)\";",
             injectionTime: WKUserScriptInjectionTime.atDocumentStart,
             forMainFrameOnly: false
         )
-    
+
         let configurationLocal = configuration ?? WKWebViewConfiguration()
         configurationLocal.userContentController.addUserScript(userScript)
-        
+
         return configurationLocal
     }
     #endif

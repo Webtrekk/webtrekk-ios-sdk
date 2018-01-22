@@ -9,7 +9,6 @@ import UIKit
     #endif
 #endif
 
-
 internal final class RequestManager: NSObject, URLSessionDelegate {
 
 	internal typealias Delegate = _RequestManagerDelegate
@@ -34,18 +33,17 @@ internal final class RequestManager: NSObject, URLSessionDelegate {
 
 	internal weak var delegate: Delegate?
 
-
     internal init(manualStart: Bool) {
 		checkIsOnMainThread()
 
         self.manualStart = manualStart
-        
+
  		#if !os(watchOS)
             self.reachability = Reachability.init()
         #endif
 
         super.init()
-        
+
         #if !os(watchOS)
             self.reachability?.whenReachable = { [weak self] reachability in
                 logDebug("Internet is reachable again!")
@@ -56,13 +54,11 @@ internal final class RequestManager: NSObject, URLSessionDelegate {
         #endif
     }
 
-
 	#if !os(watchOS)
 	deinit {
 		reachability?.stopNotifier()
 	}
 	#endif
-
 
 	fileprivate func cancelCurrentRequest() {
 		checkIsOnMainThread()
@@ -78,7 +74,6 @@ internal final class RequestManager: NSObject, URLSessionDelegate {
 		self.pendingTask = nil
 	}
 
-
 	internal func clearPendingRequests() {
 		checkIsOnMainThread()
 
@@ -86,7 +81,6 @@ internal final class RequestManager: NSObject, URLSessionDelegate {
 
 		self.queue.deleteAll()
 	}
-
 
     internal static func createUrlSession(delegate: URLSessionDelegate? = nil) -> URLSession {
 		let configuration = URLSessionConfiguration.ephemeral
@@ -102,7 +96,6 @@ internal final class RequestManager: NSObject, URLSessionDelegate {
 		return session
 	}
 
-
 	internal func enqueueRequest(_ request: URL, maximumDelay: TimeInterval) {
 		checkIsOnMainThread()
 
@@ -116,15 +109,14 @@ internal final class RequestManager: NSObject, URLSessionDelegate {
         }
 	}
 
-
     func fetch(url: URL, completion: @escaping (Data?, ConnectionError?) -> Void) -> URLSessionDataTask? {
 		checkIsOnMainThread()
-        
+
         guard let urlSession = self.urlSession else {
             WebtrekkTracking.defaultLogger.logError("Error: session is nil during fetch")
             return nil
         }
-        
+
         let task = urlSession.dataTask(with: url, completionHandler: {data, response, error in
 			if let error = error {
 				let retryable: Bool
@@ -179,28 +171,25 @@ internal final class RequestManager: NSObject, URLSessionDelegate {
 			}
 
 			completion(data, nil)
-		}) 
+		})
 		task.resume()
-		
+
 		return task
 	}
-
 
 	fileprivate func maximumNumberOfFailures(with error: ConnectionError) -> Int {
 		checkIsOnMainThread()
 
 		if error.isCompletelyOffline {
 			return 60
-		}
-		else {
+		} else {
 			return 10
 		}
 	}
 
-
 	internal func prependRequests(_ requests: [URL]) {
 		checkIsOnMainThread()
-        
+
         // it can be done only on after application update at first start
         guard self.queue.isEmpty else {
             return
@@ -209,13 +198,11 @@ internal final class RequestManager: NSObject, URLSessionDelegate {
 		self.queue.addArray(urls: requests)
 	}
 
-
 	internal func sendAllRequests() {
 		checkIsOnMainThread()
 
 		sendNextRequest()
 	}
-
 
 	fileprivate func sendNextRequest() {
 		checkIsOnMainThread()
@@ -244,8 +231,7 @@ internal final class RequestManager: NSObject, URLSessionDelegate {
 
 						do {
 							try reachability.startNotifier()
-						}
-						catch let error {
+						} catch let error {
 							logError("Cannot listen for reachability events: \(error)")
 						}
 					}
@@ -259,17 +245,17 @@ internal final class RequestManager: NSObject, URLSessionDelegate {
 		#endif
 
         do {
-            try self.queue.getURL(){ url in
+            try self.queue.getURL() { url in
 
                 if url != self.currentRequest {
                     self.currentFailureCount = 0
                     self.currentRequest = url
                 }
-                
+
                 guard let url = url else {
                     return
                 }
-                
+
                 guard !self.finishing else {
                     WebtrekkTracking.defaultLogger.logDebug("Interrupt get request. process is finishing")
                     return
@@ -284,7 +270,7 @@ internal final class RequestManager: NSObject, URLSessionDelegate {
 
                             self.currentFailureCount = 0
                             self.currentRequest = nil
-                            let _ = self.queue.deleteFirst()
+                            _ = self.queue.deleteFirst()
 
                             self.delegate?.requestManager(self, didFailToSendRequest: url, error: error)
                             return
@@ -294,7 +280,7 @@ internal final class RequestManager: NSObject, URLSessionDelegate {
 
                             self.currentFailureCount = 0
                             self.currentRequest = nil
-                            let _ = self.queue.deleteFirst()
+                            _ = self.queue.deleteFirst()
 
                             self.delegate?.requestManager(self, didFailToSendRequest: url, error: error)
                             return
@@ -307,12 +293,12 @@ internal final class RequestManager: NSObject, URLSessionDelegate {
                         self.sendNextRequest(maximumDelay: retryDelay)
                         return
                     }
-                    
+
                     logDebug("Request has been sent successefully")
-                    
+
                     self.currentFailureCount = 0
                     self.currentRequest = nil
-                    let _ = self.queue.deleteFirst()
+                    _ = self.queue.deleteFirst()
 
                     if let delegate = self.delegate {
                         delegate.requestManager(self, didSendRequest: url)
@@ -328,28 +314,25 @@ internal final class RequestManager: NSObject, URLSessionDelegate {
         }
 	}
 
-
 	fileprivate func sendNextRequest(maximumDelay: TimeInterval) {
 		checkIsOnMainThread()
 
 		guard !self.queue.isEmpty else {
 			return
 		}
-		
+
 		if let sendNextRequestTimer = self.sendNextRequestTimer {
 			let fireDate = Date(timeIntervalSinceNow: maximumDelay)
 			if fireDate.compare(sendNextRequestTimer.fireDate) == ComparisonResult.orderedAscending {
 				sendNextRequestTimer.fireDate = fireDate
 			}
-		}
-		else {
+		} else {
 			self.sendNextRequestTimer = Timer.scheduledTimerWithTimeInterval(maximumDelay) {
 				self.sendNextRequestTimer = nil
 				self.sendAllRequests()
 			}
 		}
 	}
-
 
 	internal func start() {
 		checkIsOnMainThread()
@@ -361,7 +344,7 @@ internal final class RequestManager: NSObject, URLSessionDelegate {
 
 		self.started = true
         self.finishing = false
-        
+
         if self.urlSession == nil {
             self.urlSession = RequestManager.createUrlSession(delegate: self)
         }
@@ -370,7 +353,6 @@ internal final class RequestManager: NSObject, URLSessionDelegate {
             sendNextRequest()
         }
 	}
-
 
 	internal func stop() {
 		checkIsOnMainThread()
@@ -389,15 +371,13 @@ internal final class RequestManager: NSObject, URLSessionDelegate {
 			sendingInterruptedBecauseUnreachable = false
 			reachability?.stopNotifier()
 		#endif
-        
+
         self.finishing = true
-        
+
         WebtrekkTracking.defaultLogger.logDebug("stop. pending task is: \(self.pendingTask.simpleDescription)")
-        self.urlSession?.finishTasksAndInvalidate();
+        self.urlSession?.finishTasksAndInvalidate()
         self.urlSession = nil
 	}
-
-
 
 	internal struct ConnectionError: Error {
 
@@ -406,7 +386,6 @@ internal final class RequestManager: NSObject, URLSessionDelegate {
 		internal var message: String
 		internal var underlyingError: Error?
 
-
 		internal init(message: String, isTemporary: Bool, isCompletelyOffline: Bool = false, underlyingError: Error? = nil) {
 			self.isCompletelyOffline = isCompletelyOffline
 			self.isTemporary = isTemporary
@@ -414,12 +393,12 @@ internal final class RequestManager: NSObject, URLSessionDelegate {
 			self.underlyingError = underlyingError
 		}
 	}
-    
+
     // implement URLSessionDelegate
     public func urlSession(_ session: URLSession,
-                    didBecomeInvalidWithError error: Error?){
+                    didBecomeInvalidWithError error: Error?) {
         logDebug("didBecomeInvalidWithError  call")
-        if self.finishing{
+        if self.finishing {
             WebtrekkTracking.defaultLogger.logDebug("URL request has been finished. Save all")
             if let error = error {
                 WebtrekkTracking.defaultLogger.logError("URL session invalidated with error: \(error)")

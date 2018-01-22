@@ -80,7 +80,6 @@ func xor(_ a: ArraySlice<UInt8>, _ b: ArraySlice<UInt8>) -> Array<UInt8> {
     return xored
 }
 
-
 /**
  ISO/IEC 9797-1 Padding method 2.
  Add a single bit with value 1 to the end of the data.

@@ -19,7 +19,7 @@ extension UInt32: _UInt32Type {}
 extension UInt32 {
 
     //CHANGED BY WEBTREKK TO SUPPORT BOTH 4.0 AND 3.1 SWIFT VERSIONS
-    
+
     #if swift(>=3.2)
     @_specialize(where T == ArraySlice<UInt8>)
     init<T: Collection>(bytes: T) where T.Iterator.Element == UInt8, T.Index == Int {
@@ -39,7 +39,7 @@ extension UInt32 {
         let val1 = UInt32(bytes[index.advanced(by: 1)]) << 16
         let val2 = UInt32(bytes[index.advanced(by: 2)]) << 8
         let val3 = UInt32(bytes[index.advanced(by: 3)])
-        
+
         self = val0 | val1 | val2 | val3
     }
     #else

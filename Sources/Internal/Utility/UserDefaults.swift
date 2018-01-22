@@ -12,7 +12,7 @@ internal final class UserDefaults {
 		self.keyPrefix = keyPrefix
 		self.source = source
 	}
-    
+
     private func set(key: String, to value: AnyObject?) {
         source.set(value, forKey: keyPrefix + key)
     }
@@ -36,7 +36,7 @@ internal final class UserDefaults {
 	internal func intForKey(_ key: String) -> Int? {
 		return objectForKey(key) as? Int
 	}
-    
+
 	internal func objectForKey(_ key: String) -> AnyObject? {
 		return source.object(forKey: keyPrefix + key) as AnyObject?
 	}
@@ -80,15 +80,15 @@ internal final class UserDefaults {
 	internal func set(key: String, to value: String?) {
 		set(key: key, to: value as AnyObject?)
 	}
-    
+
     internal func set(key: String, to value: UInt64?) {
         let correctValue = value == nil ? nil : NSNumber(value: value!)
         set(key: key, to: correctValue as AnyObject?)
     }
-    
-    internal func convertDefaultsToAppSpecific(){
+
+    internal func convertDefaultsToAppSpecific() {
         for (key, value) in source.dictionaryRepresentation() {
-            if key.hasPrefix(self.keyPrefix){
+            if key.hasPrefix(self.keyPrefix) {
                 var keys = key.components(separatedBy: ".")
                 if keys.count == 3 && keys[1].isTrackIdFormat() {
                     source.removeObject(forKey: key)
