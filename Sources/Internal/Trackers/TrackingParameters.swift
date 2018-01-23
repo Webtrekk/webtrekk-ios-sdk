@@ -1,6 +1,6 @@
 import Foundation
 
-enum PropertyName:String {
+enum PropertyName: String {
     case advertisementId = "ADVERTISEMENT"
     case advertisementAction = "ADVERTISEMENT_ACTION"
     case birthday = "BIRTHDAY"
@@ -67,11 +67,11 @@ class TrackingParameter {
         return result.isEmpty ? nil : result
     }
 
-    func actionProperties(variables: [String : String]) -> ActionProperties {
+    func actionProperties(variables: [String: String]) -> ActionProperties {
         return ActionProperties(name: nil, details: categories[.actionParameter].flatMap { resolved(elements: $0, variables: variables) })
     }
 
-    func advertisementProperties(variables: [String : String]) -> AdvertisementProperties {
+    func advertisementProperties(variables: [String: String]) -> AdvertisementProperties {
         var advertisementId: String? = nil
         if let id = parameters[.advertisementId]?.serialized(variables: variables) {
             advertisementId = id
@@ -88,11 +88,11 @@ class TrackingParameter {
         return AdvertisementProperties(id: advertisementId, action: advertisementAction, details: details)
     }
 
-    func resolveIPAddress(variables: [String : String]) -> String? {
+    func resolveIPAddress(variables: [String: String]) -> String? {
             return parameters[.ipAddress]?.serialized(variables: variables)
     }
 
-    func ecommerceProperties(variables: [String : String]) -> EcommerceProperties {
+    func ecommerceProperties(variables: [String: String]) -> EcommerceProperties {
 
         var ecommerceProperties = EcommerceProperties()
 
@@ -127,11 +127,11 @@ class TrackingParameter {
         return ecommerceProperties
     }
 
-    func mediaProperties(variables: [String : String]) -> MediaProperties {
+    func mediaProperties(variables: [String: String]) -> MediaProperties {
         return MediaProperties(name: nil, groups: categories[.mediaCategories].flatMap { resolved(elements: $0, variables: variables) })
     }
 
-    func pageProperties(variables: [String : String]) -> PageProperties {
+    func pageProperties(variables: [String: String]) -> PageProperties {
         var pageProperties = PageProperties(name: nil)
         if let internalSearch = parameters[.internalSearch]?.serialized(variables: variables) {
             pageProperties.internalSearch = internalSearch
@@ -149,7 +149,7 @@ class TrackingParameter {
         return pageProperties
     }
 
-    func productProperties(variables: [String : String]) -> EcommerceProperties.Product? {
+    func productProperties(variables: [String: String]) -> EcommerceProperties.Product? {
 
         let productName = parameters[.productName]?.serialized(variables: variables)
 
@@ -172,11 +172,11 @@ class TrackingParameter {
         return EcommerceProperties.Product(name: productName ?? "", categories: productCategories, price: productPrice, quantity: productQuantity)
     }
 
-    func sessionDetails(variables: [String : String]) -> [Int: TrackingValue] {
+    func sessionDetails(variables: [String: String]) -> [Int: TrackingValue] {
         return categories[.sessionParameter].flatMap { resolved(elements: $0, variables: variables) } ?? [:]
     }
 
-    func userProperties(variables: [String : String]) -> UserProperties {
+    func userProperties(variables: [String: String]) -> UserProperties {
         var userProperties = UserProperties(birthday: nil)
         if let categoryElements = categories[.userCategories], let details = resolved(elements: categoryElements, variables: variables) {
             userProperties.details = details

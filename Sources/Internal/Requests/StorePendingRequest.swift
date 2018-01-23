@@ -137,7 +137,7 @@ class StorePendingRequest {
         return items.isEmpty ? nil : items
     }
 
-    var exist : Bool {
+    var exist: Bool {
         guard let url = self.fileURL else {
             return false
         }

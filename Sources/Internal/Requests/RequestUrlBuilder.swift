@@ -62,7 +62,9 @@ internal final class RequestUrlBuilder {
                     return urls
                 }
 
-                append(arr: &parameters, name: "p", value: libraryVersionParced + ",\(pageName),0,\(screenSize),32,0,\(Int64(properties.timestamp.timeIntervalSince1970 * 1000)),0,0,0")
+                append(arr: &parameters,
+                       name: "p",
+                       value: libraryVersionParced + ",\(pageName),0,\(screenSize),32,0,\(Int64(properties.timestamp.timeIntervalSince1970 * 1000)),0,0,0")
                 append(arr: &parameters, name: "eid", value: properties.everId)
                 append(arr: &parameters, name: "fns", value: properties.isFirstEventOfSession ? "1" : "0")
                 append(arr: &parameters, name: "mts", value: String(Int64(properties.timestamp.timeIntervalSince1970 * 1000)))
@@ -75,7 +77,9 @@ internal final class RequestUrlBuilder {
                     append(arr: &parameters, name: "la", value: language)
                 }
             case .exceptionTracking:
-                append(arr: &parameters, name: "p", value: libraryVersionParced + ",,0,,,0,\(Int64(properties.timestamp.timeIntervalSince1970 * 1000)),0,0,0")
+                append(arr: &parameters,
+                       name: "p",
+                       value: libraryVersionParced + ",,0,,,0,\(Int64(properties.timestamp.timeIntervalSince1970 * 1000)),0,0,0")
             }
 
             if let ipAddress = event.ipAddress {
@@ -113,7 +117,9 @@ internal final class RequestUrlBuilder {
             }
 
             if let advertisementProperties = (event as? TrackingEventWithAdvertisementProperties)?.advertisementProperties {
-                self.addAdvCommonProperties(parameters: &parameters, mediaCode: advertisementProperties.id, action: advertisementProperties.action)
+                self.addAdvCommonProperties(parameters: &parameters,
+                                            mediaCode: advertisementProperties.id,
+                                            action: advertisementProperties.action)
 
                 if let details = advertisementProperties.details {
                     parameters += details.mapNotNil { URLQueryItem(name: "cc", property: $0, for: request) }
@@ -205,7 +211,7 @@ internal final class RequestUrlBuilder {
         parameters.append(URLQueryItem(name: "eor", value: "1"))
     }
 
-    private var isCampaignFinished : Bool {
+    private var isCampaignFinished: Bool {
         return self.campaign.isCampaignProcessed()
     }
 
@@ -253,8 +259,12 @@ private extension CrossDeviceProperties {
                     break
                 }
                 var result = ""
-                if let regex = try? NSRegularExpression(pattern: "str\\.?\\s*\\|", options: NSRegularExpression.Options.caseInsensitive) {
-                    result = regex.stringByReplacingMatches(in: value.toLine(), options: .withTransparentBounds, range: NSMakeRange(0, value.toLine().count), withTemplate: "strasse|")
+                if let regex = try? NSRegularExpression(pattern: "str\\.?\\s*\\|",
+                                                        options: NSRegularExpression.Options.caseInsensitive) {
+                    result = regex.stringByReplacingMatches(in: value.toLine(),
+                                                            options: .withTransparentBounds,
+                                                            range: NSMakeRange(0, value.toLine().count),
+                                                            withTemplate: "strasse|")
                 }
                 if result.isEmpty {
                     break
@@ -334,7 +344,10 @@ private extension CrossDeviceProperties {
                 if key > 0 && key <= numberOfCdbCustomParams {
                     items.append(URLQueryItem(name: "cdb\(key+customCdbParamBase)", value: value))
                 } else {
-                    logError("Custom CDB parameter key \(key) is out of range, valid keys are between 1 and \(numberOfCdbCustomParams).")
+                    logError("""
+                            Custom CDB parameter key \(key) is out of range,
+                            valid keys are between 1 and \(numberOfCdbCustomParams).
+                        """)
                 }
             }
         }
@@ -353,7 +366,20 @@ private extension CrossDeviceProperties.Address {
     }
 
     func toLine() -> String {
-        return [firstName, lastName, zipCode, street, streetNumber].filterNonNil().joined(separator: "|").lowercased().replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "ä", with: "ae").replacingOccurrences(of: "ö", with: "oe").replacingOccurrences(of: "ü", with: "ue").replacingOccurrences(of: "ß", with: "ss").replacingOccurrences(of: "_", with: "").replacingOccurrences(of: "-", with: "")
+        return [firstName,
+                lastName,
+                zipCode,
+                street,
+                streetNumber].filterNonNil()
+                             .joined(separator: "|")
+                             .lowercased()
+                             .replacingOccurrences(of: " ", with: "")
+                             .replacingOccurrences(of: "ä", with: "ae")
+                             .replacingOccurrences(of: "ö", with: "oe")
+                             .replacingOccurrences(of: "ü", with: "ue")
+                             .replacingOccurrences(of: "ß", with: "ss")
+                             .replacingOccurrences(of: "_", with: "")
+                             .replacingOccurrences(of: "-", with: "")
     }
 }
 
@@ -762,7 +788,7 @@ private extension URLQueryItem {
         self.init(name: "\(name)\(property.0)", value: value)
     }
 
-    var size : Int {
+    var size: Int {
         if let value = self.value {
             return value.coded.count + name.count + 2
         } else {

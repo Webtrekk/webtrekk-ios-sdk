@@ -79,12 +79,12 @@ func replaceImplementationFromAnotherClass(toClass: AnyClass, methodChanged: Sel
     //no such method just add, no need to replace
     if !class_respondsToSelector(toClass, methodChanged) {
         // just add this function
-        guard addMethodFromAnotherClass(toClass: toClass, selectorToUse: methodChanged, methodSelector:methodAdded, fromClass: fromClass) else {
+        guard addMethodFromAnotherClass(toClass: toClass, selectorToUse: methodChanged, methodSelector: methodAdded, fromClass: fromClass) else {
             WebtrekkTracking.defaultLogger.logError("Can't add original method \(methodName) to class.")
             return false
         }
     } else {
-        guard addMethodFromAnotherClass(toClass: toClass, selectorToUse: methodAdded, methodSelector:methodAdded, fromClass: fromClass) else {
+        guard addMethodFromAnotherClass(toClass: toClass, selectorToUse: methodAdded, methodSelector: methodAdded, fromClass: fromClass) else {
             WebtrekkTracking.defaultLogger.logError("Can't add method \(methodName) to delegate class.")
             return false
         }
@@ -92,7 +92,7 @@ func replaceImplementationFromAnotherClass(toClass: AnyClass, methodChanged: Sel
         if swizzleMethod(ofType: toClass, fromSelector: methodChanged, toSelector: methodAdded) {
             WebtrekkTracking.defaultLogger.logDebug("swizzle extention delegate method \(methodName) successfully")
         } else {
-            WebtrekkTracking.defaultLogger.logError("Cann't swizzle method \(methodName)")
+            WebtrekkTracking.defaultLogger.logError("Can't swizzle method \(methodName)")
             return false
         }
     }

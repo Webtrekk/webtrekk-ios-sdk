@@ -55,7 +55,9 @@ internal final class ProductListTrackerImpl: ProductListTracker {
 
             //check if there is products in list if no skeep tracking
             guard let _ = ecommercePropertiesResult.products else {
-                WebtrekkTracking.logger.logError("Tracking won't be done. No products to track. Please call addTrackingData with products before this call")
+                WebtrekkTracking.logger.logError("""
+                        Tracking won't be done. No products to track. Please call addTrackingData with products before this call
+                    """)
                 return
             }
 
@@ -65,7 +67,9 @@ internal final class ProductListTrackerImpl: ProductListTracker {
             for i in 0..<count {
                 let name = ecommercePropertiesResult.products![i].name
                 if key != .list {
-                    ecommercePropertiesResult.products![i].position = key == .viewed ? self.orderSaver.getLastPosition(product: name) :  self.orderSaver.getFirstPosition(product: name)
+                    ecommercePropertiesResult.products![i].position = key == .viewed ?
+                        self.orderSaver.getLastPosition(product: name) :
+                        self.orderSaver.getFirstPosition(product: name)
                     if key == .addedToBasket {
                         self.orderSaver.saveAddOrder(product: ecommercePropertiesResult.products![i])
                     }
@@ -111,8 +115,8 @@ internal final class ProductListTrackerImpl: ProductListTracker {
     private class ProductOrderSaver {
         private struct Order {
             var addOrder = Int.max
-            var positionFirstValue : Int?
-            var positionLastValue : Int?
+            var positionFirstValue: Int?
+            var positionLastValue: Int?
 
             init(positionFirstValue: Int?) {
                 self.positionFirstValue = positionFirstValue
@@ -122,13 +126,13 @@ internal final class ProductListTrackerImpl: ProductListTracker {
                 self.addOrder = addOrder
             }
 
-            init(addOrder: Int, positionFirstValue : Int?, positionLastValue : Int?) {
+            init(addOrder: Int, positionFirstValue: Int?, positionLastValue: Int?) {
                 self.addOrder = addOrder
                 self.positionFirstValue = positionFirstValue
                 self.positionLastValue = positionLastValue
             }
         }
-        private var products  = [String : Order]()
+        private var products  = [String: Order]()
         private var currentAddPosition = 0
 
         /** load data fro userDefaults*/
@@ -136,7 +140,7 @@ internal final class ProductListTrackerImpl: ProductListTracker {
             var maxOrder = -1
             self.products.removeAll()
             if let data = self.userDefaults.dataForKey(DefaultsKeys.productListOrder),
-                let jsonObj = try? JSONSerialization.jsonObject(with: data, options: []) as? [[String:Any?]] {
+                let jsonObj = try? JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any?]] {
 
                 jsonObj?.forEach() { (item) in
                     if let name = item["id"] as? String {
@@ -162,12 +166,12 @@ internal final class ProductListTrackerImpl: ProductListTracker {
 
         /*save data to user defaults*/
         func save() {
-            var jsonObject = [[String:Any]]()
+            var jsonObject = [[String: Any]]()
 
             self.products.forEach() { (key, value) in
-                var jsonItem : [String:Any] = [
-                "id" : key,
-                "add_order" :  value.addOrder
+                var jsonItem: [String: Any] = [
+                "id": key,
+                "add_order": value.addOrder
                 ]
 
                 if let positionFirstValue = value.positionFirstValue {
@@ -181,7 +185,8 @@ internal final class ProductListTrackerImpl: ProductListTracker {
                 jsonObject.append(jsonItem)
             }
 
-            if JSONSerialization.isValidJSONObject(jsonObject), let jsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: []) {
+            if JSONSerialization.isValidJSONObject(jsonObject), let jsonData = try? JSONSerialization.data(withJSONObject: jsonObject,
+                                                                                                           options: []) {
                     self.userDefaults.set(key: DefaultsKeys.productListOrder, to: jsonData)
             } else {
                  WebtrekkTracking.defaultLogger.logError("can't save project order information")
@@ -243,7 +248,7 @@ internal final class ProductListTrackerImpl: ProductListTracker {
             self.userDefaults.remove(key: DefaultsKeys.productListOrder)
         }
 
-        private var userDefaults : UserDefaults {
+        private var userDefaults: UserDefaults {
             return UserDefaults.standardDefaults.child(namespace: "webtrekk")
         }
 

@@ -1,33 +1,40 @@
 import UIKit
 
 #if !os(watchOS)
-	import AVFoundation
+    import AVFoundation
 #endif
 
 public protocol Tracker: class {
 
-	/** get and set everID. If you set Ever ID it started to use new value for all requests*/
+    /** get and set everID. If you set Ever ID it started to use new value for all requests*/
     var everId: String { get set }
     var trackIds: [String] { get }
-	var global: GlobalProperties { get set }
+    var global: GlobalProperties { get set }
 
     /**Functions sends all request from cache to server. Function can be used only for manual send mode, when <sendDelay>0</sendDelay>
      otherwise it returns false. It returns true if asynchronus command for sending is done*/
-	func sendPendingEvents()
+    func sendPendingEvents()
 
-	func trackAction(_ event: ActionEvent)
+    func trackAction(_ event: ActionEvent)
 
-	func trackMediaAction(_ event: MediaEvent)
+    func trackMediaAction(_ event: MediaEvent)
 
-	func trackPageView(_ event: PageViewEvent)
+    func trackPageView(_ event: PageViewEvent)
 
-	func trackerForMedia(_ mediaName: String, pageName: String, mediaProperties : MediaProperties?, variables : [String : String]?) -> MediaTracker
+    func trackerForMedia(_ mediaName: String,
+                         pageName: String,
+                         mediaProperties: MediaProperties?,
+                         variables: [String: String]?) -> MediaTracker
 
-	#if !os(watchOS)
-	func trackerForMedia(_ mediaName: String, pageName: String, automaticallyTrackingPlayer player: AVPlayer, mediaProperties : MediaProperties?, variables : [String : String]?) -> MediaTracker
-	#endif
+    #if !os(watchOS)
+    func trackerForMedia(_ mediaName: String,
+                         pageName: String,
+                         automaticallyTrackingPlayer player: AVPlayer,
+                         mediaProperties: MediaProperties?,
+                         variables: [String: String]?) -> MediaTracker
+    #endif
 
-	func trackerForPage(_ pageName: String) -> PageTracker
+    func trackerForPage(_ pageName: String) -> PageTracker
 
     #if !os(watchOS)
     /** set media code. Media code will be sent with next page request only. Only setter is working. Getter always returns ""*/
@@ -49,115 +56,115 @@ public protocol Tracker: class {
 
 public extension Tracker {
 
-	public func trackAction(
-		_ actionName: String,
-		pageName: String,
-		advertisementProperties: AdvertisementProperties = AdvertisementProperties(id: nil),
-		ecommerceProperties: EcommerceProperties = EcommerceProperties(),
-		sessionDetails: [Int: TrackingValue] = [:],
-		userProperties: UserProperties = UserProperties(birthday: nil),
-		variables: [String : String] = [:]
-	) {
-		trackAction(
-			ActionProperties(name: actionName),
-			pageProperties:          PageProperties(name: pageName),
-			advertisementProperties: advertisementProperties,
-			ecommerceProperties:     ecommerceProperties,
-			sessionDetails:          sessionDetails,
-			userProperties:          userProperties,
-			variables:               variables
-		)
-	}
+    public func trackAction(
+        _ actionName: String,
+        pageName: String,
+        advertisementProperties: AdvertisementProperties = AdvertisementProperties(id: nil),
+        ecommerceProperties: EcommerceProperties = EcommerceProperties(),
+        sessionDetails: [Int: TrackingValue] = [:],
+        userProperties: UserProperties = UserProperties(birthday: nil),
+        variables: [String: String] = [:]
+    ) {
+        trackAction(
+            ActionProperties(name: actionName),
+            pageProperties: PageProperties(name: pageName),
+            advertisementProperties: advertisementProperties,
+            ecommerceProperties: ecommerceProperties,
+            sessionDetails: sessionDetails,
+            userProperties: userProperties,
+            variables: variables
+        )
+    }
 
-	public func trackAction(
-		_ actionName: String,
-		viewControllerType: AnyObject.Type,
-		advertisementProperties: AdvertisementProperties = AdvertisementProperties(id: nil),
-		ecommerceProperties: EcommerceProperties = EcommerceProperties(),
-		sessionDetails: [Int: TrackingValue] = [:],
-		userProperties: UserProperties = UserProperties(birthday: nil),
-		variables: [String : String] = [:]
-	) {
-		trackAction(
-			ActionProperties(name: actionName),
-			pageProperties:          PageProperties(viewControllerType: viewControllerType),
-			advertisementProperties: advertisementProperties,
-			ecommerceProperties:     ecommerceProperties,
-			sessionDetails:          sessionDetails,
-			userProperties:          userProperties,
-			variables:               variables
-		)
-	}
+    public func trackAction(
+        _ actionName: String,
+        viewControllerType: AnyObject.Type,
+        advertisementProperties: AdvertisementProperties = AdvertisementProperties(id: nil),
+        ecommerceProperties: EcommerceProperties = EcommerceProperties(),
+        sessionDetails: [Int: TrackingValue] = [:],
+        userProperties: UserProperties = UserProperties(birthday: nil),
+        variables: [String: String] = [:]
+    ) {
+        trackAction(
+            ActionProperties(name: actionName),
+            pageProperties: PageProperties(viewControllerType: viewControllerType),
+            advertisementProperties: advertisementProperties,
+            ecommerceProperties: ecommerceProperties,
+            sessionDetails: sessionDetails,
+            userProperties: userProperties,
+            variables: variables
+        )
+    }
 
-	public func trackAction(
-		_ actionProperties: ActionProperties,
-		pageProperties: PageProperties,
-		advertisementProperties: AdvertisementProperties = AdvertisementProperties(id: nil),
-		ecommerceProperties: EcommerceProperties = EcommerceProperties(),
-		sessionDetails: [Int: TrackingValue] = [:],
-		userProperties: UserProperties = UserProperties(birthday: nil),
-		variables: [String : String] = [:]
-	) {
-		trackAction(ActionEvent(
-			actionProperties:        actionProperties,
-			pageProperties:          pageProperties,
-			advertisementProperties: advertisementProperties,
-			ecommerceProperties:     ecommerceProperties,
-			sessionDetails:          sessionDetails,
-			userProperties:          userProperties,
-			variables:               variables
-		))
-	}
+    public func trackAction(
+        _ actionProperties: ActionProperties,
+        pageProperties: PageProperties,
+        advertisementProperties: AdvertisementProperties = AdvertisementProperties(id: nil),
+        ecommerceProperties: EcommerceProperties = EcommerceProperties(),
+        sessionDetails: [Int: TrackingValue] = [:],
+        userProperties: UserProperties = UserProperties(birthday: nil),
+        variables: [String: String] = [:]
+    ) {
+        trackAction(ActionEvent(
+            actionProperties: actionProperties,
+            pageProperties: pageProperties,
+            advertisementProperties: advertisementProperties,
+            ecommerceProperties: ecommerceProperties,
+            sessionDetails: sessionDetails,
+            userProperties: userProperties,
+            variables: variables
+        ))
+    }
 
-	public func trackMediaAction(
-		_ action: MediaEvent.Action,
-		mediaProperties: MediaProperties,
-		pageName: String?,
-		variables: [String : String] = [:]
-	) {
-		trackMediaAction(MediaEvent(
-			action: action,
-			mediaProperties: mediaProperties,
-			pageName: pageName,
-			variables: variables
-		))
-	}
+    public func trackMediaAction(
+        _ action: MediaEvent.Action,
+        mediaProperties: MediaProperties,
+        pageName: String?,
+        variables: [String: String] = [:]
+    ) {
+        trackMediaAction(MediaEvent(
+            action: action,
+            mediaProperties: mediaProperties,
+            pageName: pageName,
+            variables: variables
+        ))
+    }
 
-	public func trackPageView(
-		_ pageName: String,
-		advertisementProperties: AdvertisementProperties = AdvertisementProperties(id: nil),
-		ecommerceProperties: EcommerceProperties = EcommerceProperties(),
-		sessionDetails: [Int: TrackingValue] = [:],
-		userProperties: UserProperties = UserProperties(birthday: nil),
-		variables: [String : String] = [:]
-	) {
-		trackPageView(
-			PageProperties(name: pageName),
-			advertisementProperties: advertisementProperties,
-			ecommerceProperties:     ecommerceProperties,
-			sessionDetails:          sessionDetails,
-			userProperties:          userProperties,
-			variables:               variables
-		)
-	}
+    public func trackPageView(
+        _ pageName: String,
+        advertisementProperties: AdvertisementProperties = AdvertisementProperties(id: nil),
+        ecommerceProperties: EcommerceProperties = EcommerceProperties(),
+        sessionDetails: [Int: TrackingValue] = [:],
+        userProperties: UserProperties = UserProperties(birthday: nil),
+        variables: [String: String] = [:]
+    ) {
+        trackPageView(
+            PageProperties(name: pageName),
+            advertisementProperties: advertisementProperties,
+            ecommerceProperties: ecommerceProperties,
+            sessionDetails: sessionDetails,
+            userProperties: userProperties,
+            variables: variables
+        )
+    }
 
-	public func trackPageView(
-		_ pageProperties: PageProperties,
-		advertisementProperties: AdvertisementProperties = AdvertisementProperties(id: nil),
-		ecommerceProperties: EcommerceProperties = EcommerceProperties(),
-		sessionDetails: [Int: TrackingValue] = [:],
-		userProperties: UserProperties = UserProperties(birthday: nil),
-		variables: [String : String] = [:]
-	) {
-		trackPageView(PageViewEvent(
-			pageProperties:          pageProperties,
-			advertisementProperties: advertisementProperties,
-			ecommerceProperties:     ecommerceProperties,
-			sessionDetails:          sessionDetails,
-			userProperties:          userProperties,
-			variables:               variables
-		))
-	}
+    public func trackPageView(
+        _ pageProperties: PageProperties,
+        advertisementProperties: AdvertisementProperties = AdvertisementProperties(id: nil),
+        ecommerceProperties: EcommerceProperties = EcommerceProperties(),
+        sessionDetails: [Int: TrackingValue] = [:],
+        userProperties: UserProperties = UserProperties(birthday: nil),
+        variables: [String: String] = [:]
+    ) {
+        trackPageView(PageViewEvent(
+            pageProperties: pageProperties,
+            advertisementProperties: advertisementProperties,
+            ecommerceProperties: ecommerceProperties,
+            sessionDetails: sessionDetails,
+            userProperties: userProperties,
+            variables: variables
+        ))
+    }
 
     public func trackCDB(_ crossDeviceProperties: CrossDeviceProperties) {
         global.crossDeviceProperties = crossDeviceProperties
@@ -175,20 +182,26 @@ public extension Tracker {
 
     func trackerForMedia(_ mediaName: String,
                          pageName: String,
-                         mediaProperties : MediaProperties? = nil,
-                         variables : [String : String]? = nil) -> MediaTracker {
+                         mediaProperties: MediaProperties? = nil,
+                         variables: [String: String]? = nil) -> MediaTracker {
 
-        return trackerForMedia(mediaName, pageName: pageName, mediaProperties: mediaProperties, variables: variables)
+        return trackerForMedia(mediaName,
+                               pageName: pageName,
+                               mediaProperties: mediaProperties,
+                               variables: variables)
     }
 
     #if !os(watchOS)
     func trackerForMedia(_ mediaName: String,
                          pageName: String,
                          automaticallyTrackingPlayer player: AVPlayer,
-                         mediaProperties : MediaProperties? = nil,
-                         variables : [String : String]? = nil) -> MediaTracker {
+                         mediaProperties: MediaProperties? = nil,
+                         variables: [String: String]? = nil) -> MediaTracker {
 
-        return trackerForMedia(mediaName, pageName: pageName, automaticallyTrackingPlayer: player, mediaProperties: mediaProperties, variables: variables)
+        return trackerForMedia(mediaName, pageName: pageName,
+                               automaticallyTrackingPlayer: player,
+                               mediaProperties: mediaProperties,
+                               variables: variables)
     }
     #endif
 }

@@ -33,7 +33,8 @@ class RequestQueue {
         let pointer: UInt64? // link to next url in file
     }
 
-    var isEmpty : Bool {
+    // TODO: This is a built in.. Why is this here?
+    var isEmpty: Bool {
         return self.size.value == 0 && self.addURLQueueSize == 0
     }
 
@@ -156,7 +157,7 @@ class RequestQueue {
                 var lock: NSCondition?
                 if !isSizeEmpty {// wait till item loadded from memory
                     lock = self.queuAddCondition
-                } else if isSizeEmpty && self.queue.count == 0 && !isDispatchQueueEmpty {
+                } else if isSizeEmpty && self.queue.isEmpty && !isDispatchQueueEmpty {
                     lock = self.dispatchQueueAddURLCondition
                 }
 
@@ -305,7 +306,7 @@ class RequestQueue {
 
         for i in 0..<self.queue.count {
             if let pointer = saveToFile(url: queue[i].url) {
-                self.queue[i] = URLItem(url:queue[i].url, pointer: pointer)
+                self.queue[i] = URLItem(url: queue[i].url, pointer: pointer)
             }
         }
         self.flashAndDeleteLock.unlock()
@@ -323,7 +324,7 @@ class RequestQueue {
             self.doZeroSizeValidation()
         } else {
             self.threadLoadURLQueue.async {
-               if self.queue.count == 0 {
+               if self.queue.isEmpty {
                     self.loadToQueue()
                 }
             }
@@ -560,7 +561,7 @@ private class TextFileReader {
             let tmpData = fileHandle.readData(ofLength: bufSize)
             self.pointer = fileHandle.offsetInFile
 
-            if tmpData.count > 0 {
+            if !tmpData.isEmpty {
                 self.buffer.append(tmpData)
                 //logDebug("buffer is \(String(data: buffer, encoding: .utf8)) \n with temp data \(String(data: tmpData, encoding: .utf8))")
                 //logDebug("file pointer is \(fileHandle.offsetInFile)")
@@ -568,7 +569,7 @@ private class TextFileReader {
                 eof = true
 
                 //check if buffer empty. If yes exit.
-                guard self.buffer.count > 0 else {
+                guard !self.buffer.isEmpty else {
                     noData = true
                     break
                 }

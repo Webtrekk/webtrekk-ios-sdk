@@ -83,13 +83,20 @@ internal class XmlTrackerConfigurationParser {
             do {
                 switch child.name {
                 case "enableRemoteConfiguration": self.enableRemoteConfiguration = try parseBool(child.text)
-                case "resendOnStartEventTime":    self.resendOnStartEventTime = try parseDouble(child.text, allowedRange: TrackerConfiguration.allowedResendOnStartEventTimes)
-                case "sampling":                  self.samplingRate = try parseInt(child.text, allowedRange: TrackerConfiguration.allowedSamplingRates)
-                case "sendDelay":                 self.maximumSendDelay = try parseDouble(child.text, allowedRange: TrackerConfiguration.allowedMaximumSendDelays)
-                case "trackingConfigurationUrl":  self.configurationUpdateUrl = try parseUrl(child.text, emptyAllowed: true)
-                case "trackDomain":               self.serverUrl = try parseUrl(child.text, emptyAllowed: false)
-                case "trackId":                   self.webtrekkId = try parseString(child.text, emptyAllowed: false)
-                case "version":                   self.version = try parseInt(child.text, allowedRange: TrackerConfiguration.allowedVersions)
+                case "resendOnStartEventTime":    self.resendOnStartEventTime = try parseDouble(child.text,
+                                                                                                allowedRange: TrackerConfiguration.allowedResendOnStartEventTimes)
+                case "sampling":                  self.samplingRate = try parseInt(child.text,
+                                                                                   allowedRange: TrackerConfiguration.allowedSamplingRates)
+                case "sendDelay":                 self.maximumSendDelay = try parseDouble(child.text,
+                                                                                          allowedRange: TrackerConfiguration.allowedMaximumSendDelays)
+                case "trackingConfigurationUrl":  self.configurationUpdateUrl = try parseUrl(child.text,
+                                                                                             emptyAllowed: true)
+                case "trackDomain":               self.serverUrl = try parseUrl(child.text,
+                                                                                emptyAllowed: false)
+                case "trackId":                   self.webtrekkId = try parseString(child.text,
+                                                                                    emptyAllowed: false)
+                case "version":                   self.version = try parseInt(child.text,
+                                                                              allowedRange: TrackerConfiguration.allowedVersions)
 
                 case "autoTracked":                  self.autoTracked = try parseBool(child.text)
                 case "autoTrackAdvertiserId":        self.automaticallyTracksAdvertisingId = try parseBool(child.text)

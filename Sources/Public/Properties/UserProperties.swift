@@ -2,21 +2,21 @@ import Foundation
 
 public struct UserProperties {
 
-	public var birthday: Birthday?
-	public var city: String?
-	public var country: String?
-	public var details: [Int: TrackingValue]?
-	public var emailAddress: String?
-	public var emailReceiverId: String?
-	public var firstName: String?
-	public var gender: Gender?
-	public var id: String?
-	public var lastName: String?
-	public var newsletterSubscribed: Bool?
-	public var phoneNumber: String?
-	public var street: String?
-	public var streetNumber: String?
-	public var zipCode: String?
+    public var birthday: Birthday?
+    public var city: String?
+    public var country: String?
+    public var details: [Int: TrackingValue]?
+    public var emailAddress: String?
+    public var emailReceiverId: String?
+    public var firstName: String?
+    public var gender: Gender?
+    public var id: String?
+    public var lastName: String?
+    public var newsletterSubscribed: Bool?
+    public var phoneNumber: String?
+    public var street: String?
+    public var streetNumber: String?
+    public var zipCode: String?
 
     public init(
         birthday: Birthday? = nil,
@@ -52,37 +52,37 @@ public struct UserProperties {
         self.zipCode = zipCode
     }
 
-	internal func merged(over other: UserProperties) -> UserProperties {
-		 return UserProperties(
-			birthday:             birthday ?? other.birthday,
-			city:                 city ?? other.city,
-			country:              country ?? other.country,
-			details:              details.merged(over: other.details),
-			emailAddress:         emailAddress ?? other.emailAddress,
-			emailReceiverId:      emailReceiverId ?? other.emailReceiverId,
-			firstName:            firstName ?? other.firstName,
-			gender:               gender ?? other.gender,
-			id:                   id ?? other.id,
-			lastName:             lastName ?? other.lastName,
-			newsletterSubscribed: newsletterSubscribed ?? other.newsletterSubscribed,
-			phoneNumber:          phoneNumber ?? other.phoneNumber,
-			street:               street ?? other.street,
-			streetNumber:         streetNumber ?? other.streetNumber,
-			zipCode:              zipCode ?? other.zipCode
-		)
-	}
+    internal func merged(over other: UserProperties) -> UserProperties {
+         return UserProperties(
+            birthday: birthday ?? other.birthday,
+            city: city ?? other.city,
+            country: country ?? other.country,
+            details: details.merged(over: other.details),
+            emailAddress: emailAddress ?? other.emailAddress,
+            emailReceiverId: emailReceiverId ?? other.emailReceiverId,
+            firstName: firstName ?? other.firstName,
+            gender: gender ?? other.gender,
+            id: id ?? other.id,
+            lastName: lastName ?? other.lastName,
+            newsletterSubscribed: newsletterSubscribed ?? other.newsletterSubscribed,
+            phoneNumber: phoneNumber ?? other.phoneNumber,
+            street: street ?? other.street,
+            streetNumber: streetNumber ?? other.streetNumber,
+            zipCode: zipCode ?? other.zipCode
+        )
+    }
 
-	public struct Birthday {
+    public struct Birthday {
 
-		public var day: Int
-		public var month: Int
-		public var year: Int
+        public var day: Int
+        public var month: Int
+        public var year: Int
 
-		public init(day: Int = 1, month: Int, year: Int) {
-			self.day = day
-			self.month = month
-			self.year = year
-		}
+        public init(day: Int = 1, month: Int, year: Int) {
+            self.day = day
+            self.month = month
+            self.year = year
+        }
 
         init?(raw: String?) {
             guard let rawValue = raw else {
@@ -101,11 +101,11 @@ public struct UserProperties {
                 return nil
             }
         }
-	}
+    }
 
     public enum Gender: Int {
         case male = 1
-		case female
+        case female
         case unknown
 
         init?(raw: String?) {
@@ -121,7 +121,7 @@ public struct UserProperties {
                 return nil
             }
         }
- 	}
+    }
 
     func convertNewsLetter(raw: String) -> Bool {
         return raw == "1"
@@ -130,7 +130,7 @@ public struct UserProperties {
 }
 
 private extension String {
-    var isBirthday : Bool {
+    var isBirthday: Bool {
         get {
             return self.count == 8 && self.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil
         }

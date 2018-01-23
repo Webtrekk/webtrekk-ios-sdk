@@ -37,7 +37,8 @@ final class RequestTrackerBuilder {
         // it's a dedicated CDB request:
         if !global.crossDeviceProperties.isEmpty() {
 
-            // if there are CDB properties already stored on the device, merge the new ones with them and store the result on the device:
+            // if there are CDB properties already stored on the device,
+            // merge the new ones with them and store the result on the device:
             if let oldCDBProperties = CrossDeviceProperties.loadFromDevice() {
                 let newCDBProperties = global.crossDeviceProperties
                 // the new ones have a higher priority (i.e. its properties can overwrite existig ones):
@@ -55,7 +56,9 @@ final class RequestTrackerBuilder {
                 global.crossDeviceProperties = oldCDBProperties
 
                 // save the lastCdbPropertiesSentTime:
-                // (This should only be set here. Because if setting it is also triggered by a dedicated CDB request, the automatic sending of the merged properties might never happen. This would only be the case though, if the customer has a suboptimal implementation and sends the dedicated CDB requests too often.)
+                // (This should only be set here. Because if setting it is also triggered by a dedicated CDB request,
+                // the automatic sending of the merged properties might never happen. This would only be the case though,
+                // if the customer has a suboptimal implementation and sends the dedicated CDB requests too often.)
                 let now = Int(Date().timeIntervalSince1970)
                 UserDefaults.standardDefaults.child(namespace: "webtrekk").set(key: lastCdbPropertiesSentTime, to: now)
             }
@@ -154,12 +157,14 @@ final class RequestTrackerBuilder {
         }
     }
 
-    private func globalPropertiesByApplyingEvent(from event: inout TrackingEvent, requestProperties: TrackerRequest.Properties) {
+    private func globalPropertiesByApplyingEvent(from event: inout TrackingEvent,
+                                                 requestProperties: TrackerRequest.Properties) {
         checkIsOnMainThread()
 
         event.variables = self.global.variables.merged(over: event.variables)
 
-        if let globalSettings = applyKeys(keys: event.variables, properties: configuration.globalProperties) as? GlobalProperties {
+        if let globalSettings = applyKeys(keys: event.variables,
+                                          properties: configuration.globalProperties) as? GlobalProperties {
 
             // merge autoParameters
             let autoProperties = getAutoParameters(event: event, requestProperties: requestProperties)
@@ -177,7 +182,7 @@ final class RequestTrackerBuilder {
         }
     }
 
-    private func applyKeys(keys: [String:String], properties: BaseProperties) -> BaseProperties {
+    private func applyKeys(keys: [String: String], properties: BaseProperties) -> BaseProperties {
 
         guard let trackingParameter = properties.trackingParameters else {
             return properties
@@ -271,26 +276,40 @@ final class RequestTrackerBuilder {
         }
 
         if var eventWithActionProperties = event as? TrackingEventWithActionProperties {
-            eventWithActionProperties.actionProperties = mergeTool.mergeProperties(first: properties.actionProperties, second: eventWithActionProperties.actionProperties, from1Over2: rewriteEvent)
+            eventWithActionProperties.actionProperties = mergeTool.mergeProperties(first: properties.actionProperties,
+                                                                                   second: eventWithActionProperties.actionProperties,
+                                                                                   from1Over2: rewriteEvent)
         }
         if var eventWithAdvertisementProperties = event as? TrackingEventWithAdvertisementProperties {
-            eventWithAdvertisementProperties.advertisementProperties = mergeTool.mergeProperties(first: properties.advertisementProperties, second: eventWithAdvertisementProperties.advertisementProperties, from1Over2: rewriteEvent)
+            eventWithAdvertisementProperties.advertisementProperties = mergeTool.mergeProperties(first: properties.advertisementProperties,
+                                                                                                 second: eventWithAdvertisementProperties.advertisementProperties,
+                                                                                                 from1Over2: rewriteEvent)
         }
         if var eventWithEcommerceProperties = event as? TrackingEventWithEcommerceProperties {
-            eventWithEcommerceProperties.ecommerceProperties = mergeTool.mergeProperties(first: properties.ecommerceProperties, second: eventWithEcommerceProperties.ecommerceProperties, from1Over2: rewriteEvent)
+            eventWithEcommerceProperties.ecommerceProperties = mergeTool.mergeProperties(first: properties.ecommerceProperties,
+                                                                                         second: eventWithEcommerceProperties.ecommerceProperties,
+                                                                                         from1Over2: rewriteEvent)
         }
         if var eventWithMediaProperties = event as? TrackingEventWithMediaProperties {
-            eventWithMediaProperties.mediaProperties = mergeTool.mergeProperties(first: properties.mediaProperties, second: eventWithMediaProperties.mediaProperties, from1Over2: rewriteEvent)
+            eventWithMediaProperties.mediaProperties = mergeTool.mergeProperties(first: properties.mediaProperties,
+                                                                                 second: eventWithMediaProperties.mediaProperties,
+                                                                                 from1Over2: rewriteEvent)
         }
         if var eventWithPageProperties = event as? TrackingEventWithPageProperties {
-            eventWithPageProperties.pageProperties = mergeTool.mergeProperties(first: properties.pageProperties, second: eventWithPageProperties.pageProperties, from1Over2: rewriteEvent)
+            eventWithPageProperties.pageProperties = mergeTool.mergeProperties(first: properties.pageProperties,
+                                                                               second: eventWithPageProperties.pageProperties,
+                                                                               from1Over2: rewriteEvent)
         }
         if var eventWithUserProperties = event as? TrackingEventWithUserProperties {
-            eventWithUserProperties.userProperties = mergeTool.mergeProperties(first: properties.userProperties, second: eventWithUserProperties.userProperties, from1Over2: rewriteEvent)
+            eventWithUserProperties.userProperties = mergeTool.mergeProperties(first: properties.userProperties,
+                                                                               second: eventWithUserProperties.userProperties,
+                                                                               from1Over2: rewriteEvent)
         }
 
         if var eventWithSessionDetails = event as? TrackingEventWithSessionDetails {
-            eventWithSessionDetails.sessionDetails = mergeTool.mergeProperties(first: properties.sessionDetails, second: eventWithSessionDetails.sessionDetails, from1Over2: rewriteEvent)
+            eventWithSessionDetails.sessionDetails = mergeTool.mergeProperties(first: properties.sessionDetails,
+                                                                               second: eventWithSessionDetails.sessionDetails,
+                                                                               from1Over2: rewriteEvent)
         }
     }
 
@@ -308,14 +327,21 @@ final class RequestTrackerBuilder {
         case adClearId = 808
     }
 
-    private static let autoParameters: [autoParametersAttrNumbers:CustomParType] =
-        [.screenOrientation: .pageParameter, .requestQueueSize: .pageParameter, .appVersion: .sessionParameter, .connectionType: .sessionParameter,
-         .advertisingId: .sessionParameter, .advertisingTrackingEnabled: .sessionParameter, .isFirstEventAfterAppUpdate: .sessionParameter, .adClearId: .sessionParameter]
+    private static let autoParameters: [autoParametersAttrNumbers: CustomParType] =
+        [.screenOrientation: .pageParameter,
+         .requestQueueSize: .pageParameter,
+         .appVersion: .sessionParameter,
+         .connectionType: .sessionParameter,
+         .advertisingId: .sessionParameter,
+         .advertisingTrackingEnabled: .sessionParameter,
+         .isFirstEventAfterAppUpdate: .sessionParameter,
+         .adClearId: .sessionParameter]
 
-    private func getAutoParameters (event: TrackingEvent, requestProperties properties: TrackerRequest.Properties) -> AutoParametersProperties {
+    private func getAutoParameters (event: TrackingEvent,
+                                    requestProperties properties: TrackerRequest.Properties) -> AutoParametersProperties {
 
-        var sessionDetails: [Int : TrackingValue] = [:]
-        var pageDetails: [Int : TrackingValue] = [:]
+        var sessionDetails: [Int: TrackingValue] = [:]
+        var pageDetails: [Int: TrackingValue] = [:]
 
         if !(event is ActionEvent) {
 
@@ -350,7 +376,7 @@ final class RequestTrackerBuilder {
             sessionDetails[autoParametersAttrNumbers.adClearId.rawValue] = .constant(String(adClearId))
         }
 
-        let pageProp = PageProperties(name: nil, details: pageDetails.count == 0 ? nil: pageDetails)
+        let pageProp = PageProperties(name: nil, details: pageDetails.isEmpty ? nil: pageDetails)
 
         return AutoParametersProperties(pageProperties: pageProp, sessionDetails: sessionDetails)
     }
@@ -361,14 +387,19 @@ final class RequestTrackerBuilder {
             let value = properties.trackingParameters?.categories[type]?[num.rawValue]
 
             if value != nil {
-                logWarning("auto parameter \"\(num)\" will be overwritten. If you don't want it, remove \"\(type)\" custom parameter number \(num.rawValue) definition.")
+                logWarning("""
+                        auto parameter \"\(num)\" will be overwritten.
+                        If you don't want it, remove \"\(type)\" custom parameter number \(num.rawValue) definition.
+                    """)
             }
         }
     }
 }
 
 private class PropertyMerger {
-    func mergeProperties(first property1: ActionProperties, second property2: ActionProperties, from1Over2: Bool) -> ActionProperties {
+    func mergeProperties(first property1: ActionProperties,
+                         second property2: ActionProperties,
+                         from1Over2: Bool) -> ActionProperties {
         if from1Over2 {
             return property1.merged(over: property2)
         } else {
@@ -376,7 +407,9 @@ private class PropertyMerger {
         }
     }
 
-    func mergeProperties(first property1: AdvertisementProperties, second property2: AdvertisementProperties, from1Over2: Bool) -> AdvertisementProperties {
+    func mergeProperties(first property1: AdvertisementProperties,
+                         second property2: AdvertisementProperties,
+                         from1Over2: Bool) -> AdvertisementProperties {
         if from1Over2 {
             return property1.merged(over: property2)
         } else {
@@ -384,7 +417,9 @@ private class PropertyMerger {
         }
     }
 
-    func mergeProperties(first property1: EcommerceProperties, second property2: EcommerceProperties, from1Over2: Bool) -> EcommerceProperties {
+    func mergeProperties(first property1: EcommerceProperties,
+                         second property2: EcommerceProperties,
+                         from1Over2: Bool) -> EcommerceProperties {
 
         if from1Over2 {
             return property1.merged(over: property2)
@@ -393,7 +428,9 @@ private class PropertyMerger {
         }
     }
 
-    func mergeProperties(first property1: MediaProperties, second property2: MediaProperties, from1Over2: Bool) -> MediaProperties {
+    func mergeProperties(first property1: MediaProperties,
+                         second property2: MediaProperties,
+                         from1Over2: Bool) -> MediaProperties {
         if from1Over2 {
             return property1.merged(over: property2)
         } else {
@@ -401,7 +438,9 @@ private class PropertyMerger {
         }
     }
 
-    func mergeProperties(first property1: PageProperties, second property2: PageProperties, from1Over2: Bool) -> PageProperties {
+    func mergeProperties(first property1: PageProperties,
+                         second property2: PageProperties,
+                         from1Over2: Bool) -> PageProperties {
         if from1Over2 {
             return property1.merged(over: property2)
         } else {
@@ -409,7 +448,9 @@ private class PropertyMerger {
         }
     }
 
-    func mergeProperties(first property1: [Int: TrackingValue], second property2: [Int: TrackingValue], from1Over2: Bool) -> [Int: TrackingValue] {
+    func mergeProperties(first property1: [Int: TrackingValue],
+                         second property2: [Int: TrackingValue],
+                         from1Over2: Bool) -> [Int: TrackingValue] {
         if from1Over2 {
             return property1.merged(over: property2)
         } else {
@@ -417,7 +458,9 @@ private class PropertyMerger {
         }
     }
 
-    func mergeProperties(first property1: UserProperties, second property2: UserProperties, from1Over2: Bool) -> UserProperties {
+    func mergeProperties(first property1: UserProperties,
+                         second property2: UserProperties,
+                         from1Over2: Bool) -> UserProperties {
         if from1Over2 {
             return property1.merged(over: property2)
         } else {

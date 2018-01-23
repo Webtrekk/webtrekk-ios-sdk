@@ -42,13 +42,19 @@ class UIFlowObserver: NSObject {
 
         #if !os(watchOS)
             let notificationCenter = NotificationCenter.default
-            applicationDidBecomeActiveObserver = notificationCenter.addObserver(forName: NSNotification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil) { [weak self] _ in
+            applicationDidBecomeActiveObserver = notificationCenter.addObserver(forName: NSNotification.Name.UIApplicationDidBecomeActive,
+                                                                                object: nil,
+                                                                                queue: nil) { [weak self] _ in
             self?.WTapplicationDidBecomeActive()
             }
-            applicationWillEnterForegroundObserver = notificationCenter.addObserver(forName: NSNotification.Name.UIApplicationWillEnterForeground, object: nil, queue: nil) { [weak self] _ in
+            applicationWillEnterForegroundObserver = notificationCenter.addObserver(forName: NSNotification.Name.UIApplicationWillEnterForeground,
+                                                                                    object: nil,
+                                                                                    queue: nil) { [weak self] _ in
             self?.WTapplicationWillEnterForeground()
             }
-            applicationWillResignActiveObserver = notificationCenter.addObserver(forName: NSNotification.Name.UIApplicationWillResignActive, object: nil, queue: nil) { [weak self] _ in
+            applicationWillResignActiveObserver = notificationCenter.addObserver(forName: NSNotification.Name.UIApplicationWillResignActive,
+                                                                                 object: nil,
+                                                                                 queue: nil) { [weak self] _ in
             self?.WTapplicationWillResignActive()
             }
             return true
@@ -60,12 +66,21 @@ class UIFlowObserver: NSObject {
             }
 
             // add methods to delegateClass
-            let replacedMethods = [#selector(WTapplicationWillResignActive), #selector(WTapplicationWillEnterForeground), #selector(WTapplicationDidEnterBackground), #selector(WTapplicationDidBecomeActive)]
-            let extentionOriginalMethodNames = ["applicationWillResignActive", "applicationDidBecomeActive", "applicationDidEnterBackground", "applicationDidBecomeActive"]
+            let replacedMethods = [#selector(WTapplicationWillResignActive),
+                                   #selector(WTapplicationWillEnterForeground),
+                                   #selector(WTapplicationDidEnterBackground),
+                                   #selector(WTapplicationDidBecomeActive)]
+            let extentionOriginalMethodNames = ["applicationWillResignActive",
+                                                "applicationDidBecomeActive",
+                                                "applicationDidEnterBackground",
+                                                "applicationDidBecomeActive"]
 
             for i in 0..<replacedMethods.count {
 
-                guard replaceImplementationFromAnotherClass(toClass: delegateClass, methodChanged: Selector(extentionOriginalMethodNames[i]), fromClass: UIFlowObserver.self, methodAdded: replacedMethods[i]) else {
+                guard replaceImplementationFromAnotherClass(toClass: delegateClass,
+                                                            methodChanged: Selector(extentionOriginalMethodNames[i]),
+                                                            fromClass: UIFlowObserver.self,
+                                                            methodAdded: replacedMethods[i]) else {
                     logError("Can't initialize WatchApp setup. See log above for details.")
                     return false
                 }

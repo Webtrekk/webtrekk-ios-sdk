@@ -2,7 +2,7 @@ import Foundation
 
 internal struct XmlElement {
 
-	internal var attributes: [String : String]
+	internal var attributes: [String: String]
 	internal var children: [XmlElement]
 	internal var path: [String]
 	internal var text: String
@@ -11,7 +11,7 @@ internal struct XmlElement {
 		return path.last ?? ""
 	}
 
-	internal init(attributes: [String : String], children: [XmlElement], path: [String], text: String) {
+	internal init(attributes: [String: String], children: [XmlElement], path: [String], text: String) {
 		self.attributes = attributes
 		self.children = children
 		self.path = path
@@ -59,12 +59,12 @@ private final class ActualParser: NSObject {
 
 	fileprivate final class ElementBuilder {
 
-		fileprivate let attributes: [String : String]
+		fileprivate let attributes: [String: String]
 		fileprivate var children = [XmlElement]()
 		fileprivate let path: [String]
 		fileprivate var text = ""
 
-		fileprivate init(attributes: [String : String], path: [String]) {
+		fileprivate init(attributes: [String: String], path: [String]) {
 			self.attributes = attributes
 			self.path = path
 		}
@@ -104,7 +104,7 @@ extension ActualParser: XMLParserDelegate {
 	}
 
 	@objc
-	fileprivate func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName: String?, attributes: [String : String]) {
+	fileprivate func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName: String?, attributes: [String: String]) {
 		currentText = ""
 		elementPath.append(elementName)
 

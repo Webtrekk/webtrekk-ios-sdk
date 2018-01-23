@@ -1,6 +1,4 @@
 disabled_rules: # rule identifiers to exclude from running
-  - line_length
-  - colon
   - force_cast
   - force_try
   - function_parameter_count
@@ -13,7 +11,6 @@ disabled_rules: # rule identifiers to exclude from running
   - type_body_length
   - function_body_length
   - todo
-  - empty_count
   - unused_optional_binding
   - shorthand_operator
   - unused_closure_parameter
@@ -39,7 +36,7 @@ excluded: # paths to ignore during linting. Takes precedence over `included`.
 #  severity: warning # explicitly
 ## rules that have both warning and error levels, can set just the warning level
 ## implicitly
-#line_length: 110
+line_length: 168
 ## they can set both implicitly with an array
 #type_body_length:
 #  - 300 # warning
@@ -76,5 +73,5 @@ identifier_name:
     - recommendation_api_deactivated
     - no_account_id_found
     - no_placement_found
-reporter: "xcode" # reporter type (xcode, json, csv, checkstyle, junit, html, emoji)
+reporter: "emoji" # reporter type (xcode, json, csv, checkstyle, junit, html, emoji)
 

@@ -1,43 +1,43 @@
 /** Enhance tracking by adding properties to track users across different devices. */
 public struct CrossDeviceProperties {
 
-	public var address: AnonymizableValue<Address>?
-	public var androidId: String?
-	public var emailAddress: AnonymizableValue<String>?
-	public var facebookId: String?
-	public var googlePlusId: String?
-	public var iosId: String?
-	public var linkedInId: String?
-	public var phoneNumber: AnonymizableValue<String>?
-	public var twitterId: String?
-	public var windowsId: String?
-	// custom CDB parameters, valid keys are 1 to 29:
+    public var address: AnonymizableValue<Address>?
+    public var androidId: String?
+    public var emailAddress: AnonymizableValue<String>?
+    public var facebookId: String?
+    public var googlePlusId: String?
+    public var iosId: String?
+    public var linkedInId: String?
+    public var phoneNumber: AnonymizableValue<String>?
+    public var twitterId: String?
+    public var windowsId: String?
+    // custom CDB parameters, valid keys are 1 to 29:
     public var custom: [Int: String]?
 
-	public init(
-		address: AnonymizableValue<Address>? = nil,
-		androidId: String? = nil,
-		emailAddress: AnonymizableValue<String>? = nil,
-		facebookId: String? = nil,
-		googlePlusId: String? = nil,
-		iosId: String? = nil,
-		linkedInId: String? = nil,
-		phoneNumber: AnonymizableValue<String>? = nil,
-		twitterId: String? = nil,
-		windowsId: String? = nil,
-		custom: [Int: String]? = nil
-		) {
-		self.address = address
-		self.androidId = androidId
-		self.emailAddress = emailAddress
-		self.facebookId = facebookId
-		self.googlePlusId = googlePlusId
-		self.iosId = iosId
-		self.linkedInId = linkedInId
-		self.phoneNumber = phoneNumber
-		self.twitterId = twitterId
-		self.windowsId = windowsId
-		self.custom = custom
+    public init(
+        address: AnonymizableValue<Address>? = nil,
+        androidId: String? = nil,
+        emailAddress: AnonymizableValue<String>? = nil,
+        facebookId: String? = nil,
+        googlePlusId: String? = nil,
+        iosId: String? = nil,
+        linkedInId: String? = nil,
+        phoneNumber: AnonymizableValue<String>? = nil,
+        twitterId: String? = nil,
+        windowsId: String? = nil,
+        custom: [Int: String]? = nil
+        ) {
+        self.address = address
+        self.androidId = androidId
+        self.emailAddress = emailAddress
+        self.facebookId = facebookId
+        self.googlePlusId = googlePlusId
+        self.iosId = iosId
+        self.linkedInId = linkedInId
+        self.phoneNumber = phoneNumber
+        self.twitterId = twitterId
+        self.windowsId = windowsId
+        self.custom = custom
         }
 
     init (_ json: [String: Any?]) {
@@ -53,7 +53,7 @@ public struct CrossDeviceProperties {
         if let jsonAdress = json["address"] as? [String: Any?] {
             if (jsonAdress["md5"] ?? jsonAdress["sha256"]) != nil {
                 self.address = .hashed(md5: json["md5"] as? String, sha256: json["sha256"] as? String)
-            } else if let plain = jsonAdress["plain"] as? [String:Any?] {
+            } else if let plain = jsonAdress["plain"] as? [String: Any?] {
                 self.address = .plain(Address(plain))
             }
         }
@@ -99,27 +99,27 @@ public struct CrossDeviceProperties {
             custom == nil
     }
 
-	public struct Address {
+    public struct Address {
 
-		public var firstName: String?
-		public var lastName: String?
-		public var street: String?
-		public var streetNumber: String?
-		public var zipCode: String?
+        public var firstName: String?
+        public var lastName: String?
+        public var street: String?
+        public var streetNumber: String?
+        public var zipCode: String?
 
-		public init(
-			firstName: String? = nil,
-			lastName: String? = nil,
-			street: String? = nil,
-			streetNumber: String? = nil,
-			zipCode: String? = nil
-		) {
-			self.firstName = firstName
-			self.lastName = lastName
-			self.street = street
-			self.streetNumber = streetNumber
-			self.zipCode = zipCode
-		}
+        public init(
+            firstName: String? = nil,
+            lastName: String? = nil,
+            street: String? = nil,
+            streetNumber: String? = nil,
+            zipCode: String? = nil
+        ) {
+            self.firstName = firstName
+            self.lastName = lastName
+            self.street = street
+            self.streetNumber = streetNumber
+            self.zipCode = zipCode
+        }
 
         init (_ json: [String: Any?]) {
             self.firstName = json["firstName"] as? String
@@ -139,24 +139,24 @@ public struct CrossDeviceProperties {
             ]
             return jsonObj
         }
-	}
+    }
 
     // merges other CDB properties into it (the other properties have lower priority during merging)
-	internal func merged(over other: CrossDeviceProperties) -> CrossDeviceProperties {
-		return CrossDeviceProperties(
-			address:      address ?? other.address,
-			androidId:    androidId ?? other.androidId,
-			emailAddress: emailAddress ?? other.emailAddress,
-			facebookId:   facebookId ?? other.facebookId,
-			googlePlusId: googlePlusId ?? other.googlePlusId,
-			iosId:        iosId ?? other.iosId,
-			linkedInId:   linkedInId ?? other.linkedInId,
-			phoneNumber:  phoneNumber ?? other.phoneNumber,
-			twitterId:    twitterId ?? other.twitterId,
-			windowsId:    windowsId ?? other.windowsId,
-			custom:       custom.merged(over: other.custom)
-		)
-	}
+    internal func merged(over other: CrossDeviceProperties) -> CrossDeviceProperties {
+        return CrossDeviceProperties(
+            address: address ?? other.address,
+            androidId: androidId ?? other.androidId,
+            emailAddress: emailAddress ?? other.emailAddress,
+            facebookId: facebookId ?? other.facebookId,
+            googlePlusId: googlePlusId ?? other.googlePlusId,
+            iosId: iosId ?? other.iosId,
+            linkedInId: linkedInId ?? other.linkedInId,
+            phoneNumber: phoneNumber ?? other.phoneNumber,
+            twitterId: twitterId ?? other.twitterId,
+            windowsId: windowsId ?? other.windowsId,
+            custom: custom.merged(over: other.custom)
+        )
+    }
 
     private func toJSONObj() -> [String: Any?] {
         var jsonObj: [String: Any?] = [
@@ -173,8 +173,8 @@ public struct CrossDeviceProperties {
         ]
 
         // add the custom cdb variables (they just need to be coverted from [Int:String] to [String:String?])
-        if let c = custom, c.isEmpty {
-            var customDict = [String:String?]()
+        if let c = custom, !c.isEmpty {
+            var customDict = [String: String?]()
             for (key, value) in c {
                 customDict[String(key)] = value
             }

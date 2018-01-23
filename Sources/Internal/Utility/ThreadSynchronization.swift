@@ -9,9 +9,9 @@ class SimpleSync<T> {
         valueInst = value
     }
 
-    var value : T {
+    var value: T {
         get {
-            var value : T?
+            var value: T?
             self.thread.sync() {
                 value = self.valueInst
             }
@@ -42,32 +42,32 @@ class ArraySync<T> {
         valueInst = [T]()
     }
 
-    var first : T? {
-        var value : T?
+    var first: T? {
+        var value: T?
         self.thread.sync() {
             value = self.valueInst.first
         }
         return value
     }
 
-    var last : T? {
-        var value : T?
+    var last: T? {
+        var value: T?
         self.thread.sync() {
             value = self.valueInst.last
         }
         return value
     }
 
-    var count : Int {
-        var value : Int?
+    var count: Int {
+        var value: Int?
         self.thread.sync() {
             value = self.valueInst.count
         }
         return value!
     }
 
-    var isEmpty : Bool {
-        var value : Bool?
+    var isEmpty: Bool {
+        var value: Bool?
         self.thread.sync() {
             value = self.valueInst.isEmpty
         }
@@ -94,7 +94,7 @@ class ArraySync<T> {
 
     subscript(index: Int) -> T {
         get {
-            var value : T?
+            var value: T?
             self.thread.sync() {
                 value = self.valueInst[index]
             }

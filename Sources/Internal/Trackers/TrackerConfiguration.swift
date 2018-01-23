@@ -48,7 +48,8 @@ internal struct TrackerConfiguration {
 	/** Url of the tracking server. */
 	internal var serverUrl: URL
 
-	/** The version is used to compare the current configuration with a remote configuration and to decide whether there is an update for the configuration available. */
+	/** The version is used to compare the current configuration with a remote configuration
+        and to decide whether there is an update for the configuration available. */
 	internal var version = 1
 
 	/** The unique identifier of your webtrekk account. */
@@ -66,7 +67,7 @@ internal struct TrackerConfiguration {
 	#endif
 
     //list of recommendations
-    internal var recommendations : [String: URL]?
+    internal var recommendations: [String: URL]?
 
     //error tracking
     internal var errorLogLevel: Int?
@@ -125,7 +126,9 @@ internal struct TrackerConfiguration {
 		}
 
 		fileprivate func matches(viewControllerTypeName: String) -> Bool {
-			return viewControllerTypeNamePattern.rangeOfFirstMatch(in: viewControllerTypeName, options: [], range: NSRange(forString: viewControllerTypeName)).location != NSNotFound
+			return viewControllerTypeNamePattern.rangeOfFirstMatch(in: viewControllerTypeName,
+                                                                   options: [],
+                                                                   range: NSRange(forString: viewControllerTypeName)).location != NSNotFound
 		}
 	}
 }

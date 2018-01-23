@@ -46,11 +46,11 @@ public struct EcommerceProperties {
     internal func merged(over other: EcommerceProperties) -> EcommerceProperties {
         return EcommerceProperties(
             currencyCode: self.currencyCode ?? other.currencyCode,
-            details:      self.details.merged(over: other.details),
-            orderNumber:  self.orderNumber ?? other.orderNumber,
-            products:     self.mergedProducts(products: products, over: other.products),
-            status:       self.status ?? other.status,
-            totalValue:   self.totalValue ?? other.totalValue,
+            details: self.details.merged(over: other.details),
+            orderNumber: self.orderNumber ?? other.orderNumber,
+            products: self.mergedProducts(products: products, over: other.products),
+            status: self.status ?? other.status,
+            totalValue: self.totalValue ?? other.totalValue,
             voucherValue: self.voucherValue ?? other.voucherValue,
             paymentMethod: self.paymentMethod ?? other.paymentMethod,
             shippingService: self.shippingService ?? other.shippingService,
@@ -71,19 +71,59 @@ public struct EcommerceProperties {
             return products
         }
 
-        var names: [String] = [], overNames: [String] = [], mergedNames: [String]
-        var prices: [String?] = [], overPrices: [String?] = [], mergedPrices : [String?]
-        var quantities : [Int?] = [], overQuantities : [Int?] = [], mergedQuantities : [Int?]
-        var positions : [Int?] = [], overPositions : [Int?] = [], mergedPositions : [Int?]
-        var margins: [Float?] = [], overMargins: [Float?] = [], mergedMargins : [Float?]
-        var variants: [String?] = [], overVariants: [String?] = [], mergedVariants : [String?]
-        var vouchers: [String?] = [], overVouchers: [String?] = [], mergedVouchers : [String?]
-        var soldOuts: [Bool?] = [], overSoldOuts: [Bool?] = [], mergedSoldOuts : [Bool?]
-        var categories: [[Int: TrackingValue]?] = [], overCategories: [[Int: TrackingValue]?] = [], mergedCategories: [[Int: TrackingValue]?] = []
-        var details: [[Int: TrackingValue]?] = [], overDetails: [[Int: TrackingValue]?] = [], mergedDetails: [[Int: TrackingValue]?] = []
+        var names: [String] = [],
+            overNames: [String] = [],
+            mergedNames: [String]
+        var prices: [String?] = [],
+            overPrices: [String?] = [],
+            mergedPrices: [String?]
+        var quantities: [Int?] = [],
+            overQuantities: [Int?] = [],
+            mergedQuantities: [Int?]
+        var positions: [Int?] = [],
+            overPositions: [Int?] = [],
+            mergedPositions: [Int?]
+        var margins: [Float?] = [],
+            overMargins: [Float?] = [],
+            mergedMargins: [Float?]
+        var variants: [String?] = [],
+            overVariants: [String?] = [],
+            mergedVariants: [String?]
+        var vouchers: [String?] = [],
+            overVouchers: [String?] = [],
+            mergedVouchers: [String?]
+        var soldOuts: [Bool?] = [],
+            overSoldOuts: [Bool?] = [],
+            mergedSoldOuts: [Bool?]
+        var categories: [[Int: TrackingValue]?] = [],
+            overCategories: [[Int: TrackingValue]?] = [],
+            mergedCategories: [[Int: TrackingValue]?] = []
+        var details: [[Int: TrackingValue]?] = [],
+            overDetails: [[Int: TrackingValue]?] = [],
+            mergedDetails: [[Int: TrackingValue]?] = []
 
-        transformFromProductList(products: products, names: &names, prices: &prices, quantities: &quantities, categories: &categories, positions: &positions, details: &details, margins: &margins, variants: &variants, vouchers: &vouchers, soldOuts: &soldOuts)
-        transformFromProductList(products: over, names: &overNames, prices: &overPrices, quantities: &overQuantities, categories: &overCategories, positions: &overPositions, details: &overDetails, margins: &overMargins, variants: &overVariants, vouchers: &overVouchers, soldOuts: &overSoldOuts)
+        transformFromProductList(products: products,
+                                 names: &names,
+                                 prices: &prices,
+                                 quantities: &quantities,
+                                 categories: &categories,
+                                 positions: &positions,
+                                 details: &details,
+                                 margins: &margins,
+                                 variants: &variants,
+                                 vouchers: &vouchers,
+                                 soldOuts: &soldOuts)
+        transformFromProductList(products: over,
+                                 names: &overNames,
+                                 prices: &overPrices,
+                                 quantities: &overQuantities,
+                                 categories: &overCategories,
+                                 positions: &overPositions,
+                                 details: &overDetails,
+                                 margins: &overMargins,
+                                 variants: &overVariants,
+                                 vouchers: &overVouchers,
+                                 soldOuts: &overSoldOuts)
 
         mergedNames = !names.isEmpty ? names : overNames
         mergedPrices = !prices.isEmpty ? prices : overPrices
@@ -101,7 +141,7 @@ public struct EcommerceProperties {
             if i1 >= overCategories.count {
                 mergedCategories.append(categories[i1])
             } else {
-                mergedCategories.append(i1 < categories.count ? categories[i1].merged(over:overCategories[i1]) : overCategories[i1])
+                mergedCategories.append(i1 < categories.count ? categories[i1].merged(over: overCategories[i1]) : overCategories[i1])
             }
         }
 
@@ -111,17 +151,33 @@ public struct EcommerceProperties {
             if i2 >= overDetails.count {
                 mergedDetails.append(details[i2])
             } else {
-                mergedDetails.append(i2 < details.count ? details[i2].merged(over:overDetails[i2]) : overDetails[i2])
+                mergedDetails.append(i2 < details.count ? details[i2].merged(over: overDetails[i2]) : overDetails[i2])
             }
         }
 
-        return transformToProductList(names: mergedNames, prices: mergedPrices, quantities: mergedQuantities, categories: mergedCategories, positions: mergedPositions, details: mergedDetails, margins: mergedMargins, variants: mergedVariants, vouchers: mergedVouchers, soldOuts: mergedSoldOuts)
+        return transformToProductList(names: mergedNames,
+                                      prices: mergedPrices,
+                                      quantities: mergedQuantities,
+                                      categories: mergedCategories,
+                                      positions: mergedPositions,
+                                      details: mergedDetails,
+                                      margins: mergedMargins,
+                                      variants: mergedVariants,
+                                      vouchers: mergedVouchers,
+                                      soldOuts: mergedSoldOuts)
     }
 
-    private func transformFromProductList(products: [Product], names: inout [String], prices: inout [String?],
-                                          quantities: inout [Int?], categories localCategories: inout [[Int: TrackingValue]?],
-                                          positions: inout [Int?], details localDetails: inout [[Int: TrackingValue]?], margins: inout [Float?],
-                                          variants: inout [String?], vouchers: inout [String?], soldOuts: inout [Bool?]) {
+    private func transformFromProductList(products: [Product],
+                                          names: inout [String],
+                                          prices: inout [String?],
+                                          quantities: inout [Int?],
+                                          categories localCategories: inout [[Int: TrackingValue]?],
+                                          positions: inout [Int?],
+                                          details localDetails: inout [[Int: TrackingValue]?],
+                                          margins: inout [Float?],
+                                          variants: inout [String?],
+                                          vouchers: inout [String?],
+                                          soldOuts: inout [Bool?]) {
 
         guard products.isEmpty else {
             return
@@ -145,12 +201,25 @@ public struct EcommerceProperties {
     }
 
     // assume that array is size of names size
-    private func transformToProductList(names: [String], prices: [String?], quantities: [Int?],
-                                        categories: [[Int: TrackingValue]?], positions: [Int?],
-                                        details: [[Int: TrackingValue]?], margins: [Float?],
-                                        variants: [String?], vouchers: [String?], soldOuts: [Bool?]) -> [Product]? {
+    private func transformToProductList(names: [String], prices: [String?],
+                                        quantities: [Int?],
+                                        categories: [[Int: TrackingValue]?],
+                                        positions: [Int?],
+                                        details: [[Int: TrackingValue]?],
+                                        margins: [Float?],
+                                        variants: [String?],
+                                        vouchers: [String?],
+                                        soldOuts: [Bool?]) -> [Product]? {
 
-        let size = max (names.count, prices.count, quantities.count, !categories.isEmpty ? 1 : 0, !details.isEmpty ? 1 : 0, margins.count, variants.count, vouchers.count, soldOuts.count)
+        let size = max (names.count,
+                        prices.count,
+                        quantities.count,
+                        !categories.isEmpty ? 1 : 0,
+                        !details.isEmpty ? 1 : 0,
+                        margins.count,
+                        variants.count,
+                        vouchers.count,
+                        soldOuts.count)
 
         guard size > 0 else {
             return nil
@@ -214,7 +283,7 @@ public struct EcommerceProperties {
             self.soldOut = soldOut
         }
 
-        var soldOutStr : String? {
+        var soldOutStr: String? {
             guard let soldOut = self.soldOut else {
                 return nil
             }
@@ -232,7 +301,7 @@ public struct EcommerceProperties {
 }
 
 extension String {
-    var isQuantity : Bool {
+    var isQuantity: Bool {
         get {
             return self.isEmpty && self.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil
         }
@@ -240,7 +309,7 @@ extension String {
 }
 
 extension Float {
-    var string : String {
+    var string: String {
         return String(describing: self)
     }
 }

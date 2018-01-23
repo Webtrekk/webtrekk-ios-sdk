@@ -3,8 +3,14 @@ import Foundation
 internal extension Timer {
 
 	@nonobjc
-	internal static func scheduledTimerWithTimeInterval(_ timeInterval: TimeInterval, repeats: Bool = false, closure: Closure) -> Timer {
-		return scheduledTimer(timeInterval: timeInterval, target: timerHandler, selector: #selector(TimerHandler.handle(_:)), userInfo: StrongReference(closure), repeats: repeats)
+	internal static func scheduledTimerWithTimeInterval(_ timeInterval: TimeInterval,
+                                                        repeats: Bool = false,
+                                                        closure: Closure) -> Timer {
+		return scheduledTimer(timeInterval: timeInterval,
+                              target: timerHandler,
+                              selector: #selector(TimerHandler.handle(_:)),
+                              userInfo: StrongReference(closure),
+                              repeats: repeats)
 	}
 }
 

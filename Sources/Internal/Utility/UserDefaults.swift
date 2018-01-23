@@ -3,7 +3,7 @@ import Foundation
 internal final class UserDefaults {
 
 	internal static let standardDefaults = UserDefaults(source: Foundation.UserDefaults.standard, keyPrefix: "")
-    private static let separator : String = "."
+    private static let separator: String = "."
 
 	fileprivate let keyPrefix: String
 	fileprivate let source: Foundation.UserDefaults
@@ -45,8 +45,8 @@ internal final class UserDefaults {
         return objectForKey(key) as? UInt64
     }
 
-    internal func dictForKey(_ key: String) -> [String:String?]? {
-        return objectForKey(key) as? [String:String]
+    internal func dictForKey(_ key: String) -> [String: String?]? {
+        return objectForKey(key) as? [String: String]
     }
 
 	internal func remove(key: String) {
@@ -57,7 +57,7 @@ internal final class UserDefaults {
 		return objectForKey(key) as? String
 	}
 
-    internal func set(key: String, to value: [String:String?]?) {
+    internal func set(key: String, to value: [String: String?]?) {
         set(key: key, to: value as AnyObject?)
     }
 

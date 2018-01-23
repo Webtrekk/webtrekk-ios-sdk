@@ -15,8 +15,11 @@ internal extension UIViewController {
 
 	@nonobjc
 	internal var applicationDidBecomeActiveObserver: NSObjectProtocol? {
-		get { return objc_getAssociatedObject(self, &AssociatedKeys.applicationDidBecomeActiveObserver) as? NSObjectProtocol }
-		set { objc_setAssociatedObject(self, &AssociatedKeys.applicationDidBecomeActiveObserver, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+		get { return objc_getAssociatedObject(self,
+                                              &AssociatedKeys.applicationDidBecomeActiveObserver) as? NSObjectProtocol }
+		set { objc_setAssociatedObject(self,
+                                       &AssociatedKeys.applicationDidBecomeActiveObserver,
+                                       newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
 	}
 
 	@nonobjc
@@ -27,8 +30,11 @@ internal extension UIViewController {
 	@nonobjc
 	internal var automaticTracker: PageTracker {
 		return objc_getAssociatedObject(self, &AssociatedKeys.automaticTracker) as? PageTracker ?? {
-			let tracker = DefaultPageTracker(handler: DefaultTracker.autotrackingEventHandler, viewControllerType: type(of: self))
-			objc_setAssociatedObject(self, &AssociatedKeys.automaticTracker, tracker, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+			let tracker = DefaultPageTracker(handler: DefaultTracker.autotrackingEventHandler,
+                                             viewControllerType: type(of: self))
+			objc_setAssociatedObject(self, &AssociatedKeys.automaticTracker,
+                                     tracker,
+                                     .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
 			return tracker
 		}()
 	}
@@ -41,8 +47,12 @@ internal extension UIViewController {
 
 		swizzled = true
 
-		_ = swizzleMethod(ofType: UIViewController.self, fromSelector: #selector(viewDidAppear(_:)), toSelector: #selector(swizzled_viewDidAppear(_:)))
-		_ = swizzleMethod(ofType: UIViewController.self, fromSelector: #selector(viewWillDisappear(_:)), toSelector: #selector(swizzled_viewWillDisappear(_:)))
+		_ = swizzleMethod(ofType: UIViewController.self,
+                          fromSelector: #selector(viewDidAppear(_:)),
+                          toSelector: #selector(swizzled_viewDidAppear(_:)))
+		_ = swizzleMethod(ofType: UIViewController.self,
+                          fromSelector: #selector(viewWillDisappear(_:)),
+                          toSelector: #selector(swizzled_viewWillDisappear(_:)))
 	}
 
 	@objc(Webtrekk_viewDidAppear:)
@@ -52,7 +62,9 @@ internal extension UIViewController {
 		automaticTracker.trackPageView()
 
 		if applicationDidBecomeActiveObserver == nil {
-			applicationDidBecomeActiveObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil) { [weak self] _ in
+			applicationDidBecomeActiveObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidBecomeActive,
+                                                                                        object: nil,
+                                                                                        queue: nil) { [weak self] _ in
 				self?.applicationDidBecomeActiveWhileAppeared()
 			}
 		}

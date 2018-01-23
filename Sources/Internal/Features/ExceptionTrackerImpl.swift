@@ -11,16 +11,33 @@ private func exceptionHandler(exception: NSException) {
     }
 
     //Save exception to file
-    WebtrekkTracking.defaultLogger.logDebug("Webtrekk catched exception: \(exception), callStack: \(exception.callStackSymbols), reason: \(exception.reason ?? "nil"), name: \(exception.name), user info: \(String(describing: exception.userInfo)), return address: \(exception.callStackReturnAddresses)")
+    WebtrekkTracking.defaultLogger.logDebug("""
+            Webtrekk catched exception: \(exception),
+            callStack: \(exception.callStackSymbols),
+            reason: \(exception.reason ?? "nil"),
+            name: \(exception.name),
+            user info: \(String(describing: exception.userInfo)),
+            return address: \(exception.callStackReturnAddresses)
+        """)
 
-    ExceptionSaveAndSendHelper.default.saveToFile(name: exception.name.rawValue, stack: exception.callStackSymbols, reason: exception.reason, userInfo: exception.userInfo as NSDictionary?, stackReturnAddress: exception.callStackReturnAddresses)
+    ExceptionSaveAndSendHelper.default.saveToFile(name: exception.name.rawValue,
+                                                  stack: exception.callStackSymbols,
+                                                  reason: exception.reason,
+                                                  userInfo: exception.userInfo as NSDictionary?,
+                                                  stackReturnAddress: exception.callStackReturnAddresses)
 }
 
 #if !os(watchOS)
 //these function should be global due to requriements to signal handler API
 private func signalHandler(signalNum: Int32) {
 
-    let signalsMap: [Int32: String] = [4:"SIGILL", 5: "SIGTRAP", 6:"SIGABRT", 8:"SIGFPE", 10:"SIGBUS", 11:"SIGSEGV", 13:"SIGPIPE"]
+    let signalsMap: [Int32: String] = [4: "SIGILL",
+                                       5: "SIGTRAP",
+                                       6: "SIGABRT",
+                                       8: "SIGFPE",
+                                       10: "SIGBUS",
+                                       11: "SIGSEGV",
+                                       13: "SIGPIPE"]
     //Save exception to file
     defer {
         if let oldSignal = ExceptionTrackerImpl.previousSignalHandlers[signalNum] {
@@ -31,12 +48,18 @@ private func signalHandler(signalNum: Int32) {
     }
 
     //Save exception to file
-    WebtrekkTracking.defaultLogger.logDebug("Webtrekk catched signal: \(signalsMap[signalNum] ?? "undefined") with dump: \(Thread.callStackSymbols)")
+    WebtrekkTracking.defaultLogger.logDebug("""
+            Webtrekk catched signal: \(signalsMap[signalNum] ?? "undefined") with dump: \(Thread.callStackSymbols)
+        """)
 
     // remove first two items as this is handler function items.
     let stack = Array(Thread.callStackSymbols.suffix(from: 2))
 
-    ExceptionSaveAndSendHelper.default.saveToFile(name: "Signal: \(signalsMap[signalNum] ?? "undefined")", stack: stack, reason: nil, userInfo: nil, stackReturnAddress: nil)
+    ExceptionSaveAndSendHelper.default.saveToFile(name: "Signal: \(signalsMap[signalNum] ?? "undefined")",
+                                                  stack: stack,
+                                                  reason: nil,
+                                                  userInfo: nil,
+                                                  stackReturnAddress: nil)
 }
 #endif
 
@@ -69,7 +92,7 @@ class ExceptionTrackerImpl: ExceptionTracker {
         }
 
         if let errorLogLevel = config.errorLogLevel, (0...3).contains(errorLogLevel) {
-            self.errorLogLevel = ErrorLogLevel(rawValue:errorLogLevel)!
+            self.errorLogLevel = ErrorLogLevel(rawValue: errorLogLevel)!
         }
 
         guard satisfyToLevel(level: .fatal) else {
@@ -141,7 +164,9 @@ class ExceptionTrackerImpl: ExceptionTracker {
         }
 
         guard satisfyToLevel(level: .info) else {
-            WebtrekkTracking.defaultLogger.logDebug("Tracking level isn't correspond to info/warning level. No tracking will be done.")
+            WebtrekkTracking.defaultLogger.logDebug("""
+                    Tracking level isn't correspond to info/warning level. No tracking will be done.
+                """)
             return
         }
 
@@ -155,11 +180,18 @@ class ExceptionTrackerImpl: ExceptionTracker {
         }
 
         guard satisfyToLevel(level: .catched) else {
-            WebtrekkTracking.defaultLogger.logDebug("Tracking level isn't correspond to caught/exception level. No tracking will be done.")
+            WebtrekkTracking.defaultLogger.logDebug("""
+                    Tracking level isn't correspond to caught/exception level. No tracking will be done.
+                """)
             return
         }
 
-        ExceptionSaveAndSendHelper.default.track(logLevel: self.errorLogLevel, name: exception.name.rawValue, stack: exception.callStackSymbols, message: exception.reason, userInfo: exception.userInfo as NSDictionary?, stackReturnAddress: exception.callStackReturnAddresses)
+        ExceptionSaveAndSendHelper.default.track(logLevel: self.errorLogLevel,
+                                                 name: exception.name.rawValue,
+                                                 stack: exception.callStackSymbols,
+                                                 message: exception.reason,
+                                                 userInfo: exception.userInfo as NSDictionary?,
+                                                 stackReturnAddress: exception.callStackReturnAddresses)
     }
 
     func trackError(_ error: Error) {
@@ -168,11 +200,15 @@ class ExceptionTrackerImpl: ExceptionTracker {
             return
         }
         guard satisfyToLevel(level: .catched) else {
-            WebtrekkTracking.defaultLogger.logDebug("Tracking level isn't correspond to caught/exception level. No tracking will be done.")
+            WebtrekkTracking.defaultLogger.logDebug("""
+                    Tracking level isn't correspond to caught/exception level. No tracking will be done.
+                """)
             return
         }
 
-        ExceptionSaveAndSendHelper.default.track(logLevel: self.errorLogLevel, name: "Error", message: error.localizedDescription)
+        ExceptionSaveAndSendHelper.default.track(logLevel: self.errorLogLevel,
+                                                 name: "Error",
+                                                 message: error.localizedDescription)
     }
 
     func trackNSError(_ error: NSError) {
@@ -182,12 +218,15 @@ class ExceptionTrackerImpl: ExceptionTracker {
         }
 
         guard satisfyToLevel(level: .catched) else {
-            WebtrekkTracking.defaultLogger.logDebug("Tracking level isn't correspond to caught/exception level. No tracking will be done.")
+            WebtrekkTracking.defaultLogger.logDebug("""
+                    Tracking level isn't correspond to caught/exception level. No tracking will be done.
+                """)
             return
         }
 
         ExceptionSaveAndSendHelper.default.track(logLevel: self.errorLogLevel, name: "NSError",
-                                                 message: "code:\(error.code), domain:\(error.domain)", userInfo: error.userInfo as NSDictionary?)
+                                                 message: "code:\(error.code), domain:\(error.domain)",
+                                                 userInfo: error.userInfo as NSDictionary?)
     }
 
     private func checkIfInitialized() -> Bool {
@@ -218,11 +257,13 @@ private class ExceptionSaveAndSendHelper {
      #else
         saveDirectory = .applicationSupportDirectory
      #endif
-       self.applicationSupportDir = FileManager.default.urls(for: saveDirectory, in: .userDomainMask).first?.appendingPathComponent("Webtrekk")
+       self.applicationSupportDir = FileManager.default.urls(for: saveDirectory,
+                                                             in: .userDomainMask).first?.appendingPathComponent("Webtrekk")
     }
 
     private func normalizeStack(stack: [String]?) -> NSString {
-        let returnStack = stack?.joined(separator: "|").replacingOccurrences(of: "\\s{2,}", with: " ", options: .regularExpression, range: nil)
+        let returnStack = stack?.joined(separator: "|")
+                                .replacingOccurrences(of: "\\s{2,}", with: " ", options: .regularExpression, range: nil)
         return normalizeField(field: returnStack, fieldName: "stack")
     }
 
@@ -248,48 +289,70 @@ private class ExceptionSaveAndSendHelper {
         }
 
         guard fieldUtf8.count <= 255 else {
-            WebtrekkTracking.defaultLogger.logWarning("Field \(fieldName) is more then 255 length during excception tracking. Normalize it by cutting to 255 length.")
+            WebtrekkTracking.defaultLogger.logWarning("""
+                    Field \(fieldName) is more then 255 length during excception tracking.
+                    Normalize it by cutting to 255 length.
+                """)
 
             let cutUTF8Field = Array(fieldUtf8.prefix(maxParameterLength))
 
             return cutUTF8Field.withUnsafeBytes { buffer in
-                return NSString(bytes: buffer.baseAddress!, length: maxParameterLength, encoding: String.Encoding.utf8.rawValue)!
+                return NSString(bytes: buffer.baseAddress!,
+                                length: maxParameterLength,
+                                encoding: String.Encoding.utf8.rawValue)!
             }
         }
 
         return NSString(string: field ?? "")
     }
 
-    fileprivate func saveToFile(name: String, stack: [String], reason: String?, userInfo: NSDictionary?, stackReturnAddress: [NSNumber]?) {
-        saveToFile(name: normalizeField(field: name, fieldName: "name"), stack: normalizeStack(stack: stack), reason: normalizeField(field: reason, fieldName: "reason"), userInfo: normalizeUserInfo(userInfo: userInfo), stackReturnAddress: normalizeUserReturnAddress(returnAddress: stackReturnAddress))
+    fileprivate func saveToFile(name: String,
+                                stack: [String],
+                                reason: String?,
+                                userInfo: NSDictionary?,
+                                stackReturnAddress: [NSNumber]?) {
+        saveToFile(name: normalizeField(field: name, fieldName: "name"),
+                   stack: normalizeStack(stack: stack),
+                   reason: normalizeField(field: reason, fieldName: "reason"),
+                   userInfo: normalizeUserInfo(userInfo: userInfo),
+                   stackReturnAddress: normalizeUserReturnAddress(returnAddress: stackReturnAddress))
     }
 
-    private func saveToFile(name: NSString, stack: NSString, reason: NSString, userInfo: NSString, stackReturnAddress: NSString) {
+    private func saveToFile(name: NSString,
+                            stack: NSString,
+                            reason: NSString,
+                            userInfo: NSString,
+                            stackReturnAddress: NSString) {
 
         // get url
         guard let url = newFileURL else {
             return
         }
 
-        let array : NSArray = [name, stack, reason, userInfo, stackReturnAddress]
+        let array: NSArray = [name, stack, reason, userInfo, stackReturnAddress]
 
         //construct string
         guard array.write(to: url, atomically: true) else {
-            WebtrekkTracking.defaultLogger.logError("Can't save exception with url: \(url). Exception tracking won't be done.")
+            WebtrekkTracking.defaultLogger.logError("""
+                    Can't save exception with url: \(url). Exception tracking won't be done.
+                """)
             return
         }
     }
 
-    private var newFileURL : URL? {
+    private var newFileURL: URL? {
 
-        var url : URL
+        var url: URL
         var i: Int = 0
 
         repeat {
             let urlValue = applicationSupportDir?.appendingPathComponent(exceptionFileName+"\(i)"+".xml")
 
             if urlValue == nil {
-                WebtrekkTracking.defaultLogger.logError("Can't define path for saving exception. Exception tracking for fatal exception won't work")
+                WebtrekkTracking.defaultLogger.logError("""
+                        Can't define path for saving exception.
+                        Exception tracking for fatal exception won't work.
+                    """)
                 return nil
             } else {
                 url = urlValue!
@@ -299,10 +362,13 @@ private class ExceptionSaveAndSendHelper {
         return url
     }
 
-    private var existedFileURL : URL? {
+    private var existedFileURL: URL? {
 
         guard let supportDir = applicationSupportDir?.path else {
-            WebtrekkTracking.defaultLogger.logError("can't define path for reading exception. Exception tracking for fatal exception won't work")
+            WebtrekkTracking.defaultLogger.logError("""
+                    Can't define path for reading exception.
+                    Exception tracking for fatal exception won't work.
+                """)
             return nil
         }
 
@@ -341,7 +407,10 @@ private class ExceptionSaveAndSendHelper {
                 do {
                     try FileManager.default.removeItem(atPath: url.path)
                 } catch let error {
-                    WebtrekkTracking.defaultLogger.logError("Serious problem with saved exception file deletion: \(error). Information about exception can be sent several times")
+                    WebtrekkTracking.defaultLogger.logError("""
+                            Serious problem with saved exception file deletion: \(error).
+                            Information about exception can be sent several times.
+                        """)
                 }
             }
 
@@ -350,16 +419,35 @@ private class ExceptionSaveAndSendHelper {
             }
 
             // send action
-            track(logLevel: logLevel, name: array[0], stack: array[1], message: array[2], userInfo: array[3], stackReturnAddress: array[4])
+            track(logLevel: logLevel,
+                  name: array[0],
+                  stack: array[1],
+                  message: array[2],
+                  userInfo: array[3],
+                  stackReturnAddress: array[4])
         }
     }
 
-    fileprivate func track(logLevel: ExceptionTrackerImpl.ErrorLogLevel, name: String, stack: [String]? = nil, message: String? = nil, userInfo: NSDictionary? = nil, stackReturnAddress: [NSNumber]? = nil) {
-        track(logLevel: logLevel, name: normalizeField(field: name, fieldName: "name"), stack: normalizeStack(stack: stack), message: normalizeField(field: message, fieldName: "message/reason"), userInfo: normalizeUserInfo(userInfo: userInfo), stackReturnAddress: normalizeUserReturnAddress(returnAddress: stackReturnAddress))
+    fileprivate func track(logLevel: ExceptionTrackerImpl.ErrorLogLevel,
+                           name: String, stack: [String]? = nil,
+                           message: String? = nil,
+                           userInfo: NSDictionary? = nil,
+                           stackReturnAddress: [NSNumber]? = nil) {
+        track(logLevel: logLevel,
+              name: normalizeField(field: name, fieldName: "name"),
+              stack: normalizeStack(stack: stack),
+              message: normalizeField(field: message, fieldName: "message/reason"),
+              userInfo: normalizeUserInfo(userInfo: userInfo),
+              stackReturnAddress: normalizeUserReturnAddress(returnAddress: stackReturnAddress))
     }
 
     // common function for tracking exception field message can be as message and reason
-    private func track(logLevel: ExceptionTrackerImpl.ErrorLogLevel, name: NSString? = nil, stack: NSString? = nil, message: NSString? = nil, userInfo: NSString? = nil, stackReturnAddress: NSString? = nil) {
+    private func track(logLevel: ExceptionTrackerImpl.ErrorLogLevel,
+                       name: NSString? = nil,
+                       stack: NSString? = nil,
+                       message: NSString? = nil,
+                       userInfo: NSString? = nil,
+                       stackReturnAddress: NSString? = nil) {
 
         guard let webtrekk = WebtrekkTracking.instance() as? DefaultTracker else {
             WebtrekkTracking.defaultLogger.logDebug("Can't convert to DefaultTracker for sending event")
@@ -392,7 +480,8 @@ private class ExceptionSaveAndSendHelper {
         if let stackReturnAddress = stackReturnAddress as String?, !stackReturnAddress.isEmpty {
             details[917] = .constant(stackReturnAddress)
         }
-        let action = ActionEvent(actionProperties: ActionProperties(name: "webtrekk_ignore", details: details), pageProperties: PageProperties(name: nil))
+        let action = ActionEvent(actionProperties: ActionProperties(name: "webtrekk_ignore", details: details),
+                                 pageProperties: PageProperties(name: nil))
 
         webtrekk.enqueueRequestForEvent(action, type: .exceptionTracking)
     }

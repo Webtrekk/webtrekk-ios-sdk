@@ -1,6 +1,6 @@
-public final class WeakReference<T : AnyObject> {
+public final class WeakReference<T: AnyObject> {
 
-	public weak var target: T?
+    public weak var target: T?
 
-	public init(_ target: T) { self.target = target }
+    public init(_ target: T) { self.target = target }
 }
