@@ -2,10 +2,6 @@ os: osx
 
 before_install:
   - brew update
-  - brew install swiftlint
-
-#install:
-#  - ./config/install_swiftlint.sh
 
 script:
   - swiftlint
