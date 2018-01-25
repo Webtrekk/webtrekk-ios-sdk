@@ -1,3 +1,5 @@
+os: osx
+
 before_install:
   - brew update
   - brew install swiftlint
