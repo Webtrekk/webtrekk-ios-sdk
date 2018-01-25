@@ -21,12 +21,12 @@ opt_in_rules: # some rules are only opt-in
   # Find all the available rules by running:
   # swiftlint rules
 included: # paths to include during linting. `--path` is ignored if present.
-  - Sources
+  - Source
 excluded: # paths to ignore during linting. Takes precedence over `included`.
   - CarthageTest
   - Pods
   - Xcode
-  - Sources/Internal/Crypto
+  - Source/Internal/Crypto
 
 # configurable rules can be customized from this configuration file
 # binary rules can set their severity level

@@ -50,7 +50,14 @@ SwiftLint
 =========
 
 We use Swiftlint from [Realm](https://realm.io/) to lint our code. SwiftLint has to be installed on your device. 
-More info can be found on [SwiftLint](https://github.com/realm/SwiftLint). Details about the specific settings for this project can be found in the `.swiftlint.yml` file.
+More info can be found on [SwiftLint](https://github.com/realm/SwiftLint). 
+Details about the specific settings for this project can be found in the `.swiftlint.yml` file.
+
+Travis CI
+=========
+
+We use [Travis CI](https://travis-ci.org/) to check the code for inconsistencies and running the linter & tests. 
+Details about the specific settings for this project can be found in the `.travis.yml` file.
 
 
 Migrating from Webtrekk SDK V3
