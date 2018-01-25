@@ -91,9 +91,9 @@ class Campaign: NSObject {
                 self.timer?.invalidate()
 
                 // parse response
-                guard let dataG = data, let json = try? JSONSerialization.jsonObject(with: dataG, options: .allowFragments) as! [String: Any],
-                    let jsonMedia = json["mediacode"] as? String else {
-
+                guard let dataG = data,
+                      let json = try? JSONSerialization.jsonObject(with: dataG, options: .allowFragments) as! [String: Any],
+                      let jsonMedia = json["mediacode"] as? String else {
                         WebtrekkTracking.logger.logError("Incorrect JSON response for Campaign tracking:\(data.simpleDescription)")
                         return
                 }

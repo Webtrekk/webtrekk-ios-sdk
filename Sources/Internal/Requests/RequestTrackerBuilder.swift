@@ -317,7 +317,7 @@ final class RequestTrackerBuilder {
 
     }
 
-    private enum autoParametersAttrNumbers: Int {
+    private enum AutoParametersAttrNumbers: Int {
         case screenOrientation = 783, requestQueueSize
         case appVersion = 804
         case connectionType = 807
@@ -327,7 +327,7 @@ final class RequestTrackerBuilder {
         case adClearId = 808
     }
 
-    private static let autoParameters: [autoParametersAttrNumbers: CustomParType] =
+    private static let autoParameters: [AutoParametersAttrNumbers: CustomParType] =
         [.screenOrientation: .pageParameter,
          .requestQueueSize: .pageParameter,
          .appVersion: .sessionParameter,
@@ -347,33 +347,33 @@ final class RequestTrackerBuilder {
 
             #if !os(watchOS) && !os(tvOS)
                 if let interfaceOrientation = properties.interfaceOrientation {
-                    pageDetails[autoParametersAttrNumbers.screenOrientation.rawValue] = .constant(interfaceOrientation.serialized)
+                    pageDetails[AutoParametersAttrNumbers.screenOrientation.rawValue] = .constant(interfaceOrientation.serialized)
                 }
 
                 if let connectionType = properties.connectionType {
-                    sessionDetails[autoParametersAttrNumbers.connectionType.rawValue] = .constant(connectionType.serialized)
+                    sessionDetails[AutoParametersAttrNumbers.connectionType.rawValue] = .constant(connectionType.serialized)
                 }
             #endif
 
             if let requestQueueSize = properties.requestQueueSize {
-                pageDetails[autoParametersAttrNumbers.requestQueueSize.rawValue] = .constant(String(requestQueueSize))
+                pageDetails[AutoParametersAttrNumbers.requestQueueSize.rawValue] = .constant(String(requestQueueSize))
             }
             if let appVersion = properties.appVersion {
-                sessionDetails[autoParametersAttrNumbers.appVersion.rawValue] = .constant(appVersion)
+                sessionDetails[AutoParametersAttrNumbers.appVersion.rawValue] = .constant(appVersion)
             }
             if let advertisingId = properties.advertisingId {
-                sessionDetails[autoParametersAttrNumbers.advertisingId.rawValue] = .constant(advertisingId.uuidString)
+                sessionDetails[AutoParametersAttrNumbers.advertisingId.rawValue] = .constant(advertisingId.uuidString)
             }
             if let advertisingTrackingEnabled = properties.advertisingTrackingEnabled {
-                sessionDetails[autoParametersAttrNumbers.advertisingTrackingEnabled.rawValue] = .constant(advertisingTrackingEnabled ? "1" : "0")
+                sessionDetails[AutoParametersAttrNumbers.advertisingTrackingEnabled.rawValue] = .constant(advertisingTrackingEnabled ? "1" : "0")
             }
             if properties.isFirstEventAfterAppUpdate {
-                sessionDetails[autoParametersAttrNumbers.isFirstEventAfterAppUpdate.rawValue] = .constant("1")
+                sessionDetails[AutoParametersAttrNumbers.isFirstEventAfterAppUpdate.rawValue] = .constant("1")
             }
         }
 
         if let adClearId = properties.adClearId {
-            sessionDetails[autoParametersAttrNumbers.adClearId.rawValue] = .constant(String(adClearId))
+            sessionDetails[AutoParametersAttrNumbers.adClearId.rawValue] = .constant(String(adClearId))
         }
 
         let pageProp = PageProperties(name: nil, details: pageDetails.isEmpty ? nil: pageDetails)

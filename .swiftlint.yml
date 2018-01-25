@@ -15,7 +15,6 @@ disabled_rules: # rule identifiers to exclude from running
   - shorthand_operator
   - unused_closure_parameter
   - vertical_parameter_alignment
-  - type_name
   - large_tuple
 opt_in_rules: # some rules are only opt-in
   - empty_count
