@@ -1,5 +1,6 @@
 Webtrekk Tracking Library
 ==========================
+[![Build Status](https://travis-ci.org/Webtrekk/webtrekk-ios-sdk.svg?branch=master)](https://travis-ci.org/Webtrekk/webtrekk-ios-sdk)
 
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Webtrekk.svg?style=flat-square)](https://cocoapods.org/pods/Webtrekk) ![Carthage](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat) ![Platform support](https://img.shields.io/badge/platform-ios%20%7C%20tvos%20%7C%20watchos-lightgrey.svg?style=flat-square)
 
