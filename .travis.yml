@@ -1,0 +1,5 @@
+install:
+  - ./config/install_swiftlint.sh
+
+script:
+  - swiftlint
