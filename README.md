@@ -1,13 +1,12 @@
-Webtrekk Tracking Library
-==========================
+# Webtrekk Tracking Library
+
 [![Build Status](https://travis-ci.org/Webtrekk/webtrekk-ios-sdk.svg?branch=master)](https://travis-ci.org/Webtrekk/webtrekk-ios-sdk)
 
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Webtrekk.svg?style=flat-square)](https://cocoapods.org/pods/Webtrekk) ![Carthage](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat) ![Platform support](https://img.shields.io/badge/platform-ios%20%7C%20tvos%20%7C%20watchos-lightgrey.svg?style=flat-square)
 
 The Webtrekk SDK allows you to track user activities, screen flow and media usage for an App. All data is send to the Webtrekk tracking system for further analysis.
 
-Requirements
-============
+# Requirements
 
 | Plattform | Version            |
 |-----------|-------------------:|
@@ -35,8 +34,7 @@ watchOS support starting with version 4.3.0 with the following limiations:
 Carthage support starting from version 4.6.0
 
 
-Installation
-============
+# Installation
 
 [CocoaPods](htttp://cocoapods.org) (*Podfile*):
 
@@ -46,22 +44,19 @@ Installation
 
 `github "Webtrekk/webtrekk-ios-sdk"`
 
-SwiftLint
-=========
+# SwiftLint
 
 We use Swiftlint from [Realm](https://realm.io/) to lint our code. SwiftLint has to be installed on your device. 
 More info can be found on [SwiftLint](https://github.com/realm/SwiftLint). 
 Details about the specific settings for this project can be found in the `.swiftlint.yml` file.
 
-Travis CI
-=========
+# Travis CI
 
 We use [Travis CI](https://travis-ci.org/) to check the code for inconsistencies and running the linter & tests. 
 Details about the specific settings for this project can be found in the `.travis.yml` file.
 
 
-Migrating from Webtrekk SDK V3
-==============================
+# Migrating from Webtrekk SDK V3
 
 The Webtrekk SDK V4 offers the possibility to migrate some stored information to the new SDK. This option is enabled as per default but in case the old data should be neglected and deleted the value of the `migratesFromLibraryV3` variable needs to be set to `false` before creating the first tracker. The code snippet below shows this case.
 
@@ -79,39 +74,14 @@ Following properties are part of the migration.
 | `samplingState`  | previously stored samplingState                                   |
 | `unsentRequests` | previously saved unsent requests                                  |
 
-SSL
-===
+# SSL
 
 As of iOS 9 Apple is more strictly enforcing the usage of SSL for network connections. Webtrekk highly recommends and offers the usage of a valid serverUrl with SSL support. In case there is a need to circumvent this. The App will need an exception entry within the `Info.plist`. Apple's regulations about this are well documented within the [iOS Developer Library](https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/uid/TP40009251-SW33)
 
-Examples & Unit Tests
-=====================
+# Example App with functionality
 
-The `Xcode` directory contains all files necessary to
+For an example app of the functionality in this SDK see: https://github.com/Webtrekk/iOS-SDK-Example-App
 
--	manually build the library
--	run unit test
--	run examples
-
-```shell
-# install CocoaPods 1.2.0 or newer (unless you already did)
-sudo gem install cocoapods
-
-# clone this repository
-https://github.com/Webtrekk/webtrekk-ios-sdk.git
-
-# examples & tests are located in the directory 'Xcode' …
-cd Xcode
-
-# … and are set up with CocoaPods
-pod install
-
-# 'Examples.xcworkspace' is the file you'll use from now on
-open Examples.xcworkspace
-```
-
-License
-=======
+# License
 
 See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).
-
