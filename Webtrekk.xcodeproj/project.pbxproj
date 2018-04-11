@@ -85,6 +85,7 @@
 		0FE637821EDED520006887EC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FE637811EDED520006887EC /* UIKit.framework */; };
 		0FE637841EDED52B006887EC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FE637831EDED52B006887EC /* Foundation.framework */; };
 		0FE637861EDED536006887EC /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FE637851EDED536006887EC /* AVFoundation.framework */; };
+		5AEE4AF3207EC2FB008FD2B3 /* CampaignTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEE4AF2207EC2FB008FD2B3 /* CampaignTests.swift */; };
 		5AF6D0682073DA6E002E98A3 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF6D0672073DA6E002E98A3 /* Tests.swift */; };
 		5AF6D06A2073DA6E002E98A3 /* Webtrekk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F2D21791EDEA18500D09ADF /* Webtrekk.framework */; };
 		5AF6D0812073DC86002E98A3 /* RequestTrackerBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF6D0802073DC86002E98A3 /* RequestTrackerBuilderTests.swift */; };
@@ -206,6 +207,7 @@
 		0FE637881EDED5C1006887EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0FE637891EDED5C1006887EC /* Webtrekk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Webtrekk.h; sourceTree = "<group>"; };
 		0FE6378A1EDED7AD006887EC /* Webtrekk-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Webtrekk-Bridging-Header.h"; sourceTree = "<group>"; };
+		5AEE4AF2207EC2FB008FD2B3 /* CampaignTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampaignTests.swift; sourceTree = "<group>"; };
 		5AF6D0652073DA6E002E98A3 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AF6D0672073DA6E002E98A3 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		5AF6D0692073DA6E002E98A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -312,6 +314,7 @@
 		0F2D21841EDEA1C500D09ADF /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				5AEE4AF0207E8DCC008FD2B3 /* TestClass */,
 				9F1BF1FE1F69784C006B6F06 /* Crypto */,
 				0F2D21851EDEA1C500D09ADF /* Event Handlers */,
 				0F2D21891EDEA1C500D09ADF /* Features */,
@@ -516,6 +519,7 @@
 		5A6AEA3A20739E2A00ED92F3 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				5AEE4AF1207EC2CE008FD2B3 /* Features */,
 				5AF6D05E2073D949002E98A3 /* Requests */,
 			);
 			path = Internal;
@@ -533,6 +537,21 @@
 			children = (
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5AEE4AF0207E8DCC008FD2B3 /* TestClass */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TestClass;
+			sourceTree = SOURCE_ROOT;
+		};
+		5AEE4AF1207EC2CE008FD2B3 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				5AEE4AF2207EC2FB008FD2B3 /* CampaignTests.swift */,
+			);
+			path = Features;
 			sourceTree = "<group>";
 		};
 		5AF6D05E2073D949002E98A3 /* Requests */ = {
@@ -880,6 +899,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5AF6D0812073DC86002E98A3 /* RequestTrackerBuilderTests.swift in Sources */,
+				5AEE4AF3207EC2FB008FD2B3 /* CampaignTests.swift in Sources */,
 				5AF6D0682073DA6E002E98A3 /* Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

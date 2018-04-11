@@ -1,23 +1,27 @@
 //
-//  RequestTests.swift
+//  CampaignTests.swift
 //  Tests
 //
-//  Created by Martin Demiddel on 03.04.18.
+//  Created by Martin Demiddel on 12.04.18.
 //  Copyright © 2018 Webtrekk. All rights reserved.
 //
 
 import XCTest
-import Foundation
 @testable import Webtrekk
 
-class RequestTrackerBuilderTests: XCTestCase {
+class CampaignTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
+        // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
+    }
+    
+    func test_processCampaign_return() {
+        //
     }
 }

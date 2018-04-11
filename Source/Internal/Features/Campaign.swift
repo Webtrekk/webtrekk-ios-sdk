@@ -20,26 +20,26 @@ class Campaign: NSObject {
     }
 
     func processCampaign() {
-
-        // check if campaign is already set 
-        if let isCampaignSet = sharedDefaults.boolForKey(Campaign.campaignHasProcessed), isCampaignSet { return
+        if let isCampaignSet = sharedDefaults.boolForKey(Campaign.campaignHasProcessed), isCampaignSet {
+            WebtrekkTracking.logger.logError("campaign was not already set")
+            return
         }
 
         WebtrekkTracking.logger.logDebug("Campaign process is starting")
         self.campaignProcessTimeOut = Date(timeIntervalSinceNow: Campaign.timeoutValue)
 
         // send request
-
         var urlComponents = URLComponents(string: "https://appinstall.webtrekk.net/appinstall/v1/install")
 
-        guard urlComponents != nil  else {
+        guard urlComponents != nil else {
             WebtrekkTracking.logger.logError("can't initializate URL for campaign")
             return
         }
         var queryItems = [URLQueryItem]()
         queryItems.append(URLQueryItem(name: "trackid", value: self.trackID))
 
-        if let advID = Environment.advertisingIdentifierManager?.advertisingIdentifier, advID.uuidString != "00000000-0000-0000-0000-000000000000" {
+        if let advID = Environment.advertisingIdentifierManager?.advertisingIdentifier,
+            advID.uuidString != "00000000-0000-0000-0000-000000000000" {
             queryItems.append(URLQueryItem(name: "aid", value: advID.uuidString))
         }
 
@@ -53,7 +53,6 @@ class Campaign: NSObject {
         }
 
         sendInstallCampaignRequest(url: url)
-
     }
 
     @objc
