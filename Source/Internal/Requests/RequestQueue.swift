@@ -96,7 +96,7 @@ class RequestQueue {
                 } else {
                     self.logDebug("file save error")
                 }
-                DispatchQueue.main.sync() {
+                DispatchQueue.main.sync {
                     self.dispatchQueueAddURLCondition.lock()
                     if self.size.value == self.queue.count && self.queue.count < self.urlsBuffered {
                         if isSaveSuccessfully {

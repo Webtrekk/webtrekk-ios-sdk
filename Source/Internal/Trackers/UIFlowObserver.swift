@@ -105,7 +105,10 @@ class UIFlowObserver: NSObject {
                 self.WTapplicationDidBecomeActive()
             }
         }
-        let tracker = WebtrekkTracking.instance() as! DefaultTracker
+
+        guard let tracker = WebtrekkTracking.instance() as? DefaultTracker else {
+            return
+        }
         tracker.isApplicationActive = true
     #else
         let tracker = self.tracker
@@ -143,7 +146,9 @@ class UIFlowObserver: NSObject {
                 self.WTapplicationDidEnterBackground()
             }
         }
-        let tracker = WebtrekkTracking.instance() as! DefaultTracker
+        guard let tracker = WebtrekkTracking.instance() as? DefaultTracker else {
+            return
+        }
 
         if let started = tracker.requestManager?.started, started {
             tracker.stopRequestManager()
@@ -164,7 +169,9 @@ class UIFlowObserver: NSObject {
                     self.WTapplicationWillResignActive()
                 }
             }
-        let tracker = WebtrekkTracking.instance() as! DefaultTracker
+            guard let tracker = WebtrekkTracking.instance() as? DefaultTracker else {
+                return
+            }
         #else
         let tracker = self.tracker
         #endif
@@ -205,7 +212,9 @@ class UIFlowObserver: NSObject {
                     self.WTapplicationWillEnterForeground()
                 }
             }
-            let tracker = WebtrekkTracking.instance() as! DefaultTracker
+            guard let tracker = WebtrekkTracking.instance() as? DefaultTracker else {
+                return
+            }
         #else
             let tracker = self.tracker
         #endif

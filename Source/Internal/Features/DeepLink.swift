@@ -23,9 +23,10 @@ class DeepLink: NSObject {
     }
 
     // method that replaces application in delegate
-    @objc dynamic func wt_application(_ application: UIApplication,
-                     continue userActivity: NSUserActivity,
-                                          restorationHandler: ([AnyObject]?) -> Void) -> Bool {
+    @objc dynamic func wt_application(
+                    _ application: UIApplication,
+                    continue userActivity: NSUserActivity,
+                    restorationHandler: ([AnyObject]?) -> Void) -> Bool {
 
         // test if this is deep link
         if userActivity.activityType == NSUserActivityTypeBrowsingWeb,

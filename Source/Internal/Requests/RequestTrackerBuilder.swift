@@ -98,7 +98,9 @@ final class RequestTrackerBuilder {
 
         if let mc = self.deepLink.getAndDeletSavedDeepLinkMediaCode() {
 
-            var eventWithAdvertisementProperties = event as! TrackingEventWithAdvertisementProperties
+            guard var eventWithAdvertisementProperties = event as? TrackingEventWithAdvertisementProperties else {
+                return
+            }
             eventWithAdvertisementProperties.advertisementProperties.id = mc
         }
     }
@@ -113,7 +115,9 @@ final class RequestTrackerBuilder {
         }
 
         if self.appinstallGoal.checkAppinstallGoal() {
-            var eventWithEcommerceProperties = event as! TrackingEventWithEcommerceProperties
+            guard var eventWithEcommerceProperties = event as? TrackingEventWithEcommerceProperties else {
+                return
+            }
             var detailsToAdd = eventWithEcommerceProperties.ecommerceProperties.details ?? [Int: TrackingValue]()
             detailsToAdd[900] = "1"
             eventWithEcommerceProperties.ecommerceProperties.details = detailsToAdd
@@ -135,7 +139,9 @@ final class RequestTrackerBuilder {
                 return
             }
 
-            var eventWithPageProperties = event as! TrackingEventWithPageProperties
+            guard var eventWithPageProperties = event as? TrackingEventWithPageProperties else {
+                return
+            }
             eventWithPageProperties.pageProperties.url = pageURL
         }
     }

@@ -245,7 +245,7 @@ internal final class RequestManager: NSObject, URLSessionDelegate {
 		#endif
 
         do {
-            try self.queue.getURL() { url in
+            try self.queue.getURL { url in
 
                 if url != self.currentRequest {
                     self.currentFailureCount = 0
@@ -395,7 +395,8 @@ internal final class RequestManager: NSObject, URLSessionDelegate {
 	}
 
     // implement URLSessionDelegate
-    public func urlSession(_ session: URLSession,
+    public func urlSession(
+                    _ session: URLSession,
                     didBecomeInvalidWithError error: Error?) {
         logDebug("didBecomeInvalidWithError  call")
         if self.finishing {

@@ -30,7 +30,9 @@ internal extension WKInterfaceController {
             return
         }
 
-        let tracker = WebtrekkTracking.instance() as! DefaultTracker
+        guard let tracker = WebtrekkTracking.instance() as? DefaultTracker else {
+            return
+        }
         if tracker.isApplicationActive {
             automaticTracker.trackPageView()
         }

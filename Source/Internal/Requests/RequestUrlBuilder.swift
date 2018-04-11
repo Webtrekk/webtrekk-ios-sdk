@@ -536,14 +536,14 @@ private extension EcommerceProperties {
 
         //collect all key for categories and details
         var detailsKeys = Set<Int>()
-        products.forEach() {product in
+        products.forEach { product in
             if let details = product.details {
                 details.keys.forEach({detailsKeys.insert($0)})
             }
         }
 
         var categoriesKeys = Set<Int>()
-        products.forEach() {product in
+        products.forEach { product in
             if let categories = product.categories {
                 categories.keys.forEach({categoriesKeys.insert($0)})
             }

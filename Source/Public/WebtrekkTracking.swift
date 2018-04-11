@@ -42,7 +42,9 @@ public class WebtrekkTracking {
             return false
         }
 
-        let tracker = self.tracker as! DefaultTracker
+        guard let tracker = self.tracker as? DefaultTracker else {
+            return false
+        }
 
         return tracker.isInitialited
     }
@@ -80,7 +82,9 @@ public class WebtrekkTracking {
         }
 
         do {
-            let tracker = instance() as! DefaultTracker
+            guard let tracker = instance() as? DefaultTracker else {
+                throw TrackerError(message: "Cannot initialize Webtrekk tracking see log above for details")
+            }
             guard tracker.initializeTracking(configuration: try XmlTrackerConfigurationParser().parse(xml: configurationData)) else {
                 throw TrackerError(message: "Cannot initialize Webtrekk tracking see log above for details")
             }

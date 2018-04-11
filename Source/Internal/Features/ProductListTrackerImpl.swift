@@ -15,7 +15,7 @@ internal final class ProductListTrackerImpl: ProductListTracker {
     /** implementation of ProductListTracker interface*/
     func addTrackingData(products: [EcommerceProperties.Product], type: EcommerceProperties.Status) {
 
-        let productResults = products.filter() { (product) -> Bool in
+        let productResults = products.filter { (product) -> Bool in
             guard let productId = product.name else {
                 WebtrekkTracking.defaultLogger.logError("product without product id can't be tracked")
                 return false
@@ -45,7 +45,7 @@ internal final class ProductListTrackerImpl: ProductListTracker {
     func track(commonProperties: PageViewEvent, viewController: UIController? = nil) {
         let webtrekk = WebtrekkTracking.instance()
         //setup ecommens status for each properties
-        self.ecommerceProperties.forEach() {(key, value) in
+        self.ecommerceProperties.forEach {(key, value) in
             var ecommercePropertiesResult = commonProperties.ecommerceProperties
             ecommercePropertiesResult = ecommercePropertiesResult.merged(over: value)
 
@@ -81,7 +81,7 @@ internal final class ProductListTrackerImpl: ProductListTracker {
 
             if key == .purchased {
                 //resort
-                ecommercePropertiesResult.products!.sort() {(product1, product2) in
+                ecommercePropertiesResult.products!.sort {(product1, product2) in
                     return self.orderSaver.getAddOrder(product: product1.name) < self.orderSaver.getAddOrder(product: product2.name)
                 }
             }
@@ -142,7 +142,7 @@ internal final class ProductListTrackerImpl: ProductListTracker {
             if let data = self.userDefaults.dataForKey(DefaultsKeys.productListOrder),
                 let jsonObj = try? JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any?]] {
 
-                jsonObj?.forEach() { (item) in
+                jsonObj?.forEach { (item) in
                     if let name = item["id"] as? String {
 
                         let addOrder = item["add_order"] as? Int
@@ -168,7 +168,7 @@ internal final class ProductListTrackerImpl: ProductListTracker {
         func save() {
             var jsonObject = [[String: Any]]()
 
-            self.products.forEach() { (key, value) in
+            self.products.forEach { (key, value) in
                 var jsonItem: [String: Any] = [
                 "id": key,
                 "add_order": value.addOrder
@@ -185,8 +185,8 @@ internal final class ProductListTrackerImpl: ProductListTracker {
                 jsonObject.append(jsonItem)
             }
 
-            if JSONSerialization.isValidJSONObject(jsonObject), let jsonData = try? JSONSerialization.data(withJSONObject: jsonObject,
-                                                                                                           options: []) {
+            if JSONSerialization.isValidJSONObject(jsonObject),
+                let jsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: []) {
                     self.userDefaults.set(key: DefaultsKeys.productListOrder, to: jsonData)
             } else {
                  WebtrekkTracking.defaultLogger.logError("can't save project order information")

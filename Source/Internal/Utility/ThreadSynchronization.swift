@@ -12,7 +12,7 @@ class SimpleSync<T> {
     var value: T {
         get {
             var value: T?
-            self.thread.sync() {
+            self.thread.sync {
                 value = self.valueInst
             }
             return value!
@@ -26,7 +26,9 @@ class SimpleSync<T> {
 
     func increment<T2: BinaryInteger>(to: T2) {
         self.thread.sync(flags: .barrier) {
-            var val = self.valueInst as! T2
+            guard var val = self.valueInst as? T2 else {
+                return
+            }
             val += to
             self.valueInst = val as! T
         }
@@ -44,7 +46,7 @@ class ArraySync<T> {
 
     var first: T? {
         var value: T?
-        self.thread.sync() {
+        self.thread.sync {
             value = self.valueInst.first
         }
         return value
@@ -52,7 +54,7 @@ class ArraySync<T> {
 
     var last: T? {
         var value: T?
-        self.thread.sync() {
+        self.thread.sync {
             value = self.valueInst.last
         }
         return value
@@ -60,7 +62,7 @@ class ArraySync<T> {
 
     var count: Int {
         var value: Int?
-        self.thread.sync() {
+        self.thread.sync {
             value = self.valueInst.count
         }
         return value!
@@ -68,7 +70,7 @@ class ArraySync<T> {
 
     var isEmpty: Bool {
         var value: Bool?
-        self.thread.sync() {
+        self.thread.sync {
             value = self.valueInst.isEmpty
         }
         return value!
@@ -95,7 +97,7 @@ class ArraySync<T> {
     subscript(index: Int) -> T {
         get {
             var value: T?
-            self.thread.sync() {
+            self.thread.sync {
                 value = self.valueInst[index]
             }
             return value!

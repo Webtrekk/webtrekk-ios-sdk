@@ -3,9 +3,11 @@ import Foundation
 internal extension Timer {
 
 	@nonobjc
-	internal static func scheduledTimerWithTimeInterval(_ timeInterval: TimeInterval,
-                                                        repeats: Bool = false,
-                                                        closure: Closure) -> Timer {
+	internal static func scheduledTimerWithTimeInterval(
+                    _ timeInterval: TimeInterval,
+                    repeats: Bool = false,
+                    closure: Closure) -> Timer {
+
 		return scheduledTimer(timeInterval: timeInterval,
                               target: timerHandler,
                               selector: #selector(TimerHandler.handle(_:)),
@@ -20,7 +22,9 @@ private class TimerHandler: NSObject {
 
 	@objc
 	fileprivate func handle(_ timer: Timer) {
-		let closureReference = timer.userInfo as! StrongReference<Closure>
+        guard let closureReference = timer.userInfo as? StrongReference<Closure> else {
+            return
+        }
 		closureReference.target()
 	}
 }

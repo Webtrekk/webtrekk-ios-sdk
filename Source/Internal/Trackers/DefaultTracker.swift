@@ -367,7 +367,9 @@ final class DefaultTracker: Tracker {
 
         if shouldEnqueueNewEvents {
             let requestUrls = self.requestUrlBuilder?.urlForRequests(request, type: type)
-            requestUrls?.forEach() {self.requestManager?.enqueueRequest($0, maximumDelay: configuration.maximumSendDelay)}
+            requestUrls?.forEach {
+                self.requestManager?.enqueueRequest($0, maximumDelay: configuration.maximumSendDelay)
+            }
 
         }
 
@@ -762,7 +764,9 @@ final class DefaultTracker: Tracker {
     fileprivate func updateAutomaticTracking() {
         checkIsOnMainThread()
 
-        let handler = DefaultTracker.autotrackingEventHandler as! AutotrackingEventHandler
+        guard let handler = DefaultTracker.autotrackingEventHandler as? AutotrackingEventHandler else {
+            return
+        }
 
         if self.configuration.automaticallyTrackedPages.isEmpty {
             if let index = handler.trackers.index(where: { [weak self] in $0.target === self}) {
