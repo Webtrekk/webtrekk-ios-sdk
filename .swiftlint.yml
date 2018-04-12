@@ -53,6 +53,18 @@ identifier_name:
   min_length: # only min_length
     error: 3 # only error
   excluded: # excluded via string array
+    - i
+    - mc
+    - c
+    - i2
+    - i1
+    - _queue
+    - _patternString
+    - _requestQueue
+    - _appVersion
+    - _isSampling
+    - _samplingRate
+    - _everId
     - id
     - to
     - at

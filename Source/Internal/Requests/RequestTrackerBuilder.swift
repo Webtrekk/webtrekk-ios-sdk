@@ -167,7 +167,9 @@ final class RequestTrackerBuilder {
                                                  requestProperties: TrackerRequest.Properties) {
         checkIsOnMainThread()
 
-        event.variables = self.global.variables.merged(over: event.variables)
+        let eventL = event
+
+        event.variables = self.global.variables.merged(over: eventL.variables)
 
         if let globalSettings = applyKeys(keys: event.variables,
                                           properties: configuration.globalProperties) as? GlobalProperties {
@@ -266,15 +268,15 @@ final class RequestTrackerBuilder {
     }
 
     private func mergeProperties(event: inout TrackingEvent, properties: BaseProperties, rewriteEvent: Bool) {
-
         let mergeTool = PropertyMerger()
+        let eventL = event
 
         if rewriteEvent {
-            event.ipAddress = properties.ipAddress ?? event.ipAddress
-            event.pageName = properties.pageProperties.name ?? event.pageName
+            event.ipAddress = properties.ipAddress ?? eventL.ipAddress
+            event.pageName = properties.pageProperties.name ?? eventL.pageName
         } else {
-            event.ipAddress = event.ipAddress ?? properties.ipAddress
-            event.pageName = event.pageName ?? properties.pageProperties.name
+            event.ipAddress = eventL.ipAddress ?? properties.ipAddress
+            event.pageName = eventL.pageName ?? properties.pageProperties.name
         }
 
         guard !(event is ActionEvent) || properties is AutoParametersProperties else {
@@ -282,39 +284,60 @@ final class RequestTrackerBuilder {
         }
 
         if var eventWithActionProperties = event as? TrackingEventWithActionProperties {
-            eventWithActionProperties.actionProperties = mergeTool.mergeProperties(first: properties.actionProperties,
-                                                                                   second: eventWithActionProperties.actionProperties,
+            let first = properties.actionProperties
+            let second = eventWithActionProperties.actionProperties
+
+            eventWithActionProperties.actionProperties = mergeTool.mergeProperties(first: first,
+                                                                                   second: second,
                                                                                    from1Over2: rewriteEvent)
         }
         if var eventWithAdvertisementProperties = event as? TrackingEventWithAdvertisementProperties {
-            eventWithAdvertisementProperties.advertisementProperties = mergeTool.mergeProperties(first: properties.advertisementProperties,
-                                                                                                 second: eventWithAdvertisementProperties.advertisementProperties,
+            let first = properties.advertisementProperties
+            let second = eventWithAdvertisementProperties.advertisementProperties
+
+            eventWithAdvertisementProperties.advertisementProperties = mergeTool.mergeProperties(first: first,
+                                                                                                 second: second,
                                                                                                  from1Over2: rewriteEvent)
         }
         if var eventWithEcommerceProperties = event as? TrackingEventWithEcommerceProperties {
-            eventWithEcommerceProperties.ecommerceProperties = mergeTool.mergeProperties(first: properties.ecommerceProperties,
-                                                                                         second: eventWithEcommerceProperties.ecommerceProperties,
+            let first = properties.ecommerceProperties
+            let second = eventWithEcommerceProperties.ecommerceProperties
+
+            eventWithEcommerceProperties.ecommerceProperties = mergeTool.mergeProperties(first: first,
+                                                                                         second: second,
                                                                                          from1Over2: rewriteEvent)
         }
         if var eventWithMediaProperties = event as? TrackingEventWithMediaProperties {
-            eventWithMediaProperties.mediaProperties = mergeTool.mergeProperties(first: properties.mediaProperties,
-                                                                                 second: eventWithMediaProperties.mediaProperties,
+            let first = properties.mediaProperties
+            let second = eventWithMediaProperties.mediaProperties
+
+            eventWithMediaProperties.mediaProperties = mergeTool.mergeProperties(first: first,
+                                                                                 second: second,
                                                                                  from1Over2: rewriteEvent)
         }
         if var eventWithPageProperties = event as? TrackingEventWithPageProperties {
-            eventWithPageProperties.pageProperties = mergeTool.mergeProperties(first: properties.pageProperties,
-                                                                               second: eventWithPageProperties.pageProperties,
+            let first = properties.pageProperties
+            let second = eventWithPageProperties.pageProperties
+
+            eventWithPageProperties.pageProperties = mergeTool.mergeProperties(first: first,
+                                                                               second: second,
                                                                                from1Over2: rewriteEvent)
         }
         if var eventWithUserProperties = event as? TrackingEventWithUserProperties {
-            eventWithUserProperties.userProperties = mergeTool.mergeProperties(first: properties.userProperties,
-                                                                               second: eventWithUserProperties.userProperties,
+            let first = properties.userProperties
+            let second = eventWithUserProperties.userProperties
+
+            eventWithUserProperties.userProperties = mergeTool.mergeProperties(first: first,
+                                                                               second: second,
                                                                                from1Over2: rewriteEvent)
         }
 
         if var eventWithSessionDetails = event as? TrackingEventWithSessionDetails {
-            eventWithSessionDetails.sessionDetails = mergeTool.mergeProperties(first: properties.sessionDetails,
-                                                                               second: eventWithSessionDetails.sessionDetails,
+            let first = properties.sessionDetails
+            let second = eventWithSessionDetails.sessionDetails
+
+            eventWithSessionDetails.sessionDetails = mergeTool.mergeProperties(first: first,
+                                                                               second: second,
                                                                                from1Over2: rewriteEvent)
         }
     }
