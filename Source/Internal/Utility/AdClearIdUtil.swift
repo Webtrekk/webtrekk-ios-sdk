@@ -1,6 +1,6 @@
 import Foundation
 
-internal struct AdClearId {
+public struct AdClearId {
     private static let bitsOfMilliseconds: UInt64 = 39
     private static let bitsOfRandom: UInt64 = 10
     private static let bitsOfApplication: UInt64 = 10

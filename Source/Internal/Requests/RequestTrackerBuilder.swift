@@ -374,6 +374,7 @@ final class RequestTrackerBuilder {
 
         if !(event is ActionEvent) {
 
+//            #if !targetEnvironment(TARGET_OS_WATCH)
             #if !os(watchOS) && !os(tvOS)
                 if let interfaceOrientation = properties.interfaceOrientation {
                     pageDetails[AutoParametersAttrNumbers.screenOrientation.rawValue] = .constant(interfaceOrientation.serialized)
