@@ -286,7 +286,7 @@
 		0F2D216F1EDEA18500D09ADF = {
 			isa = PBXGroup;
 			children = (
-				0F2D217B1EDEA18500D09ADF /* Webtrekk */,
+				5A20E22120864FD000EF4E1A /* Source */,
 				5AF6D0662073DA6E002E98A3 /* Tests */,
 				0F2D217A1EDEA18500D09ADF /* Products */,
 				0FE6377B1EDEC001006887EC /* Frameworks */,
@@ -302,19 +302,6 @@
 				5AF6D0652073DA6E002E98A3 /* Tests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		0F2D217B1EDEA18500D09ADF /* Webtrekk */ = {
-			isa = PBXGroup;
-			children = (
-				0FE637891EDED5C1006887EC /* Webtrekk.h */,
-				0FE637881EDED5C1006887EC /* Info.plist */,
-				0F2D21DC1EDEA1C500D09ADF /* WebtrekkTracking.swift */,
-				0F2D21841EDEA1C500D09ADF /* Internal */,
-				0F2D21B71EDEA1C500D09ADF /* Public */,
-				0FE637871EDED5C1006887EC /* Supporting Files */,
-			);
-			path = Webtrekk;
 			sourceTree = "<group>";
 		};
 		0F2D21841EDEA1C500D09ADF /* Internal */ = {
@@ -518,6 +505,19 @@
 			name = "Supporting Files";
 			path = "Source/Supporting Files";
 			sourceTree = SOURCE_ROOT;
+		};
+		5A20E22120864FD000EF4E1A /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				0FE637871EDED5C1006887EC /* Supporting Files */,
+				0F2D21B71EDEA1C500D09ADF /* Public */,
+				0F2D21841EDEA1C500D09ADF /* Internal */,
+				0FE637881EDED5C1006887EC /* Info.plist */,
+				0FE637891EDED5C1006887EC /* Webtrekk.h */,
+				0F2D21DC1EDEA1C500D09ADF /* WebtrekkTracking.swift */,
+			);
+			path = Source;
+			sourceTree = "<group>";
 		};
 		5A6AEA3A20739E2A00ED92F3 /* Internal */ = {
 			isa = PBXGroup;
@@ -1061,7 +1061,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
-				INFOPLIST_FILE = Webtrekk/Info.plist;
+				INFOPLIST_FILE = Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1087,7 +1087,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
-				INFOPLIST_FILE = Webtrekk/Info.plist;
+				INFOPLIST_FILE = Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1151,7 +1151,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
-				INFOPLIST_FILE = Webtrekk/Info.plist;
+				INFOPLIST_FILE = Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Webtrekk.Webtrekk;
@@ -1179,7 +1179,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
-				INFOPLIST_FILE = Webtrekk/Info.plist;
+				INFOPLIST_FILE = Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Webtrekk.Webtrekk;
@@ -1207,7 +1207,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/watchOS",
 				);
-				INFOPLIST_FILE = Webtrekk/Info.plist;
+				INFOPLIST_FILE = Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Webtrekk.Webtrekk;
@@ -1236,7 +1236,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/watchOS",
 				);
-				INFOPLIST_FILE = Webtrekk/Info.plist;
+				INFOPLIST_FILE = Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Webtrekk.Webtrekk;
