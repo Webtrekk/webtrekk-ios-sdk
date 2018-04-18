@@ -497,18 +497,9 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		0FE637871EDED5C1006887EC /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Supporting Files";
-			path = "Source/Supporting Files";
-			sourceTree = SOURCE_ROOT;
-		};
 		5A20E22120864FD000EF4E1A /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				0FE637871EDED5C1006887EC /* Supporting Files */,
 				0F2D21B71EDEA1C500D09ADF /* Public */,
 				0F2D21841EDEA1C500D09ADF /* Internal */,
 				0FE637881EDED5C1006887EC /* Info.plist */,
