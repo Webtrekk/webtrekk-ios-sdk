@@ -500,7 +500,6 @@
 		0FE637871EDED5C1006887EC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				0FE6378A1EDED7AD006887EC /* Webtrekk-Bridging-Header.h */,
 			);
 			name = "Supporting Files";
 			path = "Source/Supporting Files";
@@ -515,6 +514,7 @@
 				0FE637881EDED5C1006887EC /* Info.plist */,
 				0FE637891EDED5C1006887EC /* Webtrekk.h */,
 				0F2D21DC1EDEA1C500D09ADF /* WebtrekkTracking.swift */,
+				0FE6378A1EDED7AD006887EC /* Webtrekk-Bridging-Header.h */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -533,13 +533,6 @@
 			children = (
 			);
 			path = Public;
-			sourceTree = "<group>";
-		};
-		5A6AEA3C20739E3D00ED92F3 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		5AEE4AF1207EC2CE008FD2B3 /* Features */ = {
@@ -561,7 +554,6 @@
 		5AF6D0662073DA6E002E98A3 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				5A6AEA3C20739E3D00ED92F3 /* Supporting Files */,
 				5A6AEA3B20739E3500ED92F3 /* Public */,
 				5A6AEA3A20739E2A00ED92F3 /* Internal */,
 				5AF6D0672073DA6E002E98A3 /* Tests.swift */,
@@ -978,7 +970,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_SWIFT_FLAGS = "-DCARTHAGE_CONFIG";
+				OTHER_SWIFT_FLAGS = "";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1035,7 +1027,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_SWIFT_FLAGS = "-DCARTHAGE_CONFIG";
+				OTHER_SWIFT_FLAGS = "";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.0;
@@ -1065,11 +1057,12 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "-DCARTHAGE_CONFIG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Webtrekk.Webtrekk;
 				PRODUCT_NAME = Webtrekk;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Source/Supporting Files/Webtrekk-Bridging-Header.h";
-				SWIFT_OBJC_INTERFACE_HEADER_NAME = "$(SRCROOT)/Source/Supporting Files/Webtrekk.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Source/Webtrekk-Bridging-Header.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = Source/Webtrekk.h;
 			};
 			name = Debug;
 		};
@@ -1091,11 +1084,12 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "-DCARTHAGE_CONFIG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Webtrekk.Webtrekk;
 				PRODUCT_NAME = Webtrekk;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Source/Supporting Files/Webtrekk-Bridging-Header.h";
-				SWIFT_OBJC_INTERFACE_HEADER_NAME = "$(SRCROOT)/Source/Supporting Files/Webtrekk.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Source/Webtrekk-Bridging-Header.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = Source/Webtrekk.h;
 			};
 			name = Release;
 		};
