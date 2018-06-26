@@ -10,6 +10,7 @@ internal class XmlTrackerConfigurationParser {
     private var automaticallyTracksRequestQueueSize: Bool?
     private var configurationUpdateUrl: URL?
     private var enableRemoteConfiguration: Bool?
+    private var enableCampaignTracking: Bool?
     private var maximumSendDelay: TimeInterval?
     private var resendOnStartEventTime: TimeInterval?
     private var samplingRate: Int?
@@ -82,33 +83,44 @@ internal class XmlTrackerConfigurationParser {
         for child in xmlElement.children {
             do {
                 switch child.name {
-                case "enableRemoteConfiguration": self.enableRemoteConfiguration = try parseBool(child.text)
-                case "resendOnStartEventTime":    self.resendOnStartEventTime = try parseDouble(child.text,
-                                                                                                allowedRange: TrackerConfiguration.allowedResendOnStartEventTimes)
-                case "sampling":                  self.samplingRate = try parseInt(child.text,
-                                                                                   allowedRange: TrackerConfiguration.allowedSamplingRates)
-                case "sendDelay":                 self.maximumSendDelay = try parseDouble(child.text,
-                                                                                          allowedRange: TrackerConfiguration.allowedMaximumSendDelays)
-                case "trackingConfigurationUrl":  self.configurationUpdateUrl = try parseUrl(child.text,
-                                                                                             emptyAllowed: true)
-                case "trackDomain":               self.serverUrl = try parseUrl(child.text,
-                                                                                emptyAllowed: false)
-                case "trackId":                   self.webtrekkId = try parseString(child.text,
-                                                                                    emptyAllowed: false)
-                case "version":                   self.version = try parseInt(child.text,
-                                                                              allowedRange: TrackerConfiguration.allowedVersions)
-
-                case "autoTracked":                  self.autoTracked = try parseBool(child.text)
-                case "autoTrackAdvertiserId":        self.automaticallyTracksAdvertisingId = try parseBool(child.text)
-                case "autoTrackAdvertisementOptOut": self.automaticallyTracksAdvertisingOptOut = try parseBool(child.text)
-                case "autoTrackAppUpdate":           self.automaticallyTracksAppUpdates = try parseBool(child.text)
-                case "autoTrackAppVersionName":      self.automaticallyTracksAppVersion = try parseBool(child.text)
-                case "autoTrackRequestUrlStoreSize": self.automaticallyTracksRequestQueueSize = try parseBool(child.text)
-                case "autoTrackAdClearId":           self.automaticallyTracksAdClearId = try parseBool(child.text)
-
-                case "globalTrackingParameter" : try readFromGlobalElement(child)
-                case "recommendations" : try recommendationsL = readRecommendations(xmlElement: child)
-                case "screen": try readFromScreenElement(child)
+                case "enableRemoteConfiguration":
+                    self.enableRemoteConfiguration = try parseBool(child.text)
+                case "enableCampaignTracking":
+                    self.enableCampaignTracking = try parseBool(child.text)
+                case "resendOnStartEventTime":
+                    self.resendOnStartEventTime = try parseDouble(child.text, allowedRange: TrackerConfiguration.allowedResendOnStartEventTimes)
+                case "sampling":
+                    self.samplingRate = try parseInt(child.text, allowedRange: TrackerConfiguration.allowedSamplingRates)
+                case "sendDelay":
+                    self.maximumSendDelay = try parseDouble(child.text, allowedRange: TrackerConfiguration.allowedMaximumSendDelays)
+                case "trackingConfigurationUrl":
+                    self.configurationUpdateUrl = try parseUrl(child.text, emptyAllowed: true)
+                case "trackDomain":
+                    self.serverUrl = try parseUrl(child.text, emptyAllowed: false)
+                case "trackId":
+                    self.webtrekkId = try parseString(child.text, emptyAllowed: false)
+                case "version":
+                    self.version = try parseInt(child.text, allowedRange: TrackerConfiguration.allowedVersions)
+                case "autoTracked":
+                    self.autoTracked = try parseBool(child.text)
+                case "autoTrackAdvertiserId":
+                    self.automaticallyTracksAdvertisingId = try parseBool(child.text)
+                case "autoTrackAdvertisementOptOut":
+                    self.automaticallyTracksAdvertisingOptOut = try parseBool(child.text)
+                case "autoTrackAppUpdate":
+                    self.automaticallyTracksAppUpdates = try parseBool(child.text)
+                case "autoTrackAppVersionName":
+                    self.automaticallyTracksAppVersion = try parseBool(child.text)
+                case "autoTrackRequestUrlStoreSize":
+                    self.automaticallyTracksRequestQueueSize = try parseBool(child.text)
+                case "autoTrackAdClearId":
+                    self.automaticallyTracksAdClearId = try parseBool(child.text)
+                case "globalTrackingParameter" :
+                    try readFromGlobalElement(child)
+                case "recommendations":
+                    try recommendationsL = readRecommendations(xmlElement: child)
+                case "screen":
+                    try readFromScreenElement(child)
                 case "autoTrackConnectionType":
                     #if !os(watchOS) && !os(tvOS)
                     self.automaticallyTracksConnectionType = try parseBool(child.text)
@@ -123,11 +135,11 @@ internal class XmlTrackerConfigurationParser {
                     #endif
                 case "errorLogLevel":
                     if self.errorLogLevel == nil || (self.errorLogLevel != nil && self.errorLogLevel != 0) {
-                    self.errorLogLevel = try parseInt(child.text, allowedRange: 1...3)
+                        self.errorLogLevel = try parseInt(child.text, allowedRange: 1...3)
                     }
                 case "errorLogEnable":
                     if let enable = try parseBool(child.text) {
-                    self.errorLogLevel = enable ? self.errorLogLevel : 0
+                        self.errorLogLevel = enable ? self.errorLogLevel : 0
                     }
                 default:
                     guard child.name != "autoTrackAppVersionCode" && child.name != "maxRequests" else {
@@ -199,6 +211,10 @@ internal class XmlTrackerConfigurationParser {
 
         if let automaticallyTracksAdClearId = self.automaticallyTracksAdClearId {
             trackerConfiguration.automaticallyTracksAdClearId = automaticallyTracksAdClearId
+        }
+
+        if let enableCampaignTracking = self.enableCampaignTracking {
+            trackerConfiguration.enableCampaignTracking = enableCampaignTracking
         }
 
         if let recommendations = recommendationsL {

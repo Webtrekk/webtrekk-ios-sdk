@@ -7,7 +7,7 @@ class AppinstallGoal {
     private let sharedDefaults = UserDefaults.standardDefaults.child(namespace: "webtrekk")
 
     func setupAppinstallGoal() {
-        guard !isAppinstallGoalProcessed() else {
+        if self.isAppinstallGoalProcessed() {
             return
         }
 
@@ -22,7 +22,7 @@ class AppinstallGoal {
     func fininshAppinstallGoal() {
         if self.checkAppinstallGoal() {
             self.sharedDefaults.remove(key: AppinstallGoal.appinstallGoal)
-            appinstallGoalProcessFinished()
+            self.appinstallGoalProcessFinished()
         }
     }
 

@@ -8,13 +8,13 @@ final class RequestTrackerBuilder {
     var deepLink: DeepLink!
     #endif
 
-    let campaign: Campaign
+    let campaign: Campaign? // deprecated in version 5!
     let appinstallGoal: AppinstallGoal
     let pageURL: String?
     let configuration: TrackerConfiguration
     let global: GlobalProperties
 
-    init (_ campaign: Campaign, pageURL: String?, configuration: TrackerConfiguration,
+    init (_ campaign: Campaign? = nil, pageURL: String?, configuration: TrackerConfiguration,
           global: GlobalProperties, appInstall: AppinstallGoal) {
         self.campaign = campaign
         self.pageURL = pageURL

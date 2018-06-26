@@ -140,15 +140,16 @@ final class DefaultTracker: Tracker {
         self.manualStart = configuration.maximumSendDelay == 0
         self.requestManager = RequestManager(manualStart: self.manualStart)
         self.requestQueueBackupFile = DefaultTracker.requestQueueBackupFileForWebtrekkId(configuration.webtrekkId)
-
         self.campaign = Campaign(trackID: configuration.webtrekkId)
-
+        
         guard let campaign = self.campaign else {
             return false
         }
 
-        campaign.processCampaign()
-        self.appinstallGoal.setupAppinstallGoal()
+        if (configuration.enableCampaignTracking) {
+            campaign.processCampaign()
+            self.appinstallGoal.setupAppinstallGoal()
+        }
 
         self.requestUrlBuilder = RequestUrlBuilder(serverUrl: configuration.serverUrl, webtrekkId: configuration.webtrekkId, campaign: campaign)
 

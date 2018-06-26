@@ -20,8 +20,8 @@ class Campaign: NSObject {
     }
 
     func processCampaign() {
-        if let isCampaignSet = sharedDefaults.boolForKey(Campaign.campaignHasProcessed), isCampaignSet {
-            WebtrekkTracking.logger.logError("campaign was not already set")
+        if let isCampaignProcessed = sharedDefaults.boolForKey(Campaign.campaignHasProcessed), isCampaignProcessed {
+            WebtrekkTracking.logger.logError("campaign was already processed")
             return
         }
 

@@ -32,6 +32,9 @@ internal struct TrackerConfiguration {
 
     /** If enabled automatically tracks adclear id. */
     internal var automaticallyTracksAdClearId = false
+    
+    /** If enabled automatically tracks campaigns. */
+    internal var enableCampaignTracking = true
 
 	/** Url of the remote configuration. */
 	internal var configurationUpdateUrl: URL?
