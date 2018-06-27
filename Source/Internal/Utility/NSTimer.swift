@@ -6,7 +6,7 @@ internal extension Timer {
 	internal static func scheduledTimerWithTimeInterval(
                     _ timeInterval: TimeInterval,
                     repeats: Bool = false,
-                    closure: Closure) -> Timer {
+                    closure: @escaping Closure) -> Timer {
 
 		return scheduledTimer(timeInterval: timeInterval,
                               target: timerHandler,

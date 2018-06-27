@@ -32,7 +32,7 @@ internal struct TrackerConfiguration {
 
     /** If enabled automatically tracks adclear id. */
     internal var automaticallyTracksAdClearId = false
-    
+
     /** If enabled automatically tracks campaigns. */
     internal var enableCampaignTracking = true
 
