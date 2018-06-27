@@ -26,6 +26,8 @@ Xcode 9.0+ and Swift 4.0 starting with version 4.8.0
 
 Xcode 9.3+ and Swift 4.1 starting with version 4.11.0
 
+Xcode 10+ and Swift 4.2 starting with version 4.12.1
+
 tvOS support starting with version 4.2.0 with the following limitation:
 No screen resolution and automatic network status tracking support.
 
