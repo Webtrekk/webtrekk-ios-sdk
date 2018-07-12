@@ -399,20 +399,23 @@ internal final class RequestManager: NSObject, URLSessionDelegate {
                     _ session: URLSession,
                     didBecomeInvalidWithError error: Error?) {
         logDebug("didBecomeInvalidWithError  call")
-        if self.finishing {
-            WebtrekkTracking.defaultLogger.logDebug("URL request has been finished. Save all")
-            if let error = error {
-                WebtrekkTracking.defaultLogger.logError("URL session invalidated with error: \(error)")
-            }
-            self.queue.save()
-            self.finishing = false
 
-            #if !os(watchOS)
+        DispatchQueue.global(qos: .background).async {
+            if self.finishing {
+                WebtrekkTracking.defaultLogger.logDebug("URL request has been finished. Save all")
+                if let error = error {
+                    WebtrekkTracking.defaultLogger.logError("URL session invalidated with error: \(error)")
+                }
+                self.queue.save()
+                self.finishing = false
+                
+                #if !os(watchOS)
                 if self.backgroundTaskIdentifier != UIBackgroundTaskInvalid {
                     UIApplication.shared.endBackgroundTask(self.backgroundTaskIdentifier)
                     self.backgroundTaskIdentifier = UIBackgroundTaskInvalid
                 }
-            #endif
+                #endif
+            }
         }
     }
 }

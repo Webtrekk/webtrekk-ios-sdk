@@ -251,7 +251,6 @@ class RequestQueue {
         }
 
         self.logDebug("wait for all savings done")
-        // wait for all saving done
         self.threadAddURLQueue.sync {}
         self.logDebug("finish wait for all savings done")
         self.saveSettings()
