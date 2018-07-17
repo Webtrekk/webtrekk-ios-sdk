@@ -408,7 +408,7 @@ internal final class RequestManager: NSObject, URLSessionDelegate {
                 }
                 self.queue.save()
                 self.finishing = false
-                
+
                 #if !os(watchOS)
                 if self.backgroundTaskIdentifier != UIBackgroundTaskInvalid {
                     UIApplication.shared.endBackgroundTask(self.backgroundTaskIdentifier)

@@ -16,16 +16,17 @@ public struct PageProperties {
     }
 
     public init(
-		name: String?,
-		details: [Int: TrackingValue]? = nil,
-		groups: [Int: TrackingValue]? = nil,
-		internalSearch: String? = nil,
-		url: String? = nil
+        name: String? = nil,
+        details: [Int: TrackingValue]? = nil,
+        groups: [Int: TrackingValue]? = nil,
+        internalSearch: String? = nil,
+        url: String? = nil
 	) {
 		self.details = details
 		self.groups = groups
 		self.name = name
 		self.internalSearch = internalSearch
+
         setUpURL(url: url)
 	}
 

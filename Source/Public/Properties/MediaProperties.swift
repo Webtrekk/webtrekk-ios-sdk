@@ -11,7 +11,7 @@ public struct MediaProperties {
     public var soundVolume: Double?  // 0 ... 1
 
     public init(
-        name: String?,
+        name: String? = nil,
         bandwidth: Double? = nil,
         duration: TimeInterval? = nil,
         groups: [Int: TrackingValue]? = nil,

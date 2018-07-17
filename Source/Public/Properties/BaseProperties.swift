@@ -13,14 +13,14 @@ public class BaseProperties {
     var trackingParameters: TrackingParameter?
 
     public init(
-        actionProperties: ActionProperties = ActionProperties(name: nil),
-        advertisementProperties: AdvertisementProperties = AdvertisementProperties(id: nil),
+        actionProperties: ActionProperties = ActionProperties(),
+        advertisementProperties: AdvertisementProperties = AdvertisementProperties(),
         ecommerceProperties: EcommerceProperties = EcommerceProperties(),
         ipAddress: String? = nil,
-        mediaProperties: MediaProperties = MediaProperties(name: nil),
-        pageProperties: PageProperties = PageProperties(name: nil),
+        mediaProperties: MediaProperties = MediaProperties(),
+        pageProperties: PageProperties = PageProperties(),
         sessionDetails: [Int: TrackingValue] = [:],
-        userProperties: UserProperties = UserProperties(birthday: nil)
+        userProperties: UserProperties = UserProperties()
         ) {
         self.actionProperties = actionProperties
         self.advertisementProperties = advertisementProperties

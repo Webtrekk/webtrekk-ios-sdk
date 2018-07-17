@@ -5,7 +5,7 @@ public struct AdvertisementProperties {
     public var id: String?
 
     public init(
-        id: String?,
+        id: String? = nil,
         action: String? = nil,
         details: [Int: TrackingValue]? = nil
     ) {

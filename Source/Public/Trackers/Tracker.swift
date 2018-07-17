@@ -59,10 +59,10 @@ public extension Tracker {
     public func trackAction(
         _ actionName: String,
         pageName: String,
-        advertisementProperties: AdvertisementProperties = AdvertisementProperties(id: nil),
+        advertisementProperties: AdvertisementProperties = AdvertisementProperties(),
         ecommerceProperties: EcommerceProperties = EcommerceProperties(),
         sessionDetails: [Int: TrackingValue] = [:],
-        userProperties: UserProperties = UserProperties(birthday: nil),
+        userProperties: UserProperties = UserProperties(),
         variables: [String: String] = [:]
     ) {
         trackAction(
@@ -79,10 +79,10 @@ public extension Tracker {
     public func trackAction(
         _ actionName: String,
         viewControllerType: AnyObject.Type,
-        advertisementProperties: AdvertisementProperties = AdvertisementProperties(id: nil),
+        advertisementProperties: AdvertisementProperties = AdvertisementProperties(),
         ecommerceProperties: EcommerceProperties = EcommerceProperties(),
         sessionDetails: [Int: TrackingValue] = [:],
-        userProperties: UserProperties = UserProperties(birthday: nil),
+        userProperties: UserProperties = UserProperties(),
         variables: [String: String] = [:]
     ) {
         trackAction(
@@ -98,11 +98,11 @@ public extension Tracker {
 
     public func trackAction(
         _ actionProperties: ActionProperties,
-        pageProperties: PageProperties,
-        advertisementProperties: AdvertisementProperties = AdvertisementProperties(id: nil),
+        pageProperties: PageProperties = PageProperties(),
+        advertisementProperties: AdvertisementProperties = AdvertisementProperties(),
         ecommerceProperties: EcommerceProperties = EcommerceProperties(),
         sessionDetails: [Int: TrackingValue] = [:],
-        userProperties: UserProperties = UserProperties(birthday: nil),
+        userProperties: UserProperties = UserProperties(),
         variables: [String: String] = [:]
     ) {
         trackAction(ActionEvent(
@@ -132,10 +132,10 @@ public extension Tracker {
 
     public func trackPageView(
         _ pageName: String,
-        advertisementProperties: AdvertisementProperties = AdvertisementProperties(id: nil),
+        advertisementProperties: AdvertisementProperties = AdvertisementProperties(),
         ecommerceProperties: EcommerceProperties = EcommerceProperties(),
         sessionDetails: [Int: TrackingValue] = [:],
-        userProperties: UserProperties = UserProperties(birthday: nil),
+        userProperties: UserProperties = UserProperties(),
         variables: [String: String] = [:]
     ) {
         trackPageView(
@@ -150,10 +150,10 @@ public extension Tracker {
 
     public func trackPageView(
         _ pageProperties: PageProperties,
-        advertisementProperties: AdvertisementProperties = AdvertisementProperties(id: nil),
+        advertisementProperties: AdvertisementProperties = AdvertisementProperties(),
         ecommerceProperties: EcommerceProperties = EcommerceProperties(),
         sessionDetails: [Int: TrackingValue] = [:],
-        userProperties: UserProperties = UserProperties(birthday: nil),
+        userProperties: UserProperties = UserProperties(),
         variables: [String: String] = [:]
     ) {
         trackPageView(PageViewEvent(

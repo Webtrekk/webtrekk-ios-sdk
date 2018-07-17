@@ -25,12 +25,12 @@ public class ActionEvent: TrackingEventWithActionProperties,
     public var variables: [String: String]
 
     public init(
-        actionProperties: ActionProperties,
-        pageProperties: PageProperties,
-        advertisementProperties: AdvertisementProperties = AdvertisementProperties(id: nil),
+        actionProperties: ActionProperties = ActionProperties(),
+        pageProperties: PageProperties = PageProperties(),
+        advertisementProperties: AdvertisementProperties = AdvertisementProperties(),
         ecommerceProperties: EcommerceProperties = EcommerceProperties(),
         sessionDetails: [Int: TrackingValue] = [:],
-        userProperties: UserProperties = UserProperties(birthday: nil),
+        userProperties: UserProperties = UserProperties(),
         variables: [String: String] = [:]
     ) {
         self.actionProperties = actionProperties

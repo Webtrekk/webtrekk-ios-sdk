@@ -4,8 +4,9 @@ public struct ActionProperties {
     public var name: String?
 
     public init(
-        name: String?,
-        details: [Int: TrackingValue]? = nil) {
+            name: String? = nil,
+            details: [Int: TrackingValue]? = nil
+        ) {
         self.details = details
         self.name = name
     }

@@ -13,12 +13,12 @@ public class PageViewEvent: TrackingEventWithAdvertisementProperties,
     public var variables: [String: String]
 
     public init(
-        pageProperties: PageProperties,
-        advertisementProperties: AdvertisementProperties = AdvertisementProperties(id: nil),
+        pageProperties: PageProperties = PageProperties(),
+        advertisementProperties: AdvertisementProperties = AdvertisementProperties(),
         ecommerceProperties: EcommerceProperties = EcommerceProperties(),
         ipAddress: String? = nil,
         sessionDetails: [Int: TrackingValue] = [:],
-        userProperties: UserProperties = UserProperties(birthday: nil),
+        userProperties: UserProperties = UserProperties(),
         variables: [String: String] = [:]
     ) {
         self.advertisementProperties = advertisementProperties
