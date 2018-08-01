@@ -35,6 +35,7 @@ final class DefaultTracker: Tracker {
     private var defaults: UserDefaults?
     private var isFirstEventOfSession = true
     private var isSampling = false
+    private let sharedDefaults = UserDefaults.standardDefaults.child(namespace: "webtrekk")
     var requestManager: RequestManager?
     private var requestQueueBackupFile: URL?
     private var requestQueueLoaded = false
@@ -146,9 +147,14 @@ final class DefaultTracker: Tracker {
             return false
         }
 
+        // default is true, so when it's not defined, everything works as before
         if configuration.enableCampaignTracking {
             campaign.processCampaign()
             self.appinstallGoal.setupAppinstallGoal()
+        } else {
+            // when using the enableCampaignTracking flag (false),
+            // the campaign should be finished manually to not block the queue
+            self.sharedDefaults.set(key: Campaign.campaignHasProcessed, to: true)
         }
 
         self.requestUrlBuilder = RequestUrlBuilder(serverUrl: configuration.serverUrl, webtrekkId: configuration.webtrekkId, campaign: campaign)

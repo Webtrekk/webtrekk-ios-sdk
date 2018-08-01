@@ -184,6 +184,7 @@ internal final class RequestUrlBuilder {
                 urls.append(url)
 
             } else {
+                // TODO: seems like it stores the params in a json for later usage (might get lost..)
                 self.pendingQueueStore.save(parameters: parameters)
             }
 
