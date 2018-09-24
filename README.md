@@ -40,7 +40,7 @@ Carthage support starting from version 4.6.0
 
 # Installation
 
-[CocoaPods](htttp://cocoapods.org) (*Podfile*):
+[CocoaPods](htttp://www.cocoapods.org) (*Podfile*):
 
 `pod 'Webtrekk'`
 

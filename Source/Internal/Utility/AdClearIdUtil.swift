@@ -23,7 +23,7 @@ public struct AdClearId {
         return adClearId!
     }
 
-    private static func generateAdClearId() -> UInt64 {
+    public static func generateAdClearId() -> UInt64 {
 
         var dateComponents = DateComponents()
         dateComponents.year = 2011

@@ -292,8 +292,18 @@ public struct EcommerceProperties {
         }
     }
 
-    /// Shopping basket status
-    /// - parameter addedToBasket: add
+    /**
+     Shopping basket Status mapping enum
+     
+     **case** addedToBasket: *add*
+     
+     **case** purchased: *conf*
+     
+     **case** viewed: *view*
+     
+     **case** list: *list*
+     
+    */
     public enum Status: String {
         case addedToBasket = "add"
         case purchased = "conf"
