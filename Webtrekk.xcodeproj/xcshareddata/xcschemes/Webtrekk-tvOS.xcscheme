@@ -29,6 +29,15 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "9F9E5F041F2770A000FC5246"
+            BuildableName = "Webtrekk.framework"
+            BlueprintName = "Webtrekk-tvOS"
+            ReferencedContainer = "container:Webtrekk.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>

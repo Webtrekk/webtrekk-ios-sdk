@@ -30,6 +30,15 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "0F2D21781EDEA18500D09ADF"
+            BuildableName = "Webtrekk.framework"
+            BlueprintName = "Webtrekk-iOS"
+            ReferencedContainer = "container:Webtrekk.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
