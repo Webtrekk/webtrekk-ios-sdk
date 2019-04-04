@@ -12,11 +12,11 @@ extension Optional: _Optional {}
 
 internal extension _Optional {
 
-	internal var simpleDescription: String {
+    var simpleDescription: String {
 		return map { String(describing: $0) } ?? "<nil>"
 	}
 
-	internal var value: Wrapped? {
+    var value: Wrapped? {
 		return map { $0 }
 	}
 }

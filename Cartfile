@@ -1,2 +1,2 @@
 # Replacement for Apple's Reachability re-written in Swift with closures
-github "ashleymills/Reachability.swift" ~> 3.0
+github "ashleymills/Reachability.swift" ~> 4.0

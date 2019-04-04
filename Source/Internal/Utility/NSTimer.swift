@@ -3,7 +3,7 @@ import Foundation
 internal extension Timer {
 
 	@nonobjc
-	internal static func scheduledTimerWithTimeInterval(
+    static func scheduledTimerWithTimeInterval(
                     _ timeInterval: TimeInterval,
                     repeats: Bool = false,
                     closure: @escaping Closure) -> Timer {

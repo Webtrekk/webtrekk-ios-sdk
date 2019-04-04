@@ -56,7 +56,7 @@ public protocol Tracker: class {
 
 public extension Tracker {
 
-    public func trackAction(
+    func trackAction(
         _ actionName: String,
         pageName: String,
         advertisementProperties: AdvertisementProperties = AdvertisementProperties(),
@@ -76,7 +76,7 @@ public extension Tracker {
         )
     }
 
-    public func trackAction(
+    func trackAction(
         _ actionName: String,
         viewControllerType: AnyObject.Type,
         advertisementProperties: AdvertisementProperties = AdvertisementProperties(),
@@ -96,7 +96,7 @@ public extension Tracker {
         )
     }
 
-    public func trackAction(
+    func trackAction(
         _ actionProperties: ActionProperties,
         pageProperties: PageProperties = PageProperties(),
         advertisementProperties: AdvertisementProperties = AdvertisementProperties(),
@@ -116,7 +116,7 @@ public extension Tracker {
         ))
     }
 
-    public func trackMediaAction(
+    func trackMediaAction(
         _ action: MediaEvent.Action,
         mediaProperties: MediaProperties,
         pageName: String?,
@@ -130,7 +130,7 @@ public extension Tracker {
         ))
     }
 
-    public func trackPageView(
+    func trackPageView(
         _ pageName: String,
         advertisementProperties: AdvertisementProperties = AdvertisementProperties(),
         ecommerceProperties: EcommerceProperties = EcommerceProperties(),
@@ -148,7 +148,7 @@ public extension Tracker {
         )
     }
 
-    public func trackPageView(
+    func trackPageView(
         _ pageProperties: PageProperties,
         advertisementProperties: AdvertisementProperties = AdvertisementProperties(),
         ecommerceProperties: EcommerceProperties = EcommerceProperties(),
@@ -166,12 +166,12 @@ public extension Tracker {
         ))
     }
 
-    public func trackCDB(_ crossDeviceProperties: CrossDeviceProperties) {
+    func trackCDB(_ crossDeviceProperties: CrossDeviceProperties) {
         global.crossDeviceProperties = crossDeviceProperties
         trackPageView("CDBPage")
     }
 
-    public subscript(key: String) -> String? {
+    subscript(key: String) -> String? {
         get {
             return global.variables[key]
         }

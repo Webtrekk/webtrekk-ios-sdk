@@ -3,7 +3,7 @@ import Foundation
 internal extension FileManager {
 
 	@nonobjc
-	internal func itemExistsAtURL(_ url: URL) -> Bool {
+    func itemExistsAtURL(_ url: URL) -> Bool {
 		guard url.isFileURL, !url.path.isEmpty else {
 			return false
 		}

@@ -223,7 +223,7 @@ internal final class RequestManager: NSObject, URLSessionDelegate {
 
 		#if !os(watchOS)
 			if let reachability = reachability {
-				guard reachability.isReachable else {
+				if reachability.connection == .none {
 					if !sendingInterruptedBecauseUnreachable {
 						sendingInterruptedBecauseUnreachable = true
 

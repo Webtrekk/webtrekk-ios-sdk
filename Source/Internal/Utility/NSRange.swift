@@ -2,11 +2,11 @@ import Foundation
 
 internal extension NSRange {
 
-	internal init(forString string: String) {
+    init(forString string: String) {
 		self.init(range: string.startIndex ..< string.endIndex, inString: string)
 	}
 
-	internal init(range: Range<String.Index>?, inString string: String) {
+    init(range: Range<String.Index>?, inString string: String) {
 		if let range = range {
            let location = NSRange.locationForIndex(range.lowerBound, inString: string)
            let endLocation = NSRange.locationForIndex(range.upperBound, inString: string)
@@ -17,7 +17,7 @@ internal extension NSRange {
 		}
 	}
 
-	internal func endIndexInString(_ string: String) -> String.Index? {
+    func endIndexInString(_ string: String) -> String.Index? {
 		return NSRange.indexForLocation(NSMaxRange(self), inString: string)
 	}
 
@@ -34,7 +34,7 @@ internal extension NSRange {
 		return string.utf16.distance(from: string.utf16.startIndex, to: toPosition)
 	}
 
-	internal func rangeInString(_ string: String) -> Range<String.Index>? {
+    func rangeInString(_ string: String) -> Range<String.Index>? {
 		if let startIndex = startIndexInString(string),
            let endIndex = endIndexInString(string) {
 			return startIndex ..< endIndex
@@ -43,7 +43,7 @@ internal extension NSRange {
 		return nil
 	}
 
-	internal func startIndexInString(_ string: String) -> String.Index? {
+    func startIndexInString(_ string: String) -> String.Index? {
 		return NSRange.indexForLocation(location, inString: string)
 	}
 }

@@ -269,18 +269,18 @@ internal final class AVPlayerTracker: NSObject {
 
 fileprivate extension AVPlayer {
 
-    fileprivate struct AssociatedKeys {
+    struct AssociatedKeys {
 
         fileprivate static var trackers = UInt8()
     }
 
-    fileprivate var isPlaying: Bool {
+    var isPlaying: Bool {
         checkIsOnMainThread()
 
         return abs(rate) >= 0.000001
     }
 
-    fileprivate var trackers: Trackers {
+    var trackers: Trackers {
         checkIsOnMainThread()
 
         return objc_getAssociatedObject(self, &AssociatedKeys.trackers) as? Trackers ?? {
@@ -290,7 +290,7 @@ fileprivate extension AVPlayer {
         }()
     }
 
-    fileprivate final class Trackers {
+    final class Trackers {
 
         private var trackers = [AVPlayerTracker]()
 

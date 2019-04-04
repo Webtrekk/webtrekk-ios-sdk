@@ -14,7 +14,7 @@ internal extension UIViewController {
 	private static var swizzled = false
 
 	@nonobjc
-	internal var applicationDidBecomeActiveObserver: NSObjectProtocol? {
+    var applicationDidBecomeActiveObserver: NSObjectProtocol? {
 		get { return objc_getAssociatedObject(self,
                                               &AssociatedKeys.applicationDidBecomeActiveObserver) as? NSObjectProtocol }
 		set { objc_setAssociatedObject(self,
@@ -28,7 +28,7 @@ internal extension UIViewController {
 	}
 
 	@nonobjc
-	internal var automaticTracker: PageTracker {
+    var automaticTracker: PageTracker {
 		return objc_getAssociatedObject(self, &AssociatedKeys.automaticTracker) as? PageTracker ?? {
 			let tracker = DefaultPageTracker(handler: DefaultTracker.autotrackingEventHandler,
                                              viewControllerType: type(of: self))
@@ -40,7 +40,7 @@ internal extension UIViewController {
 	}
 
 	@nonobjc
-	internal static func setUpAutomaticTracking() {
+    static func setUpAutomaticTracking() {
 		guard !swizzled else {
 			return
 		}

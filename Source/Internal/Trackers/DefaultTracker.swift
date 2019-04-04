@@ -570,36 +570,33 @@ final class DefaultTracker: Tracker {
         guard let reachability = Reachability.init() else {
             return nil
         }
-        if reachability.isReachableViaWiFi {
+
+        switch reachability.connection {
+        case .none:
+            return .offline
+        case .wifi:
             return .wifi
-        } else if reachability.isReachableViaWWAN {
-            if let carrierType = CTTelephonyNetworkInfo().currentRadioAccessTechnology {
-                switch carrierType {
-                case CTRadioAccessTechnologyGPRS, CTRadioAccessTechnologyEdge, CTRadioAccessTechnologyCDMA1x:
-                    return .cellular_2G
-
-                case CTRadioAccessTechnologyWCDMA,
-                     CTRadioAccessTechnologyHSDPA,
-                     CTRadioAccessTechnologyHSUPA,
-                     CTRadioAccessTechnologyCDMAEVDORev0,
-                     CTRadioAccessTechnologyCDMAEVDORevA,
-                     CTRadioAccessTechnologyCDMAEVDORevB,
-                     CTRadioAccessTechnologyeHRPD:
-                    return .cellular_3G
-
-                case CTRadioAccessTechnologyLTE:
-                    return .cellular_4G
-
-                default:
-                    return .other
-                }
-            } else {
+        case .cellular:
+            guard let carrierType = CTTelephonyNetworkInfo().currentRadioAccessTechnology else {
                 return .other
             }
-        } else if reachability.isReachable {
-            return .other
-        } else {
-            return .offline
+
+            switch carrierType {
+            case CTRadioAccessTechnologyGPRS, CTRadioAccessTechnologyEdge, CTRadioAccessTechnologyCDMA1x:
+                return .cellular_2G
+            case CTRadioAccessTechnologyWCDMA,
+                 CTRadioAccessTechnologyHSDPA,
+                 CTRadioAccessTechnologyHSUPA,
+                 CTRadioAccessTechnologyCDMAEVDORev0,
+                 CTRadioAccessTechnologyCDMAEVDORevA,
+                 CTRadioAccessTechnologyCDMAEVDORevB,
+                 CTRadioAccessTechnologyeHRPD:
+                return .cellular_3G
+            case CTRadioAccessTechnologyLTE:
+                return .cellular_4G
+            default:
+                return .other
+            }
         }
     }
     #endif

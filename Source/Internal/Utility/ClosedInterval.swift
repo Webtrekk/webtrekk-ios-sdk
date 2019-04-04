@@ -1,6 +1,6 @@
 internal extension ClosedRange {
 
-	internal func clamp(_ value: Bound) -> Bound {
+    func clamp(_ value: Bound) -> Bound {
 		if value < lowerBound {
 			return lowerBound
 		}
@@ -14,7 +14,7 @@ internal extension ClosedRange {
 
 internal extension ClosedRange where Bound: MinimumMaximumAware {
 
-	internal var conditionText: String {
+    var conditionText: String {
 		if lowerBound.isMinimum && upperBound.isMaximum {
 			return "any value"
 		}

@@ -2,7 +2,7 @@ import Foundation
 
 internal extension String {
 
-    internal func firstMatchForRegularExpression(_ regularExpression: NSRegularExpression) -> [String]? {
+    func firstMatchForRegularExpression(_ regularExpression: NSRegularExpression) -> [String]? {
         guard let match = regularExpression.firstMatch(in: self, options: [], range: NSMakeRange(0, utf16.count)) else {
             return nil
         }
@@ -10,7 +10,7 @@ internal extension String {
         return (0 ..< match.numberOfRanges).map { String(self[match.range(at: $0).rangeInString(self)!]) }
     }
 
-    internal func firstMatchForRegularExpression(_ regularExpressionPattern: String) -> [String]? {
+    func firstMatchForRegularExpression(_ regularExpressionPattern: String) -> [String]? {
         do {
             let regularExpression = try NSRegularExpression(pattern: regularExpressionPattern, options: [])
             return firstMatchForRegularExpression(regularExpression)
@@ -20,7 +20,7 @@ internal extension String {
     }
 
     //check if string is matched to expression
-    internal func isMatchForRegularExpression(_ expression: String) -> Bool? {
+    func isMatchForRegularExpression(_ expression: String) -> Bool? {
 
        do {
             let regularExpression = try NSRegularExpression(pattern: expression, options: [])
@@ -31,7 +31,7 @@ internal extension String {
        }
     }
 
-    internal var nonEmpty: String? {
+    var nonEmpty: String? {
         if isEmpty {
             return nil
         }
@@ -39,11 +39,11 @@ internal extension String {
         return self
     }
 
-    internal var simpleDescription: String {
+    var simpleDescription: String {
         return "\"\(self)\""
     }
 
-    internal func isValidURL() -> Bool {
+    func isValidURL() -> Bool {
 
     if let url = URL(string: self), url.host != nil {
             return true
@@ -52,7 +52,7 @@ internal extension String {
         }
     }
 
-    internal func isTrackIdFormat() -> Bool {
+    func isTrackIdFormat() -> Bool {
 
         let trackIds = self.replacingOccurrences(of: " ", with: "").components(separatedBy: ",")
 
@@ -69,11 +69,11 @@ internal extension String {
         return true
     }
 
-    internal func sha256() -> String {
+    func sha256() -> String {
         return self.utf8.lazy.map({ $0 as UInt8 }).sha256().toHexString()
     }
 
-    internal func md5() -> String {
+    func md5() -> String {
         return self.utf8.lazy.map({ $0 as UInt8 }).md5().toHexString()
     }
 
@@ -91,7 +91,7 @@ internal extension String {
 
 internal extension _Optional where Wrapped == String {
 
-    internal var simpleDescription: String {
+    var simpleDescription: String {
         return self.value?.simpleDescription ?? "<nil>"
     }
 }

@@ -27,7 +27,7 @@ extension Array: CSArrayType {
 
 public extension CSArrayType where Iterator.Element == UInt8 {
 
-    public func toHexString() -> String {
+    func toHexString() -> String {
         return self.lazy.reduce("") {
             var s = String($1, radix: 16)
             if s.count == 1 {
@@ -37,7 +37,7 @@ public extension CSArrayType where Iterator.Element == UInt8 {
         }
     }
 
-    public func md5() -> [Iterator.Element] {
+    func md5() -> [Iterator.Element] {
         return Digest.md5(cs_arrayValue())
     }
 /*COMMENTED BY WEBTREKK
@@ -49,7 +49,7 @@ public extension CSArrayType where Iterator.Element == UInt8 {
         return Digest.sha224(cs_arrayValue())
     }
 */
-    public func sha256() -> [Iterator.Element] {
+    func sha256() -> [Iterator.Element] {
         return Digest.sha256(cs_arrayValue())
     }
  /*COMMENTED BY WEBTREKK

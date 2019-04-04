@@ -69,19 +69,19 @@ public protocol TrackingLogger: class {
 
 public extension TrackingLogger {
 
-    public func logDebug(_ message: @autoclosure () -> String) {
+    func logDebug(_ message: @autoclosure () -> String) {
         log(message: message, level: .debug)
     }
 
-    public func logError(_ message: @autoclosure () -> String) {
+    func logError(_ message: @autoclosure () -> String) {
         log(message: message, level: .error)
     }
 
-    public func logInfo(_ message: @autoclosure () -> String) {
+    func logInfo(_ message: @autoclosure () -> String) {
         log(message: message, level: .info)
     }
 
-    public func logWarning(_ message: @autoclosure () -> String) {
+    func logWarning(_ message: @autoclosure () -> String) {
         log(message: message, level: .warning)
     }
 }

@@ -25,11 +25,11 @@ public protocol PageTracker: class {
 
 public extension PageTracker {
 
-    public func trackAction(_ actionName: String) {
+    func trackAction(_ actionName: String) {
         trackAction(ActionEvent(actionProperties: ActionProperties(name: actionName), pageProperties: pageProperties))
     }
 
-    public subscript(key: String) -> String? {
+    subscript(key: String) -> String? {
         get {
             return variables[key]
         }
