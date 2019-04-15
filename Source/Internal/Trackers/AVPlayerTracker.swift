@@ -102,7 +102,7 @@ internal final class AVPlayerTracker: NSObject {
             self.updateToPlaybackState(.finished)
         }
 
-        self.playerTimeObserver = player.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(60, 1),
+        self.playerTimeObserver = player.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(60, preferredTimescale: 1),
                                                                  queue: nil) { [weak self] currentTime in
             guard let `self` = self, let player = self.player else {
                 return
@@ -154,7 +154,7 @@ internal final class AVPlayerTracker: NSObject {
             parent.mediaProperties.bandwidth = bandwidth
         }
 
-        if item.duration != kCMTimeIndefinite {
+        if item.duration != CMTime.indefinite {
             parent.mediaProperties.duration = CMTimeGetSeconds(item.duration)
         }
 

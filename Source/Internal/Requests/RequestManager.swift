@@ -19,7 +19,7 @@ internal final class RequestManager: NSObject, URLSessionDelegate {
 	#if !os(watchOS)
 	private let reachability: Reachability?
 	private var sendingInterruptedBecauseUnreachable = false
-    var backgroundTaskIdentifier = UIBackgroundTaskInvalid
+    var backgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
 	#endif
 
 	internal fileprivate(set) var queue = RequestQueue()
@@ -406,9 +406,9 @@ internal final class RequestManager: NSObject, URLSessionDelegate {
                 self.finishing = false
 
                 #if !os(watchOS)
-                if self.backgroundTaskIdentifier != UIBackgroundTaskInvalid {
-                    UIApplication.shared.endBackgroundTask(self.backgroundTaskIdentifier)
-                    self.backgroundTaskIdentifier = UIBackgroundTaskInvalid
+                if self.backgroundTaskIdentifier != UIBackgroundTaskIdentifier.invalid {
+                    UIApplication.shared.endBackgroundTask(convertToUIBackgroundTaskIdentifier(self.backgroundTaskIdentifier.rawValue))
+                    self.backgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
                 }
                 #endif
             }
@@ -420,4 +420,9 @@ internal protocol _RequestManagerDelegate: class {
 
 	func requestManager (_ requestManager: RequestManager, didSendRequest request: URL)
 	func requestManager (_ requestManager: RequestManager, didFailToSendRequest request: URL, error: RequestManager.ConnectionError)
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIBackgroundTaskIdentifier(_ input: Int) -> UIBackgroundTaskIdentifier {
+	return UIBackgroundTaskIdentifier(rawValue: input)
 }

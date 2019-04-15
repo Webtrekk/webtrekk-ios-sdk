@@ -686,6 +686,7 @@
 					0F2D21781EDEA18500D09ADF = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = EZPY3L3K5H;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 					};
 					5AF6D0642073DA6E002E98A3 = {
@@ -1057,6 +1058,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Webtrekk-Bridging-Header.h";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = Source/Webtrekk.h;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1084,6 +1086,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Webtrekk-Bridging-Header.h";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = Source/Webtrekk.h;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -1147,7 +1150,7 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
@@ -1174,7 +1177,7 @@
 				PRODUCT_NAME = Webtrekk;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
@@ -1203,7 +1206,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = "";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -1231,7 +1234,7 @@
 				PRODUCT_NAME = Webtrekk;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = "";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};

@@ -16,7 +16,7 @@ class UIFlowObserver: NSObject {
     fileprivate var applicationWillEnterForegroundObserver: NSObjectProtocol?
     fileprivate var applicationWillResignActiveObserver: NSObjectProtocol?
     private let deepLink = DeepLink()
-    private var backgroundTaskIdentifier = UIBackgroundTaskInvalid
+    private var backgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
     #endif
 
     init(tracker: DefaultTracker) {
@@ -42,17 +42,17 @@ class UIFlowObserver: NSObject {
 
         #if !os(watchOS)
             let notificationCenter = NotificationCenter.default
-            applicationDidBecomeActiveObserver = notificationCenter.addObserver(forName: NSNotification.Name.UIApplicationDidBecomeActive,
+            applicationDidBecomeActiveObserver = notificationCenter.addObserver(forName: UIApplication.didBecomeActiveNotification,
                                                                                 object: nil,
                                                                                 queue: nil) { [weak self] _ in
             self?.WTapplicationDidBecomeActive()
             }
-            applicationWillEnterForegroundObserver = notificationCenter.addObserver(forName: NSNotification.Name.UIApplicationWillEnterForeground,
+            applicationWillEnterForegroundObserver = notificationCenter.addObserver(forName: UIApplication.willEnterForegroundNotification,
                                                                                     object: nil,
                                                                                     queue: nil) { [weak self] _ in
             self?.WTapplicationWillEnterForeground()
             }
-            applicationWillResignActiveObserver = notificationCenter.addObserver(forName: NSNotification.Name.UIApplicationWillResignActive,
+            applicationWillResignActiveObserver = notificationCenter.addObserver(forName: UIApplication.willResignActiveNotification,
                                                                                  object: nil,
                                                                                  queue: nil) { [weak self] _ in
             self?.WTapplicationWillResignActive()
@@ -132,9 +132,9 @@ class UIFlowObserver: NSObject {
             return
         }
 
-        if requestManager.backgroundTaskIdentifier != UIBackgroundTaskInvalid {
-            application.endBackgroundTask(requestManager.backgroundTaskIdentifier)
-            requestManager.backgroundTaskIdentifier = UIBackgroundTaskInvalid
+        if requestManager.backgroundTaskIdentifier != UIBackgroundTaskIdentifier.invalid {
+            application.endBackgroundTask(convertToUIBackgroundTaskIdentifier(requestManager.backgroundTaskIdentifier.rawValue))
+            requestManager.backgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
         }
     }
     #else
@@ -185,17 +185,17 @@ class UIFlowObserver: NSObject {
         tracker.initHibertationDate()
 
         #if !os(watchOS)
-            if let requestManager = self.tracker.requestManager, requestManager.backgroundTaskIdentifier == UIBackgroundTaskInvalid,
-               self.backgroundTaskIdentifier == UIBackgroundTaskInvalid, requestManager.isPending {
+            if let requestManager = self.tracker.requestManager, requestManager.backgroundTaskIdentifier == UIBackgroundTaskIdentifier.invalid,
+               self.backgroundTaskIdentifier == UIBackgroundTaskIdentifier.invalid, requestManager.isPending {
                 self.backgroundTaskIdentifier = application.beginBackgroundTask(withName: "Webtrekk Tracker #\(self.tracker.configuration.webtrekkId)") { [weak self] in
                     guard let `self` = self else {
                         return
                     }
 
                     if !requestManager.started || !requestManager.finishing {
-                        self.application.endBackgroundTask(self.backgroundTaskIdentifier)
+                        self.application.endBackgroundTask(convertToUIBackgroundTaskIdentifier(self.backgroundTaskIdentifier.rawValue))
                     }
-                    self.backgroundTaskIdentifier = UIBackgroundTaskInvalid
+                    self.backgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
                 }
                 requestManager.backgroundTaskIdentifier = self.backgroundTaskIdentifier
             }
@@ -226,4 +226,9 @@ class UIFlowObserver: NSObject {
         }
         tracker.updateFirstSession()
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIBackgroundTaskIdentifier(_ input: Int) -> UIBackgroundTaskIdentifier {
+	return UIBackgroundTaskIdentifier(rawValue: input)
 }

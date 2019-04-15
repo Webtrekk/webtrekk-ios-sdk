@@ -62,7 +62,7 @@ internal extension UIViewController {
 		automaticTracker.trackPageView()
 
 		if applicationDidBecomeActiveObserver == nil {
-			applicationDidBecomeActiveObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidBecomeActive,
+			applicationDidBecomeActiveObserver = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification,
                                                                                         object: nil,
                                                                                         queue: nil) { [weak self] _ in
 				self?.applicationDidBecomeActiveWhileAppeared()
