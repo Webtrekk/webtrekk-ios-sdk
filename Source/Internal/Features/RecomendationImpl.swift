@@ -123,7 +123,7 @@ class RecomendationImpl: Recommendation {
     private func processResult(data: Data) -> (data: [RecommendationProduct]?, result: RecommendationQueryResult, error: NSError?) {
         var resultData: [RecommendationProduct] = []
         var resultStatus: RecommendationQueryResult = .ok
-        var error: NSError? = nil
+        var error: NSError?
 
         do {
 
@@ -140,8 +140,8 @@ class RecomendationImpl: Recommendation {
                     break
                 }
                 var recommendationsValues: RecommendationValuesMap = [:]
-                var titleOpt: String? = nil
-                var idOpt: String? = nil
+                var titleOpt: String?
+                var idOpt: String?
 
                 for reco in recos {
                     guard let value = reco["value"] as? String, let identifier = reco["identifier"] as? String,

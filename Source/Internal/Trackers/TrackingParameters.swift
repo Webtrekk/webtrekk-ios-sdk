@@ -72,15 +72,15 @@ class TrackingParameter {
     }
 
     func advertisementProperties(variables: [String: String]) -> AdvertisementProperties {
-        var advertisementId: String? = nil
+        var advertisementId: String?
         if let id = parameters[.advertisementId]?.serialized(variables: variables) {
             advertisementId = id
         }
-        var advertisementAction: String? = nil
+        var advertisementAction: String?
         if let action = parameters[.advertisementAction]?.serialized(variables: variables) {
             advertisementAction = action
         }
-        var details: [Int: TrackingValue]? = nil
+        var details: [Int: TrackingValue]?
         if let elements = categories[.adParameter], let advertisementDetails = resolved(elements: elements, variables: variables) {
             details = advertisementDetails
         }
@@ -155,12 +155,12 @@ class TrackingParameter {
 
         let productPrice = parameters[.productPrice]?.serialized(variables: variables)
 
-        var productQuantity: Int? = nil
+        var productQuantity: Int?
         if let productQuantityStr = parameters[.productQuantity]?.serialized(variables: variables), productQuantityStr.isQuantity {
             productQuantity = Int(productQuantityStr)
         }
 
-        var productCategories: [Int: TrackingValue]? = nil
+        var productCategories: [Int: TrackingValue]?
         if let elements = categories[.productCategories], let productCategoriesElements = resolved(elements: elements, variables: variables) {
             productCategories = productCategoriesElements
         }

@@ -686,7 +686,7 @@
 					0F2D21781EDEA18500D09ADF = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = EZPY3L3K5H;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					5AF6D0642073DA6E002E98A3 = {
@@ -1058,7 +1058,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Webtrekk-Bridging-Header.h";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = Source/Webtrekk.h;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1086,7 +1086,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Webtrekk-Bridging-Header.h";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = Source/Webtrekk.h;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

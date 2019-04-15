@@ -122,7 +122,7 @@ class StorePendingRequest {
 
         jsonsString.forEach { (substring) in
             var parameters = [URLQueryItem]()
-            if let data = String(substring).data(using: .utf8), let jsonObj = (try? JSONSerialization.jsonObject(with: data, options: []) as? [[String: String]]) {
+            if let data = String(substring).data(using: .utf8), let jsonObj = (((try? JSONSerialization.jsonObject(with: data, options: []) as? [[String: String]]) as [[String: String]]??)) {
                 jsonObj?.forEach {(keyValueItem) in
                     let queryItem = URLQueryItem(name: (keyValueItem.first?.key)!, value: keyValueItem.first?.value)
                     parameters.append(queryItem)

@@ -140,7 +140,7 @@ internal final class ProductListTrackerImpl: ProductListTracker {
             var maxOrder = -1
             self.products.removeAll()
             if let data = self.userDefaults.dataForKey(DefaultsKeys.productListOrder),
-                let jsonObj = try? JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any?]] {
+                let jsonObj = ((try? JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any?]]) as [[String: Any?]]??) {
 
                 jsonObj?.forEach { (item) in
                     if let name = item["id"] as? String {

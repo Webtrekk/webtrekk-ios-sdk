@@ -823,6 +823,7 @@ extension UIInterfaceOrientation {
         case .landscapeLeft, .landscapeRight: return "landscape"
         case .portrait, .portraitUpsideDown:  return "portrait"
         case .unknown:                        return "undefined"
+        @unknown default:                     return "other"
         }
     }
 }

@@ -203,7 +203,7 @@ public struct CrossDeviceProperties {
        let crossDevicePropertiesObj = UserDefaults.standardDefaults.child(namespace: "webtrekk").dataForKey(DefaultsKeys.crossDeviceProperties)
 
         if let data = crossDevicePropertiesObj,
-            let cdbJsonObj = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any?] {
+            let cdbJsonObj = ((try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any?]) as [String: Any?]??) {
                 return CrossDeviceProperties(cdbJsonObj!)
         }
 

@@ -66,9 +66,9 @@ private func signalHandler(signalNum: Int32) {
 class ExceptionTrackerImpl: ExceptionTracker {
 
     // use var to make it lazy initialized.
-    static var previousExceptionHandler: ExceptionHandler
+    static var previousExceptionHandler: ExceptionHandler?
     private static var initialized = false
-    fileprivate static var previousSignalHandlers = [Int32: SignalHanlder]()
+    fileprivate static var previousSignalHandlers = [Int32: SignalHandler]()
 
     #if !os(watchOS)
     private let signals: [Int32] = [SIGABRT, SIGILL, SIGSEGV, SIGFPE, SIGBUS, SIGPIPE, SIGTRAP]
@@ -76,8 +76,8 @@ class ExceptionTrackerImpl: ExceptionTracker {
 
     private var errorLogLevel: ErrorLogLevel = .disable
 
-    typealias SignalHanlder = (@convention(c) (Int32) -> Swift.Void)
-    typealias ExceptionHandler = (@convention(c) (NSException) -> Swift.Void)?
+    typealias SignalHandler = (@convention(c) (Int32) -> Swift.Void)
+    typealias ExceptionHandler = (@convention(c) (NSException) -> Swift.Void)
 
     fileprivate enum ErrorLogLevel: Int {
         case disable, fatal, catched, info
@@ -121,7 +121,9 @@ class ExceptionTrackerImpl: ExceptionTracker {
             return
         }
 
-        NSSetUncaughtExceptionHandler(ExceptionTrackerImpl.previousExceptionHandler)
+        if let previousExceptionHandler = ExceptionTrackerImpl.previousExceptionHandler {
+            NSSetUncaughtExceptionHandler(previousExceptionHandler)
+        }
         ExceptionTrackerImpl.previousExceptionHandler = nil
 
         #if !os(watchOS)
@@ -373,8 +375,8 @@ private class ExceptionSaveAndSendHelper {
         }
 
         let enumerator = FileManager.default.enumerator(atPath: supportDir)
-        var minimumNumber: Int? = nil
-        var fileName: String? = nil
+        var minimumNumber: Int?
+        var fileName: String?
 
         //find file with minimumID
         enumerator?.forEach { value in

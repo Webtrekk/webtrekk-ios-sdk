@@ -537,7 +537,7 @@ private class TextFileReader {
 
     fileprivate func readLine(fileHandle: FileHandle)->RequestQueue.ReadURLResult {
         var eof = false
-        var line: String? = nil
+        var line: String?
         var shift: UInt64 = 0
         var noData = false
 

@@ -93,7 +93,7 @@ class Campaign: NSObject {
                 guard let dataG = data else {
                     return
                 }
-                guard let json = try? JSONSerialization.jsonObject(with: dataG, options: .allowFragments) as? [String: Any] else {
+                guard let json = ((try? JSONSerialization.jsonObject(with: dataG, options: .allowFragments) as? [String: Any]) as [String: Any]??) else {
                     WebtrekkTracking.logger.logError("Incorrect JSON response for Campaign tracking:\(data.simpleDescription)")
                     return
                 }

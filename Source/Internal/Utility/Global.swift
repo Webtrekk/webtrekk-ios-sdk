@@ -16,19 +16,19 @@ internal func checkIsOnMainThread(function: StaticString = #function, file: Stat
 }
 
 internal func logDebug(_ message: @autoclosure () -> String) {
-	WebtrekkTracking.logger.logDebug(message)
+	WebtrekkTracking.logger.logDebug(message())
 }
 
 internal func logError(_ message: @autoclosure () -> String) {
-	WebtrekkTracking.logger.logError(message)
+	WebtrekkTracking.logger.logError(message())
 }
 
 internal func logInfo(_ message: @autoclosure () -> String) {
-	WebtrekkTracking.logger.logInfo(message)
+	WebtrekkTracking.logger.logInfo(message())
 }
 
 internal func logWarning(_ message: @autoclosure () -> String) {
-	WebtrekkTracking.logger.logWarning(message)
+	WebtrekkTracking.logger.logWarning(message())
 }
 
 internal func onMainQueue(synchronousIfPossible: Bool = false, closure: @escaping Closure) {

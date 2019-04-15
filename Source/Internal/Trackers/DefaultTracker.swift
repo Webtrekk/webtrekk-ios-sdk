@@ -765,7 +765,7 @@ final class DefaultTracker: Tracker {
         }
 
         if self.configuration.automaticallyTrackedPages.isEmpty {
-            if let index = handler.trackers.index(where: { [weak self] in $0.target === self}) {
+            if let index = handler.trackers.firstIndex(where: { [weak self] in $0.target === self}) {
                 handler.trackers.remove(at: index)
             }
         } else {
