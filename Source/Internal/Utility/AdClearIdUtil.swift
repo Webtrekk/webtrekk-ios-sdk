@@ -51,7 +51,7 @@ public struct AdClearId {
     }
 
     private static func limitBitsTo(value: UInt64, maxBits: UInt64) -> UInt64 {
-        let maxLength = (1 << maxBits) - 1
+        let maxLength: UInt64 = (1 << maxBits) - 1
 
         return value & maxLength
     }
