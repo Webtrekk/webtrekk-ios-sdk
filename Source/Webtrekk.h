@@ -1,5 +1,7 @@
 #import <UIKit/UIKit.h>
 
+#import <Webtrekk/CatchObC.h>
+
 //! Project version number for Webtrekk.
 FOUNDATION_EXPORT double WebtrekkVersionNumber;
 
