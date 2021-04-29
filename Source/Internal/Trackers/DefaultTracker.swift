@@ -1010,7 +1010,7 @@ fileprivate final class AutotrackingEventHandler: ActionEventHandler, MediaEvent
     fileprivate var trackers = [WeakReference<DefaultTracker>]()
 
     private func broadcastEvent<Event: TrackingEvent>(_ event: Event, handler: (DefaultTracker) -> (Event) -> Void) {
-        var event = event
+        let event = event
 
         for trackerOpt in trackers {
             guard let viewControllerType = event.viewControllerType,

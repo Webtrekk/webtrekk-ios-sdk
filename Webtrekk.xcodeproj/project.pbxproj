@@ -127,6 +127,7 @@
 		5AF6D0682073DA6E002E98A3 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF6D0672073DA6E002E98A3 /* Tests.swift */; };
 		5AF6D06A2073DA6E002E98A3 /* Webtrekk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F2D21791EDEA18500D09ADF /* Webtrekk.framework */; };
 		5AF6D0812073DC86002E98A3 /* RequestTrackerBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF6D0802073DC86002E98A3 /* RequestTrackerBuilderTests.swift */; };
+		747780AA23A11978000D1B1B /* Webtrekk.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FE637891EDED5C1006887EC /* Webtrekk.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9F4400231FDE887600F7CE04 /* ProductListTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4400221FDE887600F7CE04 /* ProductListTracker.swift */; };
 		9F4400251FDE893D00F7CE04 /* ProductListTrackerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4400241FDE893D00F7CE04 /* ProductListTrackerImpl.swift */; };
 		9F49813C1F9F975700BFD9F1 /* AppIntstallGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F49813B1F9F975700BFD9F1 /* AppIntstallGoal.swift */; };
@@ -231,7 +232,6 @@
 		0FE637851EDED536006887EC /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		0FE637881EDED5C1006887EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0FE637891EDED5C1006887EC /* Webtrekk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Webtrekk.h; sourceTree = "<group>"; };
-		0FE6378A1EDED7AD006887EC /* Webtrekk-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Webtrekk-Bridging-Header.h"; sourceTree = "<group>"; };
 		5A4D1F8022942AB9006501AA /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		5A4D20BD22942C40006501AA /* UInt64+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UInt64+Extension.swift"; sourceTree = "<group>"; };
 		5A4D20C522942C40006501AA /* Int+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
@@ -543,7 +543,6 @@
 				0FE637881EDED5C1006887EC /* Info.plist */,
 				0FE637891EDED5C1006887EC /* Webtrekk.h */,
 				0F2D21DC1EDEA1C500D09ADF /* WebtrekkTracking.swift */,
-				0FE6378A1EDED7AD006887EC /* Webtrekk-Bridging-Header.h */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -618,6 +617,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F2D21F21EDEA1C500D09ADF /* CatchObC.h in Headers */,
+				747780AA23A11978000D1B1B /* Webtrekk.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -976,6 +976,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1041,6 +1042,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1120,7 +1122,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Webtrekk.Webtrekk;
 				PRODUCT_NAME = Webtrekk;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Source/Webtrekk-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
@@ -1148,7 +1149,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Webtrekk.Webtrekk;
 				PRODUCT_NAME = Webtrekk;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Source/Webtrekk-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
