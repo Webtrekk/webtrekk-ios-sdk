@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -28,7 +28,6 @@
 		0F2D21EF1EDEA1C500D09ADF /* XmlTrackerConfigurationParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D219B1EDEA1C500D09ADF /* XmlTrackerConfigurationParser.swift */; };
 		0F2D21F01EDEA1C500D09ADF /* AdClearIdUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D219D1EDEA1C500D09ADF /* AdClearIdUtil.swift */; };
 		0F2D21F11EDEA1C500D09ADF /* ASIdentifierManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D219E1EDEA1C500D09ADF /* ASIdentifierManager.swift */; };
-		0F2D21F21EDEA1C500D09ADF /* CatchObC.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F2D219F1EDEA1C500D09ADF /* CatchObC.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0F2D21F31EDEA1C500D09ADF /* CatchObC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D21A01EDEA1C500D09ADF /* CatchObC.m */; };
 		0F2D21F41EDEA1C500D09ADF /* ClosedInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D21A11EDEA1C500D09ADF /* ClosedInterval.swift */; };
 		0F2D21F51EDEA1C500D09ADF /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D21A21EDEA1C500D09ADF /* Dictionary.swift */; };
@@ -73,7 +72,7 @@
 		0F2D221E1EDEA1C500D09ADF /* ExceptionTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D21D01EDEA1C500D09ADF /* ExceptionTracker.swift */; };
 		0F2D221F1EDEA1C500D09ADF /* MediaTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D21D11EDEA1C500D09ADF /* MediaTracker.swift */; };
 		0F2D22201EDEA1C500D09ADF /* PageTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D21D21EDEA1C500D09ADF /* PageTracker.swift */; };
-		0F2D22211EDEA1C500D09ADF /* Recommendations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D21D31EDEA1C500D09ADF /* Recommendations.swift */; };
+		0F2D22211EDEA1C500D09ADF /* Recommendations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D21D31EDEA1C500D09ADF /* Recommendations.swift */; platformFilter = ios; };
 		0F2D22221EDEA1C500D09ADF /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D21D41EDEA1C500D09ADF /* Tracker.swift */; };
 		0F2D22231EDEA1C500D09ADF /* TrackerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D21D51EDEA1C500D09ADF /* TrackerError.swift */; };
 		0F2D22241EDEA1C500D09ADF /* TrackerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D21D61EDEA1C500D09ADF /* TrackerRequest.swift */; };
@@ -127,6 +126,8 @@
 		5AF6D0682073DA6E002E98A3 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF6D0672073DA6E002E98A3 /* Tests.swift */; };
 		5AF6D06A2073DA6E002E98A3 /* Webtrekk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F2D21791EDEA18500D09ADF /* Webtrekk.framework */; };
 		5AF6D0812073DC86002E98A3 /* RequestTrackerBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF6D0802073DC86002E98A3 /* RequestTrackerBuilderTests.swift */; };
+		651990122382FFFB002162D2 /* CatchObC.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F2D219F1EDEA1C500D09ADF /* CatchObC.h */; platformFilter = ios; settings = {ATTRIBUTES = (Public, ); }; };
+		651990132383DDDF002162D2 /* Webtrekk.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FE637891EDED5C1006887EC /* Webtrekk.h */; platformFilter = ios; settings = {ATTRIBUTES = (Public, ); }; };
 		9F4400231FDE887600F7CE04 /* ProductListTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4400221FDE887600F7CE04 /* ProductListTracker.swift */; };
 		9F4400251FDE893D00F7CE04 /* ProductListTrackerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4400241FDE893D00F7CE04 /* ProductListTrackerImpl.swift */; };
 		9F49813C1F9F975700BFD9F1 /* AppIntstallGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F49813B1F9F975700BFD9F1 /* AppIntstallGoal.swift */; };
@@ -231,7 +232,6 @@
 		0FE637851EDED536006887EC /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		0FE637881EDED5C1006887EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0FE637891EDED5C1006887EC /* Webtrekk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Webtrekk.h; sourceTree = "<group>"; };
-		0FE6378A1EDED7AD006887EC /* Webtrekk-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Webtrekk-Bridging-Header.h"; sourceTree = "<group>"; };
 		5A4D1F8022942AB9006501AA /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		5A4D20BD22942C40006501AA /* UInt64+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UInt64+Extension.swift"; sourceTree = "<group>"; };
 		5A4D20C522942C40006501AA /* Int+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
@@ -543,7 +543,6 @@
 				0FE637881EDED5C1006887EC /* Info.plist */,
 				0FE637891EDED5C1006887EC /* Webtrekk.h */,
 				0F2D21DC1EDEA1C500D09ADF /* WebtrekkTracking.swift */,
-				0FE6378A1EDED7AD006887EC /* Webtrekk-Bridging-Header.h */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -617,7 +616,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0F2D21F21EDEA1C500D09ADF /* CatchObC.h in Headers */,
+				651990122382FFFB002162D2 /* CatchObC.h in Headers */,
+				651990132383DDDF002162D2 /* Webtrekk.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1099,6 +1099,7 @@
 		0F2D21821EDEA18500D09ADF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
@@ -1120,7 +1121,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Webtrekk.Webtrekk;
 				PRODUCT_NAME = Webtrekk;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Source/Webtrekk-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
@@ -1128,6 +1128,7 @@
 		0F2D21831EDEA18500D09ADF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = EZPY3L3K5H;
@@ -1148,7 +1149,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Webtrekk.Webtrekk;
 				PRODUCT_NAME = Webtrekk;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Source/Webtrekk-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 			};
 			name = Release;

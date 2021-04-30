@@ -65,6 +65,24 @@ Carthage support starting from version 4.6.0
 
 `github "Webtrekk/webtrekk-ios-sdk"`
 
+## xcframework
+
+Run the following (adjusted) commands in the command line.
+
+1. Create the framework for devices' architectures:
+
+```xcodebuild archive -scheme "Webtrekk-iOS" -destination="iOS" -archivePath "/tmp/webtrekk/wt-ios.xcarchive" -sdk "iphoneos" SKIP_INSTALL=NO```
+
+2. Create the framework for the simulator's architectures:
+
+```xcodebuild archive -scheme "Webtrekk-iOS" -destination="iOS Simulator" -archivePath "/tmp/webtrekk/wt-simulator.xcarchive" -sdk "iphonesimulator" SKIP_INSTALL=NO```
+
+3. Combine both into a xcframework:
+
+```xcodebuild -create-xcframework -framework /tmp/webtrekk/wt-simulator.xcarchive/Products/Library/Frameworks/Webtrekk.framework -framework /tmp/webtrekk/wt-ios.xcarchive/Products/Library/Frameworks/Webtrekk.framework -output Webtrekk.xcframework```
+
+4. Copy the xcframework to a path of your choice and link (and copy) it in your iOS target.
+
 # SwiftLint
 
 We use Swiftlint from [Realm](https://realm.io/) to lint our code. SwiftLint has to be installed on your device. 

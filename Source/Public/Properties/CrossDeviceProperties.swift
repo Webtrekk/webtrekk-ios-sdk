@@ -1,3 +1,5 @@
+import Foundation
+
 /** Enhance tracking by adding properties to track users across different devices. */
 public struct CrossDeviceProperties {
 
